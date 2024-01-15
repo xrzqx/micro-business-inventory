@@ -45,7 +45,7 @@ class MotorPenjualanController extends Controller
                     });
             }]);
         }])
-        ->get();
+        ->paginate(7);
         return view('motor.penjualan',
         [
             "barang" => $barang,
@@ -103,6 +103,37 @@ class MotorPenjualanController extends Controller
         $pembelian->save();
 
         return redirect()->route('motorpenjualan.index')->with('success', 'menambahkan penjualan barang');
+    }
+
+    public function edit($id)
+    {
+        $penjualan = Penjualan::find($id);
+        if (!$penjualan) {
+            // Handle case where the resource is not found
+            abort(404, 'Resource not found');
+        }
+
+        $pembelianSelect = Pembelian::with(['barang' => function ($query) {
+            $query->with('item', 'kategori')
+                ->whereHas('kategori', function (Builder $query) {
+                    $query->where('toko', '=', 'SGH_Motor');
+                });
+        }])
+        ->distinct('master_item_id')
+        ->where('sisa', '>', 0)
+        ->get(['master_item_id']);
+
+        $pembelian = Pembelian::find($penjualan->transaksi_pembelian_id);
+
+        $barang = Barang::find($pembelian->master_item_id);
+        // $item = Item::find($barang->item_id);
+        return view('motor.penjualanedit', 
+        [
+            "pembelianSelect" => $pembelianSelect,
+            "barang" => $barang,
+            "pembelian" => $pembelian,
+            "penjualan" => $penjualan,
+        ]);
     }
 
     public function destroy($id)

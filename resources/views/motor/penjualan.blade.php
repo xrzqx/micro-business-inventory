@@ -241,7 +241,7 @@
             <div class="col-sm-4">
                 <form class="d-flex" action="" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="name" value="{{ request('search') }}"
+                        <input type="text" class="form-control" name="search" value="{{ request('search') }}"
                             placeholder="Search Produk Name">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
@@ -308,10 +308,10 @@
                         {{date('d-m-Y', $value->tanggal)}}
                     </td>
                     <td>
-                        <button type="button" style="background-color: yellow">
+                        {{-- <button type="button" style="background-color: yellow">
                             <a href="{{ route('motorpenjualan.edit', $value->id) }}"
                                 style="color: black;text-decoration-line: none">edit</a>
-                        </button>
+                        </button> --}}
                         <form method="post" action="{{ route('motorpenjualan.destroy', $value->id) }}"
                             style="display: inline;">
                             @csrf
@@ -324,13 +324,12 @@
                 @endforeach
             </table>
         </div>
-        {{-- {{ $barang->appends(request()->input())->links() }} --}}
+        {{ $penjualan->appends(request()->input())->links() }}
     </div>
 </div>
 
 <script>
     function validateInput(input) {
-        console.log("lol");
       // Remove non-numeric characters
       input.value = input.value.replace(/[^0-9]/g, '');
   

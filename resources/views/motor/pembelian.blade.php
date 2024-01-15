@@ -34,7 +34,7 @@
                                 <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
                                     <option value="" disabled selected hidden>Pilih Barang</option>
                                     @foreach ($barang as $value)
-                                        <option value="{{ $value->id }}">{{ $value->item->nama }}</option>
+                                    <option value="{{ $value->id }}">{{ $value->item->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -69,13 +69,13 @@
                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                 placeholder="input harus angka" name="jumlah" />
                             @error('jumlah')
-                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                    </path>
-                                </svg>
-                                <span class="text-danger">{{ $message }}</span>
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col-sm-12 form-group">
@@ -84,18 +84,19 @@
                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                 placeholder="input harus angka" name="harga" />
                             @error('harga')
-                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                    </path>
-                                </svg>
-                                <span class="text-danger">{{ $message }}</span>
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col-sm-12 form-group">
                             <label>Tanggal</label>
-                            <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker" name="tanggal" />
+                            <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
+                                name="tanggal" />
                             <div class="text-err">
                                 @error('tanggal')
                                 <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
@@ -231,9 +232,9 @@
                 </button>
             </div>
             <div class="col-sm-4">
-                <form class="d-flex" action="" method="GET">
+                <form class="d-flex" action="{{route('motorpembelian.search')}}" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="name" value="{{ request('search') }}"
+                        <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
                             placeholder="Search Produk Name">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
@@ -279,7 +280,14 @@
                     <th>Tanggal</th>
                     <th>Action</th>
                 </tr>
+                @php
+                    $found = true
+                @endphp
                 @foreach ($pembelian as $key => $value)
+                @if ($value->barang)
+                @php
+                    $found = true    
+                @endphp
                 <tr>
                     <td>
                         {{ $value->supplier }}
@@ -313,10 +321,17 @@
                         </form>
                     </td>
                 </tr>
+                @else
+                    @php
+                        $found = false
+                    @endphp
+                @endif
+
                 @endforeach
+                {{$found}}
             </table>
         </div>
-        {{-- {{ $barang->appends(request()->input())->links() }} --}}
+        {{ $pembelian->appends(request()->input())->links() }}
     </div>
 </div>
 @endsection

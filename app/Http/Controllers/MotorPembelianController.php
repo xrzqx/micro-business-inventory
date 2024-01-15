@@ -9,6 +9,7 @@ use App\Models\Kategori;
 use App\Models\Pembelian;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class MotorPembelianController extends Controller
 {
@@ -26,7 +27,7 @@ class MotorPembelianController extends Controller
                     $query->where('toko', '=', 'SGH_Motor');
                 });
         }])
-        ->get();
+        ->paginate(7);
 
         return view("motor.pembelian",
         [
@@ -185,5 +186,68 @@ class MotorPembelianController extends Controller
 
         $pembelian->delete();
         return redirect()->route('motorpembelian.index')->with('success', 'menghapus pembelian barang');
+    }
+
+    public function search(Request $request)
+    {
+        // $searchQuery = $request->input('namabarang');
+
+        $barang = Barang::with('item', 'kategori')
+        ->whereHas('kategori', function (Builder $query) {
+            $query->where('toko', '=', 'SGH_Motor');
+        })
+        ->get();
+
+        $searchQuery = $request->input('namabarang');
+        // return $searchQuery;
+
+        // $pembelian = Pembelian::with(['barang' => function ($query) use ($searchQuery){
+        //     $query->with('item', 'kategori')
+        //         ->whereHas('kategori', function (Builder $query) {
+        //             $query->where('toko', '=', 'SGH_Motor');
+        //         });
+        // }])
+        // ->paginate(7);
+        
+        DB::enableQueryLog();
+
+        $pembelian = Pembelian::with(['barang' => function ($query) use ($searchQuery){
+            $query->with('kategori')
+                ->whereHas('kategori', function (Builder $query) {
+                    $query->where('toko', '=', 'SGH_Motor');
+                });
+            $query->with('item')
+                ->whereHas('item', function (Builder $query) use ($searchQuery) {
+                $query->where('nama', 'like', '%' . $searchQuery . '%');
+                });
+            
+        }])
+        ->paginate(7);
+
+        // Log information about 'barang' records
+        // foreach ($pembelian as $p) {
+        //     dump($p->barang);
+        // }
+
+        // $pembelian = Pembelian::with(['barang' => function ($query) use ($searchQuery) {
+        //     $query->with(['item', 'kategori'])
+        //         ->whereHas('kategori', function (Builder $query) {
+        //             $query->where('toko', '=', 'SGH_Motor');
+        //         })
+        //         ->where(function ($query) use ($searchQuery) {
+        //             $query->whereHas('item', function (Builder $query) use ($searchQuery) {
+        //                 $query->where('nama', 'like', '%' . $searchQuery . '%');
+        //             });
+        //         });
+        // }])
+        // ->paginate(7);
+
+        return $pembelian;
+
+        return view("motor.pembelian",
+        [
+            "barang" => $barang,
+            "pembelian" => $pembelian,
+        ]);
     }
 }

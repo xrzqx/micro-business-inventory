@@ -30,6 +30,7 @@ Route::get('/motor/kategori/{id}', [MotorKategoriController::class, 'edit'])->na
 Route::post('/motor/kategori/{id}', [MotorKategoriController::class, 'update'])->name('motorkategori.update');
 Route::delete('/motor/kategori/{id}', [MotorKategoriController::class, 'destroy'])->name('motorkategori.destroy');
 
+Route::get('/motor/pembelian/search', [MotorPembelianController::class, 'search'])->name('motorpembelian.search');
 Route::get('/motor/pembelian', [MotorPembelianController::class, 'index'])->name('motorpembelian.index');
 Route::post('/motor/pembelian', [MotorPembelianController::class, 'store'])->name('motorpembelian.store');
 Route::get('/motor/pembelian/{id}', [MotorPembelianController::class, 'edit'])->name('motorpembelian.edit');
