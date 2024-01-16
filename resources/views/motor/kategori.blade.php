@@ -152,10 +152,10 @@
                 </button>
             </div>
             <div class="col-sm-4">
-                <form class="d-flex" action="" method="GET">
+                <form class="d-flex" action="{{route('motorkategori.search')}}" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="name" value="{{ request('search') }}"
-                            placeholder="Search Produk Name">
+                        <input type="text" class="form-control" name="namakategori" value="{{ request('search') }}"
+                            placeholder="Cari nama kategori">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>

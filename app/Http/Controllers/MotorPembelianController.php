@@ -190,59 +190,26 @@ class MotorPembelianController extends Controller
 
     public function search(Request $request)
     {
-        // $searchQuery = $request->input('namabarang');
-
+        $searchQuery = $request->input('namabarang');
+        
         $barang = Barang::with('item', 'kategori')
         ->whereHas('kategori', function (Builder $query) {
             $query->where('toko', '=', 'SGH_Motor');
         })
         ->get();
 
-        $searchQuery = $request->input('namabarang');
-        // return $searchQuery;
-
-        // $pembelian = Pembelian::with(['barang' => function ($query) use ($searchQuery){
-        //     $query->with('item', 'kategori')
-        //         ->whereHas('kategori', function (Builder $query) {
-        //             $query->where('toko', '=', 'SGH_Motor');
-        //         });
-        // }])
-        // ->paginate(7);
-        
-        DB::enableQueryLog();
-
-        $pembelian = Pembelian::with(['barang' => function ($query) use ($searchQuery){
-            $query->with('kategori')
-                ->whereHas('kategori', function (Builder $query) {
-                    $query->where('toko', '=', 'SGH_Motor');
-                });
-            $query->with('item')
-                ->whereHas('item', function (Builder $query) use ($searchQuery) {
-                $query->where('nama', 'like', '%' . $searchQuery . '%');
-                });
-            
+        $pembelian = Pembelian::select('transaksi_pembelian.*')
+        ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+        ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+        ->join('item', 'item.id', '=', 'master_item.item_id')
+        ->where('kategori.toko', '=', 'SGH_Motor')
+        ->where('item.nama', 'like', '%' . $searchQuery . '%')
+        ->distinct()
+        ->with(['barang' => function ($query) use ($searchQuery){
+            $query->with('item');
         }])
         ->paginate(7);
 
-        // Log information about 'barang' records
-        // foreach ($pembelian as $p) {
-        //     dump($p->barang);
-        // }
-
-        // $pembelian = Pembelian::with(['barang' => function ($query) use ($searchQuery) {
-        //     $query->with(['item', 'kategori'])
-        //         ->whereHas('kategori', function (Builder $query) {
-        //             $query->where('toko', '=', 'SGH_Motor');
-        //         })
-        //         ->where(function ($query) use ($searchQuery) {
-        //             $query->whereHas('item', function (Builder $query) use ($searchQuery) {
-        //                 $query->where('nama', 'like', '%' . $searchQuery . '%');
-        //             });
-        //         });
-        // }])
-        // ->paginate(7);
-
-        return $pembelian;
 
         return view("motor.pembelian",
         [

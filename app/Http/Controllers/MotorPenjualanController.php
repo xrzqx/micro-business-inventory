@@ -155,4 +155,42 @@ class MotorPenjualanController extends Controller
         $penjualan->delete();
         return redirect()->route('motorpenjualan.index')->with('success', 'menghapus penjualan barang');
     }
+
+    public function search(Request $request)
+    {
+        $searchQuery = $request->input('namabarang');
+        
+        $barang = Pembelian::with(['barang' => function ($query) {
+            $query->with('item', 'kategori')
+                ->whereHas('kategori', function (Builder $query) {
+                    $query->where('toko', '=', 'SGH_Motor');
+                });
+        }])
+        ->distinct('master_item_id')
+        ->where('sisa', '>', 0)
+        ->get(['master_item_id']);
+
+        $penjualan = Penjualan::select('transaksi_penjualan.*')
+            ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
+            ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+            ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+            ->join('item', 'item.id', '=', 'master_item.item_id')
+            ->where('kategori.toko', '=', 'SGH_Motor')
+            ->where('item.nama', 'like', '%' . $searchQuery . '%')
+            ->distinct()
+            ->with(['pembelian' => function ($query) use ($searchQuery){
+                $query->with(['barang' => function ($query) {
+                    $query->with('item');
+                }]);
+            }])
+            ->paginate(7);
+
+        // return $penjualan;
+
+        return view("motor.penjualan",
+        [
+            "barang" => $barang,
+            "penjualan" => $penjualan,
+        ]);
+    }
 }

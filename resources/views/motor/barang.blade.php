@@ -186,10 +186,10 @@
                 </button>
             </div>
             <div class="col-sm-4">
-                <form class="d-flex" action="" method="GET">
+                <form class="d-flex" action="{{route('motor.search')}}" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="name" value="{{ request('search') }}"
-                            placeholder="Search Produk Name">
+                        <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
+                            placeholder="Cari Barang">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
@@ -227,7 +227,7 @@
             <table class="table">
                 <tr>
                     <th>Kode Item</th>
-                    <th>Nama Produk</th>
+                    <th>Nama Barang</th>
                     <th>Kategori</th>
                     <th>Stock</th>
                     <th>Action</th>

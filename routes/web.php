@@ -24,6 +24,7 @@ Route::get('/', function () {
 
 Route::get('/fetch-batch', [BatchController::class, 'fetchData'])->name('fetch.batch');
 
+Route::get('/motor/kategori/search', [MotorKategoriController::class, 'search'])->name('motorkategori.search');
 Route::get('/motor/kategori', [MotorKategoriController::class, 'index'])->name('motorkategori.index');
 Route::post('/motor/kategori', [MotorKategoriController::class, 'store'])->name('motorkategori.store');
 Route::get('/motor/kategori/{id}', [MotorKategoriController::class, 'edit'])->name('motorkategori.edit');
@@ -37,12 +38,14 @@ Route::get('/motor/pembelian/{id}', [MotorPembelianController::class, 'edit'])->
 Route::post('/motor/pembelian/{id}', [MotorPembelianController::class, 'update'])->name('motorpembelian.update');
 Route::delete('/motor/pembelian/{id}', [MotorPembelianController::class, 'destroy'])->name('motorpembelian.destroy');
 
+Route::get('/motor/penjualan/search', [MotorPenjualanController::class, 'search'])->name('motorpenjualan.search');
 Route::get('/motor/penjualan', [MotorPenjualanController::class, 'index'])->name('motorpenjualan.index');
 Route::post('/motor/penjualan', [MotorPenjualanController::class, 'store'])->name('motorpenjualan.store');
 Route::get('/motor/penjualan/{id}', [MotorPenjualanController::class, 'edit'])->name('motorpenjualan.edit');
 Route::post('/motor/penjualan/{id}', [MotorPenjualanController::class, 'update'])->name('motorpenjualan.update');
 Route::delete('/motor/penjualan/{id}', [MotorPenjualanController::class, 'destroy'])->name('motorpenjualan.destroy');
 
+Route::get('/motor/search', [MotorBarangController::class, 'search'])->name('motor.search');
 Route::get('/motor', [MotorBarangController::class, 'index'])->name('motor.index');
 Route::post('/motor', [MotorBarangController::class, 'store'])->name('motor.store');
 Route::get('/motor/{id}', [MotorBarangController::class, 'edit'])->name('motor.edit');

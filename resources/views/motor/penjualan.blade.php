@@ -35,7 +35,6 @@
                                     <option value="" disabled selected hidden>Pilih Barang</option>
                                     @foreach ($barang as $value)
                                         <option value="{{ $value->master_item_id }}">{{ $value->barang->item->nama }}</option>
-
                                     @endforeach
                                 </select>
                             </div>
@@ -239,10 +238,10 @@
                 </button>
             </div>
             <div class="col-sm-4">
-                <form class="d-flex" action="" method="GET">
+                <form class="d-flex" action="{{route('motorpenjualan.search')}}" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="search" value="{{ request('search') }}"
-                            placeholder="Search Produk Name">
+                        <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
+                            placeholder="Cari Barang">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>

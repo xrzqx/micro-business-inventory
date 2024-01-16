@@ -116,4 +116,27 @@ class MotorBarangController extends Controller
         $barang->delete();
         return redirect()->route('motor.index')->with('success', 'menghapus barang');
     }
+
+    public function search(Request $request)
+    {
+        $searchQuery = $request->input('namabarang');
+        
+        $barang = Barang::select('master_item.*')
+        // ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+        ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+        ->join('item', 'item.id', '=', 'master_item.item_id')
+        ->where('kategori.toko', '=', 'SGH_Motor')
+        ->where('item.nama', 'like', '%' . $searchQuery . '%')
+        // ->distinct()
+        ->with('item','kategori')
+        ->paginate(7);
+
+        $kategori = Kategori::all()->where('toko', '=', 'SGH_Motor');
+
+        return view("motor.barang",
+        [
+            "barang" => $barang,
+            "kategori" => $kategori,
+        ]);
+    }
 }

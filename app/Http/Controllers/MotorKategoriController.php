@@ -73,4 +73,17 @@ class MotorKategoriController extends Controller
         }
         return redirect()->route('motorkategori.index')->with('success', 'mengubah kategori');
     }
+
+    public function search(Request $request)
+    {
+        $searchQuery = $request->input('namakategori');
+        
+        $kategori = Kategori::where('toko', '=', 'SGH_Motor')
+        ->where('nama', 'like', '%' . $searchQuery . '%')
+        ->paginate(7);
+        return view("motor.kategori", 
+        [
+            "kategori" => $kategori,
+        ]);
+    }
 }

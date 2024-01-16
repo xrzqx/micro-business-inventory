@@ -235,7 +235,7 @@
                 <form class="d-flex" action="{{route('motorpembelian.search')}}" method="GET">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
-                            placeholder="Search Produk Name">
+                            placeholder="Cari Barang">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
@@ -280,14 +280,7 @@
                     <th>Tanggal</th>
                     <th>Action</th>
                 </tr>
-                @php
-                    $found = true
-                @endphp
                 @foreach ($pembelian as $key => $value)
-                @if ($value->barang)
-                @php
-                    $found = true    
-                @endphp
                 <tr>
                     <td>
                         {{ $value->supplier }}
@@ -321,14 +314,7 @@
                         </form>
                     </td>
                 </tr>
-                @else
-                    @php
-                        $found = false
-                    @endphp
-                @endif
-
                 @endforeach
-                {{$found}}
             </table>
         </div>
         {{ $pembelian->appends(request()->input())->links() }}
