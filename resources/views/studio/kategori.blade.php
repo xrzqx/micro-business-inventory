@@ -8,7 +8,7 @@
             <div class="modal-header">
                 <h5 class="modal-title exampleModalLabel" id="kategoriModalLabel">Tambah Kategori</h5>
             </div>
-            <form method="POST" action="{{ route('motorkategori.store') }}">
+            <form method="POST" action="{{ route('studiokategori.store') }}">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
@@ -48,18 +48,16 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>SGH Motor</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
-                <li class="sublist-item selected"><a href="{{route('motorkategori.index')}}">Daftar Kategori</a></li>
+            <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('motorkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
-                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -69,15 +67,13 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
+            <ul class="sublist">
                 <li class="sublist-item selected"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item"><a href="">Penjualan Produk</a></li>
                 <li class="sublist-item"><a href="">Limbah Barang</a></li>
-                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -88,7 +84,6 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Barang</li>
                 <li class="sublist-item">Pembelian</li>
                 <li class="sublist-item">Penjualan</li>
@@ -103,7 +98,6 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Barang</li>
                 <li class="sublist-item">Pembelian</li>
                 <li class="sublist-item">Penjualan</li>
@@ -118,7 +112,6 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Paket</li>
                 <li class="sublist-item">Transaksi</li>
                 <!-- Add more sublist items as needed -->
@@ -132,7 +125,6 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Barang</li>
                 <li class="sublist-item">Pembelian</li>
                 <li class="sublist-item">Penjualan</li>
@@ -140,7 +132,7 @@
             </ul>
         </ul>
     </div>
-    <button class="toggle-btn-sidenav">
+    <button class="toggle-btn-sidenav" onclick="toggleSidenav()">
         <span class="material-symbols-outlined toggle-icon-sidenav">
             chevron_right
         </span>
@@ -154,7 +146,7 @@
                 </button>
             </div>
             <div class="col-sm-4">
-                <form class="d-flex" action="{{route('motorkategori.search')}}" method="GET">
+                <form class="d-flex" action="{{route('studiokategori.search')}}" method="GET">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="namakategori" value="{{ request('search') }}"
                             placeholder="Cari nama kategori">
@@ -206,7 +198,7 @@
                             <a href="{{ route('motorkategori.edit', $item->id) }}"
                                 style="color: black;text-decoration-line: none">edit</a>
                         </button>
-                        <form method="post" action="{{ route('motorkategori.destroy', $item->id) }}"
+                        <form method="post" action="{{ route('studiokategori.destroy', $item->id) }}"
                             style="display: inline;">
                             @csrf
                             @method('delete')
