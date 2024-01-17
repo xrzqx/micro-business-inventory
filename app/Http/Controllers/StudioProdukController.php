@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Barang;
-use App\Models\Item;
-use App\Models\Kategori;
 use App\Models\Produk;
-use Illuminate\Database\Eloquent\Builder;
 
 class StudioProdukController extends Controller
 {
@@ -17,7 +13,7 @@ class StudioProdukController extends Controller
     public function index()
     {
         //
-        $produk = Produk::all();
+        $produk = Produk::paginate(7);
         return view("studio.produk", 
         [
             'produk' => $produk,
@@ -103,5 +99,13 @@ class StudioProdukController extends Controller
     public function search(Request $request)
     {
         //
+        $searchQuery = $request->input('namaproduk');
+        
+        $produk = Produk::where('nama', 'like', '%' . $searchQuery . '%')
+        ->paginate(7);
+        return view("studio.produk", 
+        [
+            "produk" => $produk,
+        ]);
     }
 }

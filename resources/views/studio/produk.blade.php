@@ -151,7 +151,7 @@
             <div class="col-sm-4">
                 <form class="d-flex" action="{{route('studioproduk.search')}}" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
+                        <input type="text" class="form-control" name="namaproduk" value="{{ request('search') }}"
                             placeholder="Cari Barang">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
@@ -210,7 +210,7 @@
                 @endforeach
             </table>
         </div>
-        {{-- {{ $barang->appends(request()->input())->links() }} --}}
+        {{ $produk->appends(request()->input())->links() }}
     </div>
 </div>
 @endsection
