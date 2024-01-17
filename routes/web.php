@@ -54,7 +54,7 @@ Route::get('/motor', [MotorBarangController::class, 'index'])->name('motor.index
 Route::post('/motor', [MotorBarangController::class, 'store'])->name('motor.store');
 Route::get('/motor/{id}', [MotorBarangController::class, 'edit'])->name('motor.edit');
 Route::post('/motor/{id}', [MotorBarangController::class, 'update'])->name('motor.update');
-Route::delete('/motor/{id}', [MotorKategoriController::class, 'destroy'])->name('motor.destroy');
+Route::delete('/motor/{id}', [MotorBarangController::class, 'destroy'])->name('motor.destroy');
 
 Route::get('/studio/kategori/search', [StudioKategoriController::class, 'search'])->name('studiokategori.search');
 Route::get('/studio/kategori', [StudioKategoriController::class, 'index'])->name('studiokategori.index');

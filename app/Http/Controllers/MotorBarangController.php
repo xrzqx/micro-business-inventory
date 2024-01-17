@@ -113,7 +113,13 @@ class MotorBarangController extends Controller
             abort(404, 'Resource not found');
         }
         $item = Item::find($id);
-        $barang->delete();
+        try {
+            $barang->delete();
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['error' => 'Database error'], 500);
+            // Handle the exception, log it, or provide a user-friendly message
+            return redirect()->route('motor.index')->with('failed', 'menghapus barang');
+        }
         return redirect()->route('motor.index')->with('success', 'menghapus barang');
     }
 

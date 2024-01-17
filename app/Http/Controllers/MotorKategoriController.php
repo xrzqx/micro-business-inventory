@@ -65,12 +65,12 @@ class MotorKategoriController extends Controller
             'nama.max' => 'Input nama kategori tidak boleh lebih dari 255 karakter',
         ]);
         $kategori = Kategori::find($id);
-        $kategori->nama = $request->nama;
-        $kategori->save();
         if (!$kategori) {
             // Handle case where the resource is not found
             abort(404, 'Resource not found');
         }
+        $kategori->nama = $request->nama;
+        $kategori->save();
         return redirect()->route('motorkategori.index')->with('success', 'mengubah kategori');
     }
 
