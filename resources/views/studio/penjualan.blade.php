@@ -28,7 +28,26 @@
                                 @enderror
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-12 form-group">
+                            <label>Nama Produk</label>
+                            <input type="text" class="form-control form-control-sm nama-produk" name="produk" />
+                            <div class="text-err">
+                                @error('produk')
+                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                    </path>
+                                </svg>
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
                             <label>Nama Barang</label>
                             <div class="input-group">
                                 <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
@@ -48,7 +67,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-sm-12 form-group">
+                        <div class="col-sm-4 form-group">
                             <label>Batch</label>
                             <div class="input-group">
                                 <select class="js-example-basic-single col-sm-12" name="batch" id="batch-produk">
@@ -65,7 +84,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-sm-12 form-group">
+                        <div class="col-sm-4 form-group">
                             <label>Jumlah</label>
                             <input type="text" class="form-control form-control-sm jumlah-produk" 
                             oninput="validateInput(this)" placeholder="Input harus angka" name="jumlah" 
@@ -81,6 +100,16 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                    </div>
+                    <div id="addMore">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <button type="button" class="btn btn-primary btn-more" id="addButton">Add More</button>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-12 form-group">
                             <label>Harga</label>
                             <input type="text" class="form-control form-control-sm harga-produk"
@@ -96,6 +125,8 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-12 form-group">
                             <label>Tanggal</label>
                             <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
@@ -119,7 +150,6 @@
                     <input type="submit" class="btn btn-primary btn-save" value="Save changes">
                 </div>
             </form>
-
         </div>
     </div>
 </div>
@@ -138,11 +168,11 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('motorkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
-                <li class="sublist-item selected"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
@@ -153,12 +183,12 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
-                <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
+                <li class="sublist-item selected"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
                 <li class="sublist-item"><a href="">Limbah Barang</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
@@ -285,7 +315,7 @@
                     <th>Tanggal</th>
                     <th>Action</th>
                 </tr>
-                @foreach ($penjualan as $key => $value)
+                {{-- @foreach ($penjualan as $key => $value)
                 <tr>
                     <td>
                         {{ $value->nama }}
@@ -306,10 +336,6 @@
                         {{date('d-m-Y', $value->tanggal)}}
                     </td>
                     <td>
-                        {{-- <button type="button" style="background-color: yellow">
-                            <a href="{{ route('motorpenjualan.edit', $value->id) }}"
-                                style="color: black;text-decoration-line: none">edit</a>
-                        </button> --}}
                         <form method="post" action="{{ route('motorpenjualan.destroy', $value->id) }}"
                             style="display: inline;">
                             @csrf
@@ -319,10 +345,10 @@
                         </form>
                     </td>
                 </tr>
-                @endforeach
+                @endforeach --}}
             </table>
         </div>
-        {{ $penjualan->appends(request()->input())->links() }}
+        {{-- {{ $penjualan->appends(request()->input())->links() }} --}}
     </div>
 </div>
 
@@ -392,6 +418,86 @@
         document.getElementById('jumlahInp').setAttribute('data-dynamic-value', stockData);
         console.log(stockData);
     });
+</script>
 
+<script>
+    $(document).ready(function () {
+        // Counter to keep track of added elements
+        var counter = 1;
+
+        // Event listener for the "Add More" button
+        $("#addButton").click(function () {
+            var dynamicContent = `
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label>Nama Barang</label>
+                        <div class="input-group">
+                            <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
+                                <option value="" disabled selected hidden>Pilih Barang</option>
+                                @foreach ($barang as $value)
+                                    <option value="{{ $value->master_item_id }}">{{ $value->barang->item->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('nama')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    `+`
+                    <div class="col-sm-4 form-group">
+                        <label>Batch</label>
+                        <div class="input-group">
+                            <select class="js-example-basic-single col-sm-12" name="batch" id="batch-produk">
+                                <option value="" disabled selected hidden>Pilih Batch</option>
+                            </select>
+                        </div>
+                        @error('batch')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    `+`
+                    <div class="col-sm-4 form-group">
+                        <label>Jumlah</label>
+                        <input type="text" class="form-control form-control-sm jumlah-produk" 
+                        oninput="validateInput(this)" placeholder="Input harus angka" name="jumlah" 
+                        id="jumlahInp" data-dynamic-value="0"
+                        />
+                        @error('jumlah')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            `;
+
+            // Append the dynamic content to the container
+            $("#addMore").append(dynamicContent);
+
+            // Increment the counter
+            counter++;
+        });
+        // Event listener for modal close event
+        $('#exampleModalCenter').on('hidden.bs.modal', function () {
+            // Clear the addMore
+            $("#addMore").empty();
+        });
+    });
 </script>
 @endsection

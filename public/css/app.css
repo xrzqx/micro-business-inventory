@@ -199,3 +199,10 @@ h1{
     /* background-color: #d60000; */
 }
 
+.btn-more{
+    width: 100%;
+}
+
+.add-more-group .col-4{
+    padding: 0;
+}

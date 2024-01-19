@@ -37,7 +37,7 @@
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
-                <li class="sublist-item"><a href="">Penjualan Produk</a></li>
+                <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
                 <li class="sublist-item"><a href="">Limbah Barang</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>

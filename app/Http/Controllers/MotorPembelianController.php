@@ -9,7 +9,6 @@ use App\Models\Kategori;
 use App\Models\Pembelian;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class MotorPembelianController extends Controller
 {
@@ -21,13 +20,15 @@ class MotorPembelianController extends Controller
         })
         ->get();
 
-        $pembelian = Pembelian::with(['barang' => function ($query) {
-            $query->with('item', 'kategori')
-                ->whereHas('kategori', function (Builder $query) {
-                    $query->where('toko', '=', 'SGH_Motor');
-                });
-        }])
-        ->paginate(7);
+        $pembelian = Pembelian::select('transaksi_pembelian.*')
+            ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+            ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+            ->join('item', 'item.id', '=', 'master_item.item_id')
+            ->where('kategori.toko', '=', 'SGH_Motor')
+            ->with(['barang' => function ($query) {
+                $query->with('item', 'kategori');
+            }])
+            ->paginate(7);
 
         return view("motor.pembelian",
         [

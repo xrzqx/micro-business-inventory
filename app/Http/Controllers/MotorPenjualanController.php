@@ -14,17 +14,20 @@ class MotorPenjualanController extends Controller
 {
     //
     public function index(){
-        // $item = Item::all();
-        $barang = Pembelian::with(['barang' => function ($query) {
-            $query->with('item', 'kategori')
-                ->whereHas('kategori', function (Builder $query) {
-                    $query->where('toko', '=', 'SGH_Motor');
-                });
-        }])
-        ->distinct('master_item_id')
-        ->where('sisa', '>', 0)
-        ->get(['master_item_id']);
-        // ->get();
+
+        $barang = Pembelian::select('transaksi_pembelian.master_item_id')
+            ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+            ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+            ->join('item', 'item.id', '=', 'master_item.item_id')
+            ->where('kategori.toko', '=', 'SGH_Motor')
+            ->where('sisa', '>', 0)
+            ->groupBy('transaksi_pembelian.master_item_id')
+            ->with(['barang' => function ($query) {
+                $query->with('item', 'kategori');
+            }])
+            ->get();
+
+        // return $barang;
         
         // return $pembelian;
         $pembelian = Pembelian::with(['barang' => function ($query) {
@@ -46,6 +49,7 @@ class MotorPenjualanController extends Controller
             }]);
         }])
         ->paginate(7);
+        // return $penjualan;
         return view('motor.penjualan',
         [
             "barang" => $barang,
@@ -113,15 +117,15 @@ class MotorPenjualanController extends Controller
             abort(404, 'Resource not found');
         }
 
-        $pembelianSelect = Pembelian::with(['barang' => function ($query) {
-            $query->with('item', 'kategori')
-                ->whereHas('kategori', function (Builder $query) {
-                    $query->where('toko', '=', 'SGH_Motor');
-                });
-        }])
-        ->distinct('master_item_id')
-        ->where('sisa', '>', 0)
-        ->get(['master_item_id']);
+        // $pembelianSelect = Pembelian::with(['barang' => function ($query) {
+        //     $query->with('item', 'kategori')
+        //         ->whereHas('kategori', function (Builder $query) {
+        //             $query->where('toko', '=', 'SGH_Motor');
+        //         });
+        // }])
+        // ->distinct('master_item_id')
+        // ->where('sisa', '>', 0)
+        // ->get(['master_item_id']);
 
         $pembelian = Pembelian::find($penjualan->transaksi_pembelian_id);
 
@@ -129,7 +133,7 @@ class MotorPenjualanController extends Controller
         // $item = Item::find($barang->item_id);
         return view('motor.penjualanedit', 
         [
-            "pembelianSelect" => $pembelianSelect,
+            // "pembelianSelect" => $pembelianSelect,
             "barang" => $barang,
             "pembelian" => $pembelian,
             "penjualan" => $penjualan,
@@ -160,15 +164,17 @@ class MotorPenjualanController extends Controller
     {
         $searchQuery = $request->input('namabarang');
         
-        $barang = Pembelian::with(['barang' => function ($query) {
-            $query->with('item', 'kategori')
-                ->whereHas('kategori', function (Builder $query) {
-                    $query->where('toko', '=', 'SGH_Motor');
-                });
-        }])
-        ->distinct('master_item_id')
-        ->where('sisa', '>', 0)
-        ->get(['master_item_id']);
+        $barang = Pembelian::select('transaksi_pembelian.master_item_id')
+            ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+            ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+            ->join('item', 'item.id', '=', 'master_item.item_id')
+            ->where('kategori.toko', '=', 'SGH_Motor')
+            ->where('sisa', '>', 0)
+            ->groupBy('transaksi_pembelian.master_item_id')
+            ->with(['barang' => function ($query) {
+                $query->with('item', 'kategori');
+            }])
+            ->get();
 
         $penjualan = Penjualan::select('transaksi_penjualan.*')
             ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')

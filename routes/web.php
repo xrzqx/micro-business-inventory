@@ -10,6 +10,7 @@ use App\Http\Controllers\StudioKategoriController;
 use App\Http\Controllers\StudioBarangController;
 use App\Http\Controllers\StudioProdukController;
 use App\Http\Controllers\StudioPembelianController;
+use App\Http\Controllers\StudioPenjualanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,13 @@ Route::post('/studio/pembelian', [StudioPembelianController::class, 'store'])->n
 Route::get('/studio/pembelian/{id}', [StudioPembelianController::class, 'edit'])->name('studiopembelian.edit');
 Route::post('/studio/pembelian/{id}', [StudioPembelianController::class, 'update'])->name('studiopembelian.update');
 Route::delete('/studio/pembelian/{id}', [StudioPembelianController::class, 'destroy'])->name('studiopembelian.destroy');
+
+Route::get('/studio/penjualan/search', [StudioPenjualanController::class, 'search'])->name('studiopenjualan.search');
+Route::get('/studio/penjualan', [StudioPenjualanController::class, 'index'])->name('studiopenjualan.index');
+Route::post('/studio/penjualan', [StudioPenjualanController::class, 'store'])->name('studiopenjualan.store');
+Route::get('/studio/penjualan/{id}', [StudioPenjualanController::class, 'edit'])->name('studiopenjualan.edit');
+Route::post('/studio/penjualan/{id}', [StudioPenjualanController::class, 'update'])->name('studiopenjualan.update');
+Route::delete('/studio/penjualan/{id}', [StudioPenjualanController::class, 'destroy'])->name('studiopenjualan.destroy');
 
 Route::get('/studio/search', [StudioBarangController::class, 'search'])->name('studio.search');
 Route::get('/studio', [StudioBarangController::class, 'index'])->name('studio.index');
