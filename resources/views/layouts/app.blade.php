@@ -55,13 +55,6 @@
                 sidenav.classList.toggle('hide');
             });
         });
-
-        // function toggleSidenav() {
-        //     var sidenav = document.querySelector('.sidenav');
-        //     sidenav.style.display = (sidenav.style.display === 'none' || sidenav.style.display === '') ? 'block' :
-        //         'none';
-        // }
-
     </script>
 
     <script type="text/javascript">
@@ -73,6 +66,9 @@
                     if ($(this).parents('.modal.in:first').length !== 0) {
                         dropdownParent = $(this).parents('.modal.in:first');
                     }
+                    $('#nama-produk').select2({
+                        dropdownParent: $('#exampleModalCenter')
+                    });
                     $('#kategori-produk').select2({
                         dropdownParent: $('#exampleModalCenter')
                     });

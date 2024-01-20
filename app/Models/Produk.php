@@ -12,6 +12,6 @@ class Produk extends Model
     public $timestamps = false;
     protected $primaryKey = 'id';
     protected $fillable = [
-        'nama',
+        'nama', 'toko'
     ];
 }

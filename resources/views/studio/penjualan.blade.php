@@ -9,7 +9,7 @@
             <div class="modal-header">
                 <h5 class="modal-title exampleModalLabel" id="exampleModalLabel">Tambah Penjualan</h5>
             </div>
-            <form method="POST" action="{{route('motorpenjualan.store')}}">
+            <form method="POST" action="{{route('studiopenjualan.store')}}">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
@@ -32,32 +32,37 @@
                     <div class="row">
                         <div class="col-sm-12 form-group">
                             <label>Nama Produk</label>
-                            <input type="text" class="form-control form-control-sm nama-produk" name="produk" />
-                            <div class="text-err">
-                                @error('produk')
-                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                    </path>
-                                </svg>
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                            <div class="input-group">
+                                <select class="js-example-basic-single col-sm-12" name="produk" id="nama-produk">
+                                    <option value="" disabled selected hidden>Pilih Produk</option>
+                                    @foreach ($produk as $value)
+                                        <option value="{{ $value->id }}">{{ $value->nama }}</option>
+                                    @endforeach
+                                </select>
                             </div>
+                            @error('produk')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4 form-group">
                             <label>Nama Barang</label>
                             <div class="input-group">
-                                <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
+                                <select class="js-example-basic-single col-sm-12" name="namaDynamic[]" id="kategori-produk">
                                     <option value="" disabled selected hidden>Pilih Barang</option>
                                     @foreach ($barang as $value)
                                         <option value="{{ $value->master_item_id }}">{{ $value->barang->item->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            @error('nama')
+                            @error('namaDynamic[]')
                             <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                 width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                                 <path
@@ -70,11 +75,11 @@
                         <div class="col-sm-4 form-group">
                             <label>Batch</label>
                             <div class="input-group">
-                                <select class="js-example-basic-single col-sm-12" name="batch" id="batch-produk">
+                                <select class="js-example-basic-single col-sm-12" name="batchDynamic[]" id="batch-produk">
                                     <option value="" disabled selected hidden>Pilih Batch</option>
                                 </select>
                             </div>
-                            @error('batch')
+                            @error('batchDynamic[]')
                             <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                 width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                                 <path
@@ -87,10 +92,10 @@
                         <div class="col-sm-4 form-group">
                             <label>Jumlah</label>
                             <input type="text" class="form-control form-control-sm jumlah-produk" 
-                            oninput="validateInput(this)" placeholder="Input harus angka" name="jumlah" 
+                            oninput="validateInput(this)" placeholder="Input harus angka" name="jumlahDynamic[]" 
                             id="jumlahInp" data-dynamic-value="0"
                             />
-                            @error('jumlah')
+                            @error('jumlahDynamic[]')
                             <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                 width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                                 <path
@@ -109,6 +114,25 @@
                             <button type="button" class="btn btn-primary btn-more" id="addButton">Add More</button>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <label>Jumlah Produk</label>
+                            <input type="text" class="form-control form-control-sm jumlah-produk" 
+                            oninput="validateInput(this)" placeholder="Input harus angka" name="jprod" 
+                            id="jumlahInp" data-dynamic-value="0"
+                            />
+                            @error('jprod')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-sm-12 form-group">
                             <label>Harga</label>
@@ -308,35 +332,31 @@
             <table class="table">
                 <tr>
                     <th>Customer</th>
-                    <th>Nama Barang</th>
-                    <th>Batch</th>
+                    <th>Nama Produk</th>
                     <th>Jumlah</th>
                     <th>Harga</th>
                     <th>Tanggal</th>
                     <th>Action</th>
                 </tr>
-                {{-- @foreach ($penjualan as $key => $value)
+                @foreach ($penjualan as $key => $value)
                 <tr>
                     <td>
-                        {{ $value->nama }}
+                        {{ $value->penjualan_produk->nama }}
                     </td>
                     <td>
-                        {{ $value->pembelian->barang->item->nama }}
+                        {{ $value->penjualan_produk->produk->nama }}
                     </td>
                     <td>
-                        {{ $value->pembelian->batch }}
+                        {{ $value->penjualan_produk->jumlah }}
                     </td>
                     <td>
-                        {{ $value->jumlah }}
+                        {{ $value->penjualan_produk->harga }}
                     </td>
                     <td>
-                        {{ $value->harga }}
+                        {{date('d-m-Y', $value->penjualan_produk->tanggal)}}
                     </td>
                     <td>
-                        {{date('d-m-Y', $value->tanggal)}}
-                    </td>
-                    <td>
-                        <form method="post" action="{{ route('motorpenjualan.destroy', $value->id) }}"
+                        <form method="post" action="{{ route('studiopenjualan.destroy', $value->penjualan_produk_id) }}"
                             style="display: inline;">
                             @csrf
                             @method('delete')
@@ -345,10 +365,10 @@
                         </form>
                     </td>
                 </tr>
-                @endforeach --}}
+                @endforeach
             </table>
         </div>
-        {{-- {{ $penjualan->appends(request()->input())->links() }} --}}
+        {{ $penjualan->appends(request()->input())->links() }}
     </div>
 </div>
 
@@ -424,6 +444,7 @@
     $(document).ready(function () {
         // Counter to keep track of added elements
         var counter = 1;
+        var additionalScripts = [];
 
         // Event listener for the "Add More" button
         $("#addButton").click(function () {
@@ -432,14 +453,14 @@
                     <div class="col-sm-4 form-group">
                         <label>Nama Barang</label>
                         <div class="input-group">
-                            <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
+                            <select class="js-example-basic-single col-sm-12" name="namaDynamic[]" id="kategori-produk-`+counter+`">
                                 <option value="" disabled selected hidden>Pilih Barang</option>
                                 @foreach ($barang as $value)
                                     <option value="{{ $value->master_item_id }}">{{ $value->barang->item->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        @error('nama')
+                        @error('namaDynamic[]')
                         <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                             width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                             <path
@@ -453,11 +474,11 @@
                     <div class="col-sm-4 form-group">
                         <label>Batch</label>
                         <div class="input-group">
-                            <select class="js-example-basic-single col-sm-12" name="batch" id="batch-produk">
+                            <select class="js-example-basic-single col-sm-12" name="batchDynamic[]" id="batch-produk-`+counter+`">
                                 <option value="" disabled selected hidden>Pilih Batch</option>
                             </select>
                         </div>
-                        @error('batch')
+                        @error('batchDynamic[]')
                         <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                             width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                             <path
@@ -471,10 +492,10 @@
                     <div class="col-sm-4 form-group">
                         <label>Jumlah</label>
                         <input type="text" class="form-control form-control-sm jumlah-produk" 
-                        oninput="validateInput(this)" placeholder="Input harus angka" name="jumlah" 
+                        oninput="validateInput(this)" placeholder="Input harus angka" name="jumlahDynamic[]" 
                         id="jumlahInp" data-dynamic-value="0"
                         />
-                        @error('jumlah')
+                        @error('jumlahDynamic[]')
                         <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                             width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                             <path
@@ -490,6 +511,81 @@
             // Append the dynamic content to the container
             $("#addMore").append(dynamicContent);
 
+            // Append additional code to the existing script
+            var additionalCode = `
+            $(document).ready(function () {
+                $('.js-example-basic-single').select2();
+                $('body').on('shown.bs.modal', '#exampleModalCenter', function () {
+                    $(this).find('select').each(function () {
+                        var dropdownParent = $(document.body);
+                        if ($(this).parents('.modal.in:first').length !== 0) {
+                            dropdownParent = $(this).parents('.modal.in:first');
+                        }
+                        $('#kategori-produk-`+counter+`').select2({
+                            dropdownParent: $('#exampleModalCenter')
+                        });
+                        $('#batch-produk-`+counter+`').select2({
+                            dropdownParent: $('#exampleModalCenter')
+                        });
+                    });
+                });
+                
+                $('#kategori-produk-`+counter+`').on('select2:select', function (e) {
+                    var selectedCategoryId = e.params.data.id;
+
+                    // Make an AJAX request to fetch data for "batch-produk" based on the selected category
+                    $.ajax({
+                        url: '{{ route('fetch.batch') }}', // Replace with your actual endpoint
+                        method: 'GET',
+                        data: {
+                            masterItemId: selectedCategoryId
+                        },
+                        success: function (response) {
+                            // Clear existing options
+                            $('#batch-produk-`+counter+`').empty();
+                            $('#batch-produk-`+counter+`').append('<option value="" disabled selected hidden>Pilih Batch</option>');
+                            // Populate options based on the AJAX response
+                            $.each(response, function (index, value) {
+                                $('#batch-produk-`+counter+`').append('<option value="' + value.id + '">' + value
+                                    .batch + " | Stock: " + value.sisa +'</option>');
+                            });
+
+                            // Trigger Select2 to update the UI
+                            $('#batch-produk-`+counter+`').trigger('change');
+                        },
+                        error: function (error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                });
+
+                $('#batch-produk-`+counter+`').on('change', function (e) {
+                    $('#jumlahInp').val('');
+                    console.log("Change event triggered");
+                });
+
+                $('#batch-produk-`+counter+`').on('select2:select', function (e) {
+                    var selectedBatchText = e.params.data.text;
+                    // Split the string by '|'
+                    var parts = selectedBatchText.split('|');
+
+                    // Extract the stock data (assuming it's in the second part after the '|')
+                    var stockData = parts[1].trim().split(':')[1].trim();
+                    
+                    // Access the data attribute using JavaScript
+                    document.getElementById('jumlahInp').setAttribute('data-dynamic-value', stockData);
+                    console.log(stockData);
+                });
+
+            });
+            `;
+            var newScript = document.createElement("script");
+            newScript.textContent = additionalCode;
+            document.body.appendChild(newScript);
+
+            // Store the reference to the dynamically added script
+            additionalScripts.push(newScript);
+
             // Increment the counter
             counter++;
         });
@@ -497,6 +593,14 @@
         $('#exampleModalCenter').on('hidden.bs.modal', function () {
             // Clear the addMore
             $("#addMore").empty();
+
+            // Remove all dynamically added scripts
+            additionalScripts.forEach(function (script) {
+            document.body.removeChild(script);
+            });
+
+            // Clear the array
+            additionalScripts = [];
         });
     });
 </script>
