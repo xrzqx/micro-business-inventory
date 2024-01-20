@@ -68,22 +68,32 @@ CREATE TABLE transaksi_penjualan
 CREATE TABLE produk
 (
 	id INT NOT NULL AUTO_INCREMENT,
-    master_item_id INT NOT NULL,
     nama VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY fk_master_item_produk_view (master_item_id) REFERENCES master_item (id)
+    toko VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
 )ENGINE InnoDB;
 
-CREATE TABLE transaksi_produk
+CREATE TABLE penjualan_produk
 (
 	id INT NOT NULL AUTO_INCREMENT,
-    produk_id INT NOT NULL,
-    nama VARCHAR(100) NOT NULL,
-    jumlah INT NOT NULL,
-    harga INT NOT NULL,
+	produk_id INT NOT NULL,
+    nama VARCHAR(255) NOT NULL,
+	jumlah VARCHAR(255) NOT NULL,
+	harga VARCHAR(255) NOT NULL,
     tanggal BIGINT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY fk_produk_transaksi_produk (produk_id) REFERENCES produk (id)
+    FOREIGN KEY fk_produk_penjualan_produk (produk_id) REFERENCES produk (id)
+)ENGINE InnoDB;
+
+CREATE TABLE penjualan_produk_transaksi_pembelian
+(
+	id INT NOT NULL AUTO_INCREMENT,
+    transaksi_pembelian_id INT NOT NULL,
+    penjualan_produk_id INT NOT NULL,
+    jumlah INT NOT NULL,
+    FOREIGN KEY fk_transaksi_pembelian_penjualan_produk_transaksi_pembelian (transaksi_pembelian_id) REFERENCES transaksi_pembelian (id),
+    FOREIGN KEY fk_penjualan_produk_penjualan_produk_transaksi_pembelian (penjualan_produk_id) REFERENCES penjualan_produk (id),
+    PRIMARY KEY (id)
 )ENGINE InnoDB;
 
 CREATE TABLE item_pengeluaran
