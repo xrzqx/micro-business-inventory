@@ -39,17 +39,21 @@ class MotorPenjualanController extends Controller
         ->where('sisa', '>', 0)
         ->get();
 
-        // $penjualan = Penjualan::with('pembelian')->get();
-        $penjualan = Penjualan::with(['pembelian' => function ($query) {
-            $query->with(['barang' => function ($query) {
-                $query->with(['item', 'kategori'])
-                    ->whereHas('kategori', function ($query) {
-                        $query->where('toko', '=', 'SGH_Motor');
-                    });
-            }]);
-        }])
-        ->paginate(7);
-        // return $penjualan;
+        $penjualan = Penjualan::select('transaksi_penjualan.*')
+            ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
+            ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+            ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+            // ->join('item', 'item.id', '=', 'master_item.item_id')
+            ->where('kategori.toko', '=', 'SGH_Motor')
+            // ->groupBy('transaksi_pembelian.master_item_id')
+            ->orderBy('transaksi_penjualan.tanggal', 'desc')
+            ->with(['pembelian' => function ($query) {
+                $query->with(['barang' => function ($query) {
+                    $query->with(['item', 'kategori']);
+                }]);
+            }])
+            ->paginate(7);
+
         return view('motor.penjualan',
         [
             "barang" => $barang,
