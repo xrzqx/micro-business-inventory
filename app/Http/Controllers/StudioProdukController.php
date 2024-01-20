@@ -36,6 +36,7 @@ class StudioProdukController extends Controller
         Produk::create(
             [
                 'nama' => $request->nama,
+                'toko' => 'SGH_Studio'
             ]
         );
 
@@ -102,6 +103,7 @@ class StudioProdukController extends Controller
         $searchQuery = $request->input('namaproduk');
         
         $produk = Produk::where('nama', 'like', '%' . $searchQuery . '%')
+        ->where('toko', '=', 'SGH_Studio')
         ->paginate(7);
         return view("studio.produk", 
         [
