@@ -12,6 +12,13 @@ class StudioStockController extends Controller
     public function index()
     {
         //
+        // $stock =
+        return view("studio.laporanstock", 
+        [
+            // "barang" => $barang,
+            // "pembelian" => $pembelian,
+            // "limbah" => $limbah,
+        ]);
     }
 
     /**

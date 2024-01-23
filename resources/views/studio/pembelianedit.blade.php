@@ -21,7 +21,6 @@
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{ route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
-                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -32,14 +31,13 @@
                 </div>
             </li>
             <ul class="sublist">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item selected"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
-                <!-- Add more sublist items as needed -->
+                <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -50,7 +48,6 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Barang</li>
                 <li class="sublist-item">Pembelian</li>
                 <li class="sublist-item">Penjualan</li>
@@ -65,11 +62,9 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Barang</li>
                 <li class="sublist-item">Pembelian</li>
                 <li class="sublist-item">Penjualan</li>
-                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -80,10 +75,8 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Paket</li>
                 <li class="sublist-item">Transaksi</li>
-                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -94,11 +87,9 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Barang</li>
                 <li class="sublist-item">Pembelian</li>
                 <li class="sublist-item">Penjualan</li>
-                <!-- Add more sublist items as needed -->
             </ul>
         </ul>
     </div>
