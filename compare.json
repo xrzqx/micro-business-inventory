@@ -1,0 +1,79 @@
+[
+    [{
+        "id": 32,
+        "master_item_id": 20,
+        "supplier": "TOKO BAGUS",
+        "batch": "SEP13",
+        "jumlah": 200,
+        "sisa": 200,
+        "harga": 20000,
+        "tanggal": 1705968000,
+        "barang": {
+            "id": 20,
+            "item_id": 20,
+            "kategori_id": 11,
+            "item": {
+                "id": 20,
+                "kode": "a6001",
+                "nama": "A6",
+                "stock": 400
+            },
+            "kategori": {
+                "id": 11,
+                "nama": "Kertas",
+                "toko": "SGH_Studio"
+            }
+        }
+    }, {
+        "id": 33,
+        "master_item_id": 20,
+        "supplier": "TOKO DORA",
+        "batch": "JAN24",
+        "jumlah": 300,
+        "sisa": 300,
+        "harga": 20000,
+        "tanggal": 1705968000,
+        "barang": {
+            "id": 20,
+            "item_id": 20,
+            "kategori_id": 11,
+            "item": {
+                "id": 20,
+                "kode": "a6001",
+                "nama": "A6",
+                "stock": 400
+            },
+            "kategori": {
+                "id": 11,
+                "nama": "Kertas",
+                "toko": "SGH_Studio"
+            }
+        }
+    }],
+    [{
+        "id": 34,
+        "master_item_id": 21,
+        "supplier": "TOKOPEDIA",
+        "batch": "OCT13",
+        "jumlah": 100,
+        "sisa": 100,
+        "harga": 10000,
+        "tanggal": 1705968000,
+        "barang": {
+            "id": 21,
+            "item_id": 21,
+            "kategori_id": 11,
+            "item": {
+                "id": 21,
+                "kode": "a5001",
+                "nama": "A5",
+                "stock": 100
+            },
+            "kategori": {
+                "id": 11,
+                "nama": "Kertas",
+                "toko": "SGH_Studio"
+            }
+        }
+    }]
+]

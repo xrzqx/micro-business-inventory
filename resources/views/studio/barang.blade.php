@@ -230,7 +230,6 @@
                     <th>Action</th>
                 </tr>
                 @foreach ($barang as $key => $value)
-                <h1>{{$value}}</h1>
                 <tr>
                     <td>
                         {{ $value->item->kode }}
