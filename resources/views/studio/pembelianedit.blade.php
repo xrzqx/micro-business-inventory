@@ -20,7 +20,7 @@
                 <li class="sublist-item"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{ route('motorpembelian.index')}}">Pembelian</a></li>
-                <li class="sublist-item"><a href="/motor">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
@@ -38,7 +38,7 @@
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item selected"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
-                <li class="sublist-item"><a href="">Limbah Barang</a></li>
+                <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">

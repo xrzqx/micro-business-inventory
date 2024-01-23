@@ -11,6 +11,8 @@ use App\Http\Controllers\StudioBarangController;
 use App\Http\Controllers\StudioProdukController;
 use App\Http\Controllers\StudioPembelianController;
 use App\Http\Controllers\StudioPenjualanController;
+use App\Http\Controllers\StudioLimbahController;
+use App\Http\Controllers\StudioStockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +86,20 @@ Route::post('/studio/penjualan', [StudioPenjualanController::class, 'store'])->n
 Route::get('/studio/penjualan/{id}', [StudioPenjualanController::class, 'edit'])->name('studiopenjualan.edit');
 Route::post('/studio/penjualan/{id}', [StudioPenjualanController::class, 'update'])->name('studiopenjualan.update');
 Route::delete('/studio/penjualan/{id}', [StudioPenjualanController::class, 'destroy'])->name('studiopenjualan.destroy');
+
+Route::get('/studio/limbah/search', [StudioLimbahController::class, 'search'])->name('studiolimbah.search');
+Route::get('/studio/limbah', [StudioLimbahController::class, 'index'])->name('studiolimbah.index');
+Route::post('/studio/limbah', [StudioLimbahController::class, 'store'])->name('studiolimbah.store');
+Route::get('/studio/limbah/{id}', [StudioLimbahController::class, 'edit'])->name('studiolimbah.edit');
+Route::post('/studio/limbah/{id}', [StudioLimbahController::class, 'update'])->name('studiolimbah.update');
+Route::delete('/studio/limbah/{id}', [StudioLimbahController::class, 'destroy'])->name('studiolimbah.destroy');
+
+Route::get('/studio/stock/search', [StudioStockController::class, 'search'])->name('studiostock.search');
+Route::get('/studio/stock', [StudioStockController::class, 'index'])->name('studiostock.index');
+Route::post('/studio/stock', [StudioStockController::class, 'store'])->name('studiostock.store');
+Route::get('/studio/stock/{id}', [StudioStockController::class, 'edit'])->name('studiostock.edit');
+Route::post('/studio/stock/{id}', [StudioStockController::class, 'update'])->name('studiostock.update');
+Route::delete('/studio/stock/{id}', [StudioStockController::class, 'destroy'])->name('studiostock.destroy');
 
 Route::get('/studio/search', [StudioBarangController::class, 'search'])->name('studio.search');
 Route::get('/studio', [StudioBarangController::class, 'index'])->name('studio.index');

@@ -69,11 +69,11 @@ class StudioBarangController extends Controller
         //
         $barang = Barang::with('item', 'kategori')
             ->whereHas('kategori', function (Builder $query) {
-                $query->where('toko', '=', 'SGH_Motor');
+                $query->where('toko', '=', 'SGH_Studio');
             })
             ->where('id' , $id)
             ->get();
-        $kategori = Kategori::all()->where('toko', '=', 'SGH_Motor');
+        $kategori = Kategori::all()->where('toko', '=', 'SGH_Studio');
         if (!$barang) {
             // Handle case where the resource is not found
             abort(404, 'Resource not found');

@@ -73,7 +73,7 @@
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
-                <li class="sublist-item"><a href="">Limbah Barang</a></li>
+                <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -195,7 +195,7 @@
                     </td>
                     <td>
                         <button type="button" style="background-color: yellow">
-                            <a href="{{ route('motorkategori.edit', $item->id) }}"
+                            <a href="{{ route('studiokategori.edit', $item->id) }}"
                                 style="color: black;text-decoration-line: none">edit</a>
                         </button>
                         <form method="post" action="{{ route('studiokategori.destroy', $item->id) }}"

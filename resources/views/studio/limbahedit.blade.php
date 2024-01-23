@@ -15,8 +15,8 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
-                <li class="sublist-item selected"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
+            <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
@@ -30,13 +30,13 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
-                <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
+                <li class="sublist-item selected"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
 
             </ul>
             <li class="toggle-sublist">
@@ -115,17 +115,70 @@
             });
         </script>
         @endif
-        <form method="POST" action="{{route('motorkategori.update',$kategori->id)}}">
+        <form method="POST" action="{{route('studiokategori.update',$limbah->id)}}">
             @csrf
             @method('POST')
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 form-group">
-                        <label>Nama Kategori</label>
-                        <input type="text" value="{{ $kategori->nama }}"
-                            class="form-control form-control-sm nama-produk" name="nama" />
+                        <label>Nama Barang</label>
+                        <div class="input-group">
+                            <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
+                                <option value="" disabled selected hidden>Pilih Barang</option>
+                                @foreach ($barang as $value)
+                                    <option value="{{ $value->master_item_id }}">{{ $value->barang->item->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('nama')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Batch</label>
+                        <div class="input-group">
+                            <select class="js-example-basic-single col-sm-12" name="batch" id="batch-produk">
+                                <option value="" disabled selected hidden>Pilih Batch</option>
+                            </select>
+                        </div>
+                        @error('batch')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Jumlah</label>
+                        <input type="text" class="form-control form-control-sm jumlah-produk" 
+                        oninput="validateInput(this)" placeholder="Input harus angka" name="jumlah" 
+                        id="jumlahInp" data-dynamic-value="0"
+                        />
+                        @error('jumlah')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Tanggal</label>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
+                            name="tanggal" />
                         <div class="text-err">
-                            @error('nama')
+                            @error('tanggal')
                             <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                 width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                                 <path
@@ -141,7 +194,7 @@
             <div class="row-12">
                 <div class="col-12">
                     <button type="button" class="btn btn-secondary">
-                        <a href="{{route('motorkategori.index')}}"
+                        <a href="{{route('studiolimbah.index')}}"
                             style="color: white; text-decoration-line: none">back</a>
                     </button>
                     <input type="submit" class="btn btn-primary btn-save" value="Save changes">

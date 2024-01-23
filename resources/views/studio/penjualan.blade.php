@@ -213,7 +213,7 @@
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item selected"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
-                <li class="sublist-item"><a href="">Limbah Barang</a></li>
+                <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
@@ -493,7 +493,7 @@
                         <label>Jumlah</label>
                         <input type="text" class="form-control form-control-sm jumlah-produk" 
                         oninput="validateInput(this)" placeholder="Input harus angka" name="jumlahDynamic[]" 
-                        id="jumlahInp" data-dynamic-value="0"
+                        id="jumlahInp-`+counter+`" data-dynamic-value="0"
                         />
                         @error('jumlahDynamic[]')
                         <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
@@ -560,7 +560,7 @@
                 });
 
                 $('#batch-produk-`+counter+`').on('change', function (e) {
-                    $('#jumlahInp').val('');
+                    $('#jumlahInp-`+counter+`').val('');
                     console.log("Change event triggered");
                 });
 

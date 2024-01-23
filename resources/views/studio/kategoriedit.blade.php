@@ -16,7 +16,7 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                <li class="sublist-item selected"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
@@ -36,7 +36,7 @@
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
-                <li class="sublist-item"><a href="">Limbah Barang</a></li>
+                <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
 
             </ul>
             <li class="toggle-sublist">

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container-f">
     <div class="sidenav">
         <ul class="main-list">
@@ -15,12 +16,12 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
-                <li class="sublist-item selected"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
+            <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
-
+                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -30,14 +31,15 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
+                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
-                <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item selected"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
-
+                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -48,9 +50,11 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Barang</li>
                 <li class="sublist-item">Pembelian</li>
                 <li class="sublist-item">Penjualan</li>
+                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -61,9 +65,11 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Barang</li>
                 <li class="sublist-item">Pembelian</li>
                 <li class="sublist-item">Penjualan</li>
+                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -74,8 +80,10 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Paket</li>
                 <li class="sublist-item">Transaksi</li>
+                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -86,9 +94,11 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Barang</li>
                 <li class="sublist-item">Pembelian</li>
                 <li class="sublist-item">Penjualan</li>
+                <!-- Add more sublist items as needed -->
             </ul>
         </ul>
     </div>
@@ -98,11 +108,11 @@
         </span>
     </button>
     <div class="content">
-        <h1>Edit Kategori</h1>
+        <h1>Edit Barang</h1>
         @if ($errors->any())
         <div class="alert alert-danger" id="failed-alert">
             <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong>Tidak berhasil </strong> menambahkan/mengubah produk
+            <strong>Tidak berhasil </strong> menambahkan/mengubah barang
             <ul>
                 @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -113,16 +123,33 @@
             $("#failed-alert").fadeTo(2000, 500).slideUp(500, function () {
                 $("#failed-alert").slideUp(500);
             });
+
         </script>
         @endif
-        <form method="POST" action="{{route('motorkategori.update',$kategori->id)}}">
+        <form method="POST" action="{{route('studio.update', $barang[0]->item->id)}}">
             @csrf
             @method('POST')
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 form-group">
-                        <label>Nama Kategori</label>
-                        <input type="text" value="{{ $kategori->nama }}"
+                        <label>Kode Barang</label>
+                        <input type="text" value="{{ $barang[0]->item->kode }}"
+                            class="form-control form-control-sm kode-produk" name="kode" />
+                        <div class="text-err">
+                            @error('kode')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Nama Barang</label>
+                        <input type="text" value="{{ $barang[0]->item->nama }}"
                             class="form-control form-control-sm nama-produk" name="nama" />
                         <div class="text-err">
                             @error('nama')
@@ -136,12 +163,37 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Kategori</label>
+                        <div class="input-group">
+                            <select class="js-example-basic-single col-sm-12" name="kategori" id="kategori-produk">
+                                {{-- <option value="{{$barang[0]->kategori_id}}" selected>Pilih Kategori</option> --}}
+                                <option value="#" disabled selected hidden>Pilih Kategori</option>
+                                @foreach ($kategori as $item)
+                                    @if ($item->id == $barang[0]->kategori_id)
+                                        <option selected value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    @else
+                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('kategori')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
             </div>
             <div class="row-12">
                 <div class="col-12">
                     <button type="button" class="btn btn-secondary">
-                        <a href="{{route('motorkategori.index')}}"
+                        <a href="{{route('motor.index')}}"
                             style="color: white; text-decoration-line: none">back</a>
                     </button>
                     <input type="submit" class="btn btn-primary btn-save" value="Save changes">
