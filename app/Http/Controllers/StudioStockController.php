@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pembelian;
 use App\Models\Barang;
+use App\Models\PenjualanProdukBarang;
+use App\Models\Limbah;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
 
@@ -16,12 +18,9 @@ class StudioStockController extends Controller
     public function index()
     {
         //
-        // $stock =
-        $mytime = Carbon::now();
-        $oneDayAgo = $mytime->subDay();
-        // return $oneDayAgo;
-        $timestamp = Carbon::parse($oneDayAgo)->timestamp;
-        // return $timestamp;
+        $currentTimestamp = time();
+        $formattedDate = date('d-m-Y', $currentTimestamp);
+        $timestamp = strtotime($formattedDate);
 
         $barang = Pembelian::select('transaksi_pembelian.*')
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
@@ -29,9 +28,6 @@ class StudioStockController extends Controller
             ->join('item', 'item.id', '=', 'master_item.item_id')
             ->where('kategori.toko', '=', 'SGH_Studio')
             ->where('sisa', '>', 0)
-            // ->where('transaksi_pembelian.tanggal', '<', $timestamp)
-            // ->groupBy('transaksi_pembelian.master_item_id')
-            // ->distinct()
             ->with(['barang' => function ($query) {
                 $query->with('item', 'kategori');
             }])
@@ -48,11 +44,7 @@ class StudioStockController extends Controller
         $stockdata = []; 
 
         foreach ($groupedBarangArray as $masterItemId => $items) {
-            // $masterItemId is the unique master_item_id
-            // $items is an array containing related transaksi_pembelian records
-        
-            // Your code here to process each group
-            echo "Master Item ID: $masterItemId\n";
+            // echo "Master Item ID: $masterItemId\n";
 
             $namaBarang = '';
             $stockItem = 0;
@@ -60,12 +52,8 @@ class StudioStockController extends Controller
             foreach ($items as $item) {
                 $namaBarang = $item['barang']['item']['nama'];
                 $stockItem = $stockItem + $item['sisa'];
-                // $item is an individual transaksi_pembelian record
-                // Your code here to process each transaksi_pembelian record
-                echo "Transaction ID: {$item['id']}, Nama: {$item['barang']['item']['nama']}, Jumlah: {$item['jumlah']}, Sisa: {$item['sisa']}\n";
+                // echo "Transaction ID: {$item['id']}, Nama: {$item['barang']['item']['nama']}, Jumlah: {$item['jumlah']}, Sisa: {$item['sisa']}\n";
             }
-            echo 'nama : '. $namaBarang;
-            echo 'stock : '.$stockItem;
             // Key-value pair to append
             $newKeyValuePair = [
                 "nama" => $namaBarang,
@@ -73,27 +61,101 @@ class StudioStockController extends Controller
                 // Other key-value pairs...
             ];
             $stockdata [] = $newKeyValuePair;
-            echo '<br>';
+            // echo '<br>';
+        }
+
+        $pemakaian = PenjualanProdukBarang::select('penjualan_produk_transaksi_pembelian.*')
+            ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'penjualan_produk_transaksi_pembelian.transaksi_pembelian_id')
+            ->join('penjualan_produk', 'penjualan_produk.id', '=', 'penjualan_produk_transaksi_pembelian.penjualan_produk_id')
+            ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+            ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+            ->where('kategori.toko', '=', 'SGH_Studio')
+            ->where('penjualan_produk.tanggal', '=', $timestamp)
+            ->with(['pembelian' => function ($query) {
+                $query->with(['barang' => function ($query){
+                    $query->with('item');
+                }]);
+            }])
+            ->get();
+
+        $barang = Barang::with('item', 'kategori')
+            ->whereHas('kategori', function (Builder $query) {
+                $query->where('toko', '=', 'SGH_Studio');
+            })
+            ->get();
+        
+        $barangArray = [];
+        $masukBarangArray = [];
+
+        foreach ($barang as $key => $value) {
+            $barangArray[$value->item->nama] = 0;
+            $masukBarangArray[$value->item->nama] = 0;
+        }
+
+        foreach ($pemakaian as $key => $value) {
+            if (isset($barangArray[$value->pembelian->barang->item->nama])) {
+                $barangArray[$value->pembelian->barang->item->nama] = $barangArray[$value->pembelian->barang->item->nama] + $value->jumlah;
+            }
+        }
+
+        $limbah = Limbah::select('limbah.*')
+            ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'limbah.transaksi_pembelian_id')
+            ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+            ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+            ->where('kategori.toko', '=', 'SGH_Studio')
+            ->where('limbah.tanggal', '=', $timestamp)
+            ->with(['pembelian' => function ($query) {
+                $query->with(['barang' => function ($query){
+                    $query->with('item');
+                }]);
+            }])
+            ->get();
+
+        foreach ($limbah as $key => $value) {
+            if (isset($barangArray[$value->pembelian->barang->item->nama])) {
+                $barangArray[$value->pembelian->barang->item->nama] = $barangArray[$value->pembelian->barang->item->nama] + $value->jumlah;
+            }
+        }
+
+        $stockMasukToday = Pembelian::select('transaksi_pembelian.*')
+            ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+            ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+            ->where('kategori.toko', '=', 'SGH_Studio')
+            ->where('sisa', '>', 0)
+            ->where('transaksi_pembelian.tanggal', '=', $timestamp)
+            ->with(['barang' => function ($query) {
+                $query->with('item', 'kategori');
+            }])
+            ->get();
+
+        foreach ($stockMasukToday as $key => $value) {
+            if (isset($masukBarangArray[$value->barang->item->nama])) {
+                $masukBarangArray[$value->barang->item->nama] = $masukBarangArray[$value->barang->item->nama] + $value->jumlah;
+            }
         }
 
         $newStockData = [];
 
-        foreach ($stockdata as $key => $value) {
-            dd ($value);
-            $newKeyValuePair = [
-                "nama" => $value["name"],
-                "stock" => $value["stock"],
-                "masuk" => 0,
-            ];
+        foreach ($stockdata as $value) {
+            if (isset($barangArray[$value['nama']])) {
+                $newKeyValuePair = [
+                    "nama" => $value["nama"],
+                    "stock" => $value["stock"],
+                    "masuk" => $masukBarangArray[$value['nama']],
+                    "pemakaian" => $barangArray[$value['nama']]
+                ];
+                $newStockData [] = $newKeyValuePair;
+            }
         }
 
-        return 'lol';
+        // return $newStockData;
+        $formattedDate = date('m/d/Y', $currentTimestamp);
 
         return view("studio.laporanstock", 
         [
-            // "barang" => $barang,
-            // "pembelian" => $pembelian,
-            // "limbah" => $limbah,
+            "date" => $formattedDate,
+            "data" => $newStockData,
+
         ]);
     }
 
@@ -143,5 +205,10 @@ class StudioStockController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    
+    public function search(Request $request)
+    {
+        return "l";
     }
 }

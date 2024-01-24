@@ -97,9 +97,9 @@ Route::delete('/studio/limbah/{id}', [StudioLimbahController::class, 'destroy'])
 Route::get('/studio/stock/search', [StudioStockController::class, 'search'])->name('studiostock.search');
 Route::get('/studio/stock', [StudioStockController::class, 'index'])->name('studiostock.index');
 Route::post('/studio/stock', [StudioStockController::class, 'store'])->name('studiostock.store');
-Route::get('/studio/stock/{id}', [StudioStockController::class, 'edit'])->name('studiostock.edit');
-Route::post('/studio/stock/{id}', [StudioStockController::class, 'update'])->name('studiostock.update');
-Route::delete('/studio/stock/{id}', [StudioStockController::class, 'destroy'])->name('studiostock.destroy');
+// Route::get('/studio/stock/{id}', [StudioStockController::class, 'edit'])->name('studiostock.edit');
+// Route::post('/studio/stock/{id}', [StudioStockController::class, 'update'])->name('studiostock.update');
+// Route::delete('/studio/stock/{id}', [StudioStockController::class, 'destroy'])->name('studiostock.destroy');
 
 Route::get('/studio/search', [StudioBarangController::class, 'search'])->name('studio.search');
 Route::get('/studio', [StudioBarangController::class, 'index'])->name('studio.index');

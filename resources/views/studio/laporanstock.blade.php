@@ -111,16 +111,14 @@
         <h1>Laporan Stock</h1>
         
         <div class="row">
-            <div class="col-sm-8">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Tambah Penjualan
-                </button>
-            </div>
-            <div class="col-sm-4">
-                <form class="d-flex" action="{{route('motorpenjualan.search')}}" method="GET">
+            <div class="col-sm-12">
+                <form class="d-flex align-items-center text-center" action="{{ route('studiostock.search') }}" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
-                            placeholder="Cari Barang">
+                        <label for="my_date_picker" class="mr-2" style="display:flex; align-items: center; font-size: 1.2rem">Date:</label>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker" name="tanggal" value="{{ request('date') }}" placeholder="{{$date}}"/>
+                        {{-- <label class="mr-5 ml-5" style="display:flex; align-items: center; font-size: 1.2rem">-</label>
+                        <label for="my_date_picker" class="mr-2" style="display:flex; align-items: center; font-size: 1.2rem">End Date:</label>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker" name="tanggal" value="{{ $date }}" /> --}}
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
@@ -128,45 +126,34 @@
                 </form>
             </div>
         </div>
-        @if (Session::has('success'))
-        <div class="alert alert-success" id="success-alert">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong>Berhasil </strong> {{ Session::get('success') }}
-        </div>
-        <script>
-            $("#success-alert").fadeTo(5000, 500).slideUp(500);
-
-        </script>
-        @endif
-        @if ($errors->any())
-        <div class="alert alert-danger" id="failed-alert">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong>Tidak berhasil </strong> menambahkan/mengubah data
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        <script>
-            $("#failed-alert").fadeTo(5000, 500).slideUp(500);
-
-        </script>
-        @endif
 
         <div class="table-responsive">
             <table class="table">
                 <tr>
                     <th>Nama Barang</th>
-                    <th>Stock</th>
+                    <th>Stock Akhir</th>
                     <th>Masuk</th>
                     <th>Pemakaian</th>
-                    <th>Stock Akhir</th>
                 </tr>
-
+                @foreach ($data as $key => $value)
+                <tr>
+                    <td>
+                        {{ $value['nama'] }}
+                    </td>
+                    <td>
+                        {{ $value['stock'] }}
+                    </td>
+                    <td>
+                        {{ $value['masuk'] }}
+                    </td>
+                    <td>
+                        {{ $value['pemakaian'] }}
+                    </td>
+                </tr>
+                @endforeach
             </table>
         </div>
-        {{-- {{ $limbah->appends(request()->input())->links() }} --}}
+        {{-- {{ $data->appends(request()->input())->links() }} --}}
     </div>
 </div>
 
