@@ -109,16 +109,12 @@
     </button>
     <div class="content">
         <h1>Laporan Stock</h1>
-        
         <div class="row">
             <div class="col-sm-12">
                 <form class="d-flex align-items-center text-center" action="{{ route('studiostock.search') }}" method="GET">
                     <div class="input-group mb-3">
                         <label for="my_date_picker" class="mr-2" style="display:flex; align-items: center; font-size: 1.2rem">Date:</label>
-                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker" name="tanggal" value="{{ request('date') }}" placeholder="{{$date}}"/>
-                        {{-- <label class="mr-5 ml-5" style="display:flex; align-items: center; font-size: 1.2rem">-</label>
-                        <label for="my_date_picker" class="mr-2" style="display:flex; align-items: center; font-size: 1.2rem">End Date:</label>
-                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker" name="tanggal" value="{{ $date }}" /> --}}
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker" name="tanggal" value="{{ request('date') }}" autocomplete="off"/>
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
