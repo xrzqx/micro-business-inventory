@@ -9,6 +9,19 @@
             </li>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
+                    <span>Salesperson</span>
+                    <span class="material-symbols-outlined toggle-icon rotate">
+                        chevron_right
+                    </span>
+                </div>
+            </li>
+            <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{ route('sales.index') }}">Daftar Sales</a></li>
+                <li class="sublist-item"><a href="{{route('salespembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item"><a href="{{route('salespenjualan.index')}}">Penjualan</a></li>
+            </ul>
+            <li class="toggle-sublist">
+                <div class="flex-row-list">
                     <span>SGH Motor</span>
                     <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
@@ -20,7 +33,6 @@
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
-
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -49,9 +61,10 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                <li class="sublist-item">Daftar Barang</li>
-                <li class="sublist-item">Pembelian</li>
-                <li class="sublist-item">Penjualan</li>
+                <li class="sublist-item"><a href="{{route('rokokkategori.index')}}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{route('rokok.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item"><a href="{{route('rokokpembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item"><a href="{{route('rokokpenjualan.index')}}">Penjualan</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">

@@ -14,6 +14,15 @@ use App\Http\Controllers\StudioPenjualanController;
 use App\Http\Controllers\StudioLimbahController;
 use App\Http\Controllers\StudioStockController;
 
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\SalesPenjualanController;
+use App\Http\Controllers\SalesPembelianController;
+
+use App\Http\Controllers\RokokKategoriController;
+use App\Http\Controllers\RokokBarangController;
+use App\Http\Controllers\RokokPembelianController;
+use App\Http\Controllers\RokokPenjualanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -107,3 +116,52 @@ Route::post('/studio', [StudioBarangController::class, 'store'])->name('studio.s
 Route::get('/studio/{id}', [StudioBarangController::class, 'edit'])->name('studio.edit');
 Route::post('/studio/{id}', [StudioBarangController::class, 'update'])->name('studio.update');
 Route::delete('/studio/{id}', [StudioBarangController::class, 'destroy'])->name('studio.destroy');
+
+Route::get('/sales/pembelian/search', [SalesPembelianController::class, 'search'])->name('salespembelian.search');
+Route::get('/sales/pembelian', [SalesPembelianController::class, 'index'])->name('salespembelian.index');
+Route::post('/sales/pembelian', [SalesPembelianController::class, 'store'])->name('salespembelian.store');
+Route::get('/sales/pembelian/{id}', [SalesPembelianController::class, 'edit'])->name('salespembelian.edit');
+Route::post('/sales/pembelian/{id}', [SalesPembelianController::class, 'update'])->name('salespembelian.update');
+Route::delete('/sales/pembelian/{id}', [SalesPembelianController::class, 'destroy'])->name('salespembelian.destroy');
+
+Route::get('/sales/penjualan/search', [SalesPenjualanController::class, 'search'])->name('salespenjualan.search');
+Route::get('/sales/penjualan', [SalesPenjualanController::class, 'index'])->name('salespenjualan.index');
+Route::post('/sales/penjualan', [SalesPenjualanController::class, 'store'])->name('salespenjualan.store');
+Route::get('/sales/penjualan/{id}', [SalesPenjualanController::class, 'edit'])->name('salespenjualan.edit');
+Route::post('/sales/penjualan/{id}', [SalesPenjualanController::class, 'update'])->name('salespenjualan.update');
+Route::delete('/sales/penjualan/{id}', [SalesPenjualanController::class, 'destroy'])->name('salespenjualan.destroy');
+
+Route::get('/sales/search', [SalesController::class, 'search'])->name('sales.search');
+Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
+Route::post('/sales', [SalesController::class, 'store'])->name('sales.store');
+Route::get('/sales/{id}', [SalesController::class, 'edit'])->name('sales.edit');
+Route::post('/sales/{id}', [SalesController::class, 'update'])->name('sales.update');
+Route::delete('/sales/{id}', [SalesController::class, 'destroy'])->name('sales.destroy');
+
+Route::get('/rokok/kategori/search', [RokokKategoriController::class, 'search'])->name('rokokkategori.search');
+Route::get('/rokok/kategori', [RokokKategoriController::class, 'index'])->name('rokokkategori.index');
+Route::post('/rokok/kategori', [RokokKategoriController::class, 'store'])->name('rokokkategori.store');
+Route::get('/rokok/kategori/{id}', [RokokKategoriController::class, 'edit'])->name('rokokkategori.edit');
+Route::post('/rokok/kategori/{id}', [RokokKategoriController::class, 'update'])->name('rokokkategori.update');
+Route::delete('/rokok/kategori/{id}', [RokokKategoriController::class, 'destroy'])->name('rokokkategori.destroy');
+
+Route::get('/rokok/pembelian/search', [RokokPembelianController::class, 'search'])->name('rokokpembelian.search');
+Route::get('/rokok/pembelian', [RokokPembelianController::class, 'index'])->name('rokokpembelian.index');
+Route::post('/rokok/pembelian', [RokokPembelianController::class, 'store'])->name('rokokpembelian.store');
+Route::get('/rokok/pembelian/{id}', [RokokPembelianController::class, 'edit'])->name('rokokpembelian.edit');
+Route::post('/rokok/pembelian/{id}', [RokokPembelianController::class, 'update'])->name('rokokpembelian.update');
+Route::delete('/rokok/pembelian/{id}', [RokokPembelianController::class, 'destroy'])->name('rokokpembelian.destroy');
+
+Route::get('/rokok/penjualan/search', [RokokPenjualanController::class, 'search'])->name('rokokpenjualan.search');
+Route::get('/rokok/penjualan', [RokokPenjualanController::class, 'index'])->name('rokokpenjualan.index');
+Route::post('/rokok/penjualan', [RokokPenjualanController::class, 'store'])->name('rokokpenjualan.store');
+Route::get('/rokok/penjualan/{id}', [RokokPenjualanController::class, 'edit'])->name('rokokpenjualan.edit');
+Route::post('/rokok/penjualan/{id}', [RokokPenjualanController::class, 'update'])->name('rokokpenjualan.update');
+Route::delete('/rokok/penjualan/{id}', [RokokPenjualanController::class, 'destroy'])->name('rokokpenjualan.destroy');
+
+Route::get('/rokok/search', [RokokBarangController::class, 'search'])->name('rokok.search');
+Route::get('/rokok', [RokokBarangController::class, 'index'])->name('rokok.index');
+Route::post('/rokok', [RokokBarangController::class, 'store'])->name('rokok.store');
+Route::get('/rokok/{id}', [RokokBarangController::class, 'edit'])->name('rokok.edit');
+Route::post('/rokok/{id}', [RokokBarangController::class, 'update'])->name('rokok.update');
+Route::delete('/rokok/{id}', [RokokBarangController::class, 'destroy'])->name('rokok.destroy');
