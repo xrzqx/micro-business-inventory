@@ -30,6 +30,11 @@ use App\Http\Controllers\MinyakBarangController;
 use App\Http\Controllers\MinyakPembelianController;
 use App\Http\Controllers\MinyakPenjualanController;
 
+use App\Http\Controllers\BerasKategoriController;
+use App\Http\Controllers\BerasBarangController;
+use App\Http\Controllers\BerasPembelianController;
+use App\Http\Controllers\BerasPenjualanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -202,5 +207,33 @@ Route::post('/minyak', [MinyakBarangController::class, 'store'])->name('minyak.s
 Route::get('/minyak/{id}', [MinyakBarangController::class, 'edit'])->name('minyak.edit');
 Route::post('/minyak/{id}', [MinyakBarangController::class, 'update'])->name('minyak.update');
 Route::delete('/minyak/{id}', [MinyakBarangController::class, 'destroy'])->name('minyak.destroy');
+
+Route::get('/beras/kategori/search', [BerasKategoriController::class, 'search'])->name('beraskategori.search');
+Route::get('/beras/kategori', [BerasKategoriController::class, 'index'])->name('beraskategori.index');
+Route::post('/beras/kategori', [BerasKategoriController::class, 'store'])->name('beraskategori.store');
+Route::get('/beras/kategori/{id}', [BerasKategoriController::class, 'edit'])->name('beraskategori.edit');
+Route::post('/beras/kategori/{id}', [BerasKategoriController::class, 'update'])->name('beraskategori.update');
+Route::delete('/beras/kategori/{id}', [BerasKategoriController::class, 'destroy'])->name('beraskategori.destroy');
+
+Route::get('/beras/pembelian/search', [BerasPembelianController::class, 'search'])->name('beraspembelian.search');
+Route::get('/beras/pembelian', [BerasPembelianController::class, 'index'])->name('beraspembelian.index');
+Route::post('/beras/pembelian', [BerasPembelianController::class, 'store'])->name('beraspembelian.store');
+Route::get('/beras/pembelian/{id}', [BerasPembelianController::class, 'edit'])->name('beraspembelian.edit');
+Route::post('/beras/pembelian/{id}', [BerasPembelianController::class, 'update'])->name('beraspembelian.update');
+Route::delete('/beras/pembelian/{id}', [BerasPembelianController::class, 'destroy'])->name('beraspembelian.destroy');
+
+Route::get('/beras/penjualan/search', [BerasPenjualanController::class, 'search'])->name('beraspenjualan.search');
+Route::get('/beras/penjualan', [BerasPenjualanController::class, 'index'])->name('beraspenjualan.index');
+Route::post('/beras/penjualan', [BerasPenjualanController::class, 'store'])->name('beraspenjualan.store');
+Route::get('/beras/penjualan/{id}', [BerasPenjualanController::class, 'edit'])->name('beraspenjualan.edit');
+Route::post('/beras/penjualan/{id}', [BerasPenjualanController::class, 'update'])->name('beraspenjualan.update');
+Route::delete('/beras/penjualan/{id}', [BerasPenjualanController::class, 'destroy'])->name('beraspenjualan.destroy');
+
+Route::get('/beras/search', [BerasBarangController::class, 'search'])->name('beras.search');
+Route::get('/beras', [BerasBarangController::class, 'index'])->name('beras.index');
+Route::post('/beras', [BerasBarangController::class, 'store'])->name('beras.store');
+Route::get('/beras/{id}', [BerasBarangController::class, 'edit'])->name('beras.edit');
+Route::post('/beras/{id}', [BerasBarangController::class, 'update'])->name('beras.update');
+Route::delete('/beras/{id}', [BerasBarangController::class, 'destroy'])->name('beras.destroy');
 
 

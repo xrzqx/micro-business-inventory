@@ -121,6 +121,21 @@
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
+                    <span>Beras</span>
+                    <span class="material-symbols-outlined toggle-icon">
+                        chevron_right
+                    </span>
+                </div>
+            </li>
+            <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('beraskategori.index')}}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{route('beras.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item"><a href="{{route('beraspembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item"><a href="{{route('beraspenjualan.index')}}">Penjualan</a></li>
+                <!-- Add more sublist items as needed -->
+            </ul>
+            <li class="toggle-sublist">
+                <div class="flex-row-list">
                     <span>Brilink</span>
                     <span class="material-symbols-outlined toggle-icon">
                         chevron_right
