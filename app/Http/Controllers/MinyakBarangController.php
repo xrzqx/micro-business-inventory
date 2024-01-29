@@ -8,7 +8,7 @@ use App\Models\Item;
 use App\Models\Kategori;
 use Illuminate\Database\Eloquent\Builder;
 
-class RokokBarangController extends Controller
+class MinyakBarangController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,12 +17,12 @@ class RokokBarangController extends Controller
     {
         $barang = Barang::with('item', 'kategori')
             ->whereHas('kategori', function (Builder $query) {
-                $query->where('toko', '=', 'rokok');
+                $query->where('toko', '=', 'minyak');
             })
             ->paginate(7);
-        $kategori = Kategori::all()->where('toko', '=', 'rokok');
+        $kategori = Kategori::all()->where('toko', '=', 'minyak');
         // $barang = Item::all();
-        return view("rokok.barang", 
+        return view("minyak.barang", 
         [
             "barang" => $barang,
             "kategori" => $kategori,
@@ -66,7 +66,7 @@ class RokokBarangController extends Controller
             ]
         );
 
-        return redirect()->route('rokok.index')->with('success', 'menambahkan barang');
+        return redirect()->route('minyak.index')->with('success', 'menambahkan barang');
     }
 
     /**
@@ -85,16 +85,16 @@ class RokokBarangController extends Controller
         //
         $barang = Barang::with('item', 'kategori')
             ->whereHas('kategori', function (Builder $query) {
-                $query->where('toko', '=', 'rokok');
+                $query->where('toko', '=', 'minyak');
             })
             ->where('id' , $id)
             ->get();
-        $kategori = Kategori::all()->where('toko', '=', 'rokok');
+        $kategori = Kategori::all()->where('toko', '=', 'minyak');
         if (!$barang) {
             // Handle case where the resource is not found
             abort(404, 'Resource not found');
         }
-        return view('rokok.barangedit', 
+        return view('minyak.barangedit', 
         [
             "barang" => $barang,
             "kategori" => $kategori,
@@ -133,7 +133,7 @@ class RokokBarangController extends Controller
         $item->save();
         
 
-        return redirect()->route('rokok.index')->with('success', 'mengubah barang');
+        return redirect()->route('minyak.index')->with('success', 'mengubah barang');
     }
 
     /**
@@ -154,9 +154,9 @@ class RokokBarangController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(['error' => 'Database error'], 500);
             // Handle the exception, log it, or provide a user-friendly message
-            return redirect()->route('rokok.index')->with('failed', 'menghapus barang');
+            return redirect()->route('minyak.index')->with('failed', 'menghapus barang');
         }
-        return redirect()->route('rokok.index')->with('success', 'menghapus barang');
+        return redirect()->route('minyak.index')->with('success', 'menghapus barang');
     }
 
     public function search(Request $request)
@@ -167,15 +167,15 @@ class RokokBarangController extends Controller
         // ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
         ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
         ->join('item', 'item.id', '=', 'master_item.item_id')
-        ->where('kategori.toko', '=', 'rokok')
+        ->where('kategori.toko', '=', 'minyak')
         ->where('item.nama', 'like', '%' . $searchQuery . '%')
         // ->distinct()
         ->with('item','kategori')
         ->paginate(7);
 
-        $kategori = Kategori::where('toko', '=', 'rokok')->get();
+        $kategori = Kategori::where('toko', '=', 'minyak')->get();
 
-        return view("rokok.barang",
+        return view("minyak.barang",
         [
             "barang" => $barang,
             "kategori" => $kategori,

@@ -113,9 +113,10 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                <li class="sublist-item">Daftar Barang</li>
-                <li class="sublist-item">Pembelian</li>
-                <li class="sublist-item">Penjualan</li>
+                <li class="sublist-item"><a href="{{route('minyakkategori.index')}}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{route('minyak.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item"><a href="{{route('minyakpembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item"><a href="{{route('minyakpenjualan.index')}}">Penjualan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">

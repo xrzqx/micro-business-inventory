@@ -9,7 +9,7 @@
             <div class="modal-header">
                 <h5 class="modal-title exampleModalLabel" id="exampleModalLabel">Tambah Produk</h5>
             </div>
-            <form method="POST" action="{{route('rokok.store')}}">
+            <form method="POST" action="{{route('minyak.store')}}">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
@@ -135,9 +135,9 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('rokokkategori.index')}}">Daftar Kategori</a></li>
-                <li class="sublist-item selected"><a href="{{route('rokok.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item"><a href="{{route('rokok.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpenjualan.index')}}">Penjualan</a></li>
                 <!-- Add more sublist items as needed -->
@@ -150,9 +150,9 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{route('minyakkategori.index')}}">Daftar Kategori</a></li>
-                <li class="sublist-item"><a href="{{route('minyak.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item selected"><a href="{{route('minyak.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('minyakpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('minyakpenjualan.index')}}">Penjualan</a></li>
                 <!-- Add more sublist items as needed -->
@@ -202,7 +202,7 @@
                 </button>
             </div>
             <div class="col-sm-4">
-                <form class="d-flex" action="{{route('rokok.search')}}" method="GET">
+                <form class="d-flex" action="{{route('minyak.search')}}" method="GET">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
                             placeholder="Cari Barang">
@@ -263,10 +263,10 @@
                     </td>
                     <td>
                         <button type="button" style="background-color: yellow">
-                            <a href="{{ route('rokok.edit', $value->id) }}"
+                            <a href="{{ route('minyak.edit', $value->id) }}"
                                 style="color: black;text-decoration-line: none">edit</a>
                         </button>
-                        <form method="post" action="{{route('rokok.destroy', $value->id)}}"
+                        <form method="post" action="{{route('minyak.destroy', $value->id)}}"
                             style="display: inline;">
                             @csrf
                             @method('delete')

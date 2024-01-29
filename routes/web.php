@@ -25,6 +25,11 @@ use App\Http\Controllers\RokokBarangController;
 use App\Http\Controllers\RokokPembelianController;
 use App\Http\Controllers\RokokPenjualanController;
 
+use App\Http\Controllers\MinyakKategoriController;
+use App\Http\Controllers\MinyakBarangController;
+use App\Http\Controllers\MinyakPembelianController;
+use App\Http\Controllers\MinyakPenjualanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -169,3 +174,33 @@ Route::post('/rokok', [RokokBarangController::class, 'store'])->name('rokok.stor
 Route::get('/rokok/{id}', [RokokBarangController::class, 'edit'])->name('rokok.edit');
 Route::post('/rokok/{id}', [RokokBarangController::class, 'update'])->name('rokok.update');
 Route::delete('/rokok/{id}', [RokokBarangController::class, 'destroy'])->name('rokok.destroy');
+
+Route::get('/minyak/kategori/search', [MinyakKategoriController::class, 'search'])->name('minyakkategori.search');
+Route::get('/minyak/kategori', [MinyakKategoriController::class, 'index'])->name('minyakkategori.index');
+Route::post('/minyak/kategori', [MinyakKategoriController::class, 'store'])->name('minyakkategori.store');
+Route::get('/minyak/kategori/{id}', [MinyakKategoriController::class, 'edit'])->name('minyakkategori.edit');
+Route::post('/minyak/kategori/{id}', [MinyakKategoriController::class, 'update'])->name('minyakkategori.update');
+Route::delete('/minyak/kategori/{id}', [MinyakKategoriController::class, 'destroy'])->name('minyakkategori.destroy');
+
+Route::get('/minyak/pembelian/search', [MinyakPembelianController::class, 'search'])->name('minyakpembelian.search');
+Route::get('/minyak/pembelian', [MinyakPembelianController::class, 'index'])->name('minyakpembelian.index');
+Route::post('/minyak/pembelian', [MinyakPembelianController::class, 'store'])->name('minyakpembelian.store');
+Route::get('/minyak/pembelian/{id}', [MinyakPembelianController::class, 'edit'])->name('minyakpembelian.edit');
+Route::post('/minyak/pembelian/{id}', [MinyakPembelianController::class, 'update'])->name('minyakpembelian.update');
+Route::delete('/minyak/pembelian/{id}', [MinyakPembelianController::class, 'destroy'])->name('minyakpembelian.destroy');
+
+Route::get('/minyak/penjualan/search', [MinyakPenjualanController::class, 'search'])->name('minyakpenjualan.search');
+Route::get('/minyak/penjualan', [MinyakPenjualanController::class, 'index'])->name('minyakpenjualan.index');
+Route::post('/minyak/penjualan', [MinyakPenjualanController::class, 'store'])->name('minyakpenjualan.store');
+Route::get('/minyak/penjualan/{id}', [MinyakPenjualanController::class, 'edit'])->name('minyakpenjualan.edit');
+Route::post('/minyak/penjualan/{id}', [MinyakPenjualanController::class, 'update'])->name('minyakpenjualan.update');
+Route::delete('/minyak/penjualan/{id}', [MinyakPenjualanController::class, 'destroy'])->name('minyakpenjualan.destroy');
+
+Route::get('/minyak/search', [MinyakBarangController::class, 'search'])->name('minyak.search');
+Route::get('/minyak', [MinyakBarangController::class, 'index'])->name('minyak.index');
+Route::post('/minyak', [MinyakBarangController::class, 'store'])->name('minyak.store');
+Route::get('/minyak/{id}', [MinyakBarangController::class, 'edit'])->name('minyak.edit');
+Route::post('/minyak/{id}', [MinyakBarangController::class, 'update'])->name('minyak.update');
+Route::delete('/minyak/{id}', [MinyakBarangController::class, 'destroy'])->name('minyak.destroy');
+
+

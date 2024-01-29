@@ -4,7 +4,7 @@
 <div class="container-f">
     <div class="sidenav">
         <ul class="main-list">
-            <li class="nonlist-item selected">
+            <li class="nonlist-item">
                 <a href="/">Dashboard</a>
             </li>
             <li class="toggle-sublist">
@@ -23,13 +23,13 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>SGH Motor</span>
-                    <span class="material-symbols-outlined toggle-icon">
+                    <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
                     </span>
                 </div>
             </li>
             <ul class="sublist hide">
-                <li class="sublist-item"><a href="{{route('motorkategori.index')}}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
@@ -50,6 +50,7 @@
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
+
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -64,7 +65,6 @@
                 <li class="sublist-item"><a href="{{route('rokok.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpenjualan.index')}}">Penjualan</a></li>
-                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -74,8 +74,8 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
-                <li class="sublist-item"><a href="{{route('minyakkategori.index')}}">Daftar Kategori</a></li>
+            <ul class="sublist">
+                <li class="sublist-item selected"><a href="{{route('minyakkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('minyak.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('minyakpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('minyakpenjualan.index')}}">Penjualan</a></li>
@@ -90,10 +90,8 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Paket</li>
                 <li class="sublist-item">Transaksi</li>
-                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -104,66 +102,68 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item">Daftar Barang</li>
                 <li class="sublist-item">Pembelian</li>
                 <li class="sublist-item">Penjualan</li>
-                <!-- Add more sublist items as needed -->
             </ul>
         </ul>
     </div>
-    <button class="toggle-btn-sidenav" onclick="toggleSidenav()">
+    <button class="toggle-btn-sidenav">
         <span class="material-symbols-outlined toggle-icon-sidenav">
             chevron_right
         </span>
     </button>
     <div class="content">
-        <h1>Dashboard</h1>
-        <div class="card-container">
-            <div class="card-f">
-                <div class="card-title-f">
-                    Sales
-                </div>
-                <div class="card-body-f">
-                    <div class="f-row">
-                        <div class="f-col">
-                            <div>#</div>
-                            <div>Today</div>
-                            <div>Yesterday</div>
-                            <div>Last 7 days</div>
-                            <div>Last 30 days</div>
-                            <div>Last 60 days</div>
-                            <div>Last 90 days</div>
-                            <div>All time</div>
-                        </div>
-                        <div class="f-col">
-                            <div>
-                                Total
-                            </div>
-                            <div>Rp. 500.000</div>
-                            <div>Rp. 400.000</div>
-                            <div>Rp. 2.300.000</div>
-                            <div>Rp. 4.000.000</div>
-                            <div>Rp. 8.400.000</div>
-                            <div>Rp. 16.700.000</div>
-                            <div>Rp. 1.114.700.000</div>
-                        </div>
-                        <div class="f-col">
-                            <div>
-                                Order
-                            </div>
-                            <div>70</div>
-                            <div>100</div>
-                            <div>1000</div>
-                            <div>10000</div>
-                            <div>100000</div>
-                            <div>1000000</div>
-                            <div>10000000</div>
+        <h1>Edit Kategori</h1>
+        @if ($errors->any())
+        <div class="alert alert-danger" id="failed-alert">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Tidak berhasil </strong> menambahkan/mengubah produk
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        <script>
+            $("#failed-alert").fadeTo(2000, 500).slideUp(500, function () {
+                $("#failed-alert").slideUp(500);
+            });
+        </script>
+        @endif
+        <form method="POST" action="{{route('minyakkategori.update',$kategori->id)}}">
+            @csrf
+            @method('POST')
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label>Nama Kategori</label>
+                        <input type="text" value="{{ $kategori->nama }}"
+                            class="form-control form-control-sm nama-produk" name="nama" />
+                        <div class="text-err">
+                            @error('nama')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="row-12">
+                <div class="col-12">
+                    <button type="button" class="btn btn-secondary">
+                        <a href="{{route('minyakkategori.index')}}"
+                            style="color: white; text-decoration-line: none">back</a>
+                    </button>
+                    <input type="submit" class="btn btn-primary btn-save" value="Save changes">
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 @endsection
