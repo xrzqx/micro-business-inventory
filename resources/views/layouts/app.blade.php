@@ -75,6 +75,9 @@
                     $('#batch-produk').select2({
                         dropdownParent: $('#exampleModalCenter')
                     });
+                    $('#sales-produk').select2({
+                        dropdownParent: $('#exampleModalCenter')
+                    });
                 });
             });
         });

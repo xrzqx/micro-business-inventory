@@ -1,51 +1,21 @@
 [{
-    "id": 38,
-    "master_item_id": 21,
-    "supplier": "TOKO DORA",
-    "batch": "JAN24",
-    "jumlah": 50,
-    "sisa": 45,
-    "harga": 10000,
-    "tanggal": 1706054400,
-    "barang": {
-        "id": 21,
-        "item_id": 21,
-        "kategori_id": 11,
-        "item": {
-            "id": 21,
-            "kode": "a5001",
-            "nama": "A5",
-            "stock": 140
-        },
-        "kategori": {
-            "id": 11,
-            "nama": "Kertas",
-            "toko": "SGH_Studio"
-        }
+    "id": 23,
+    "item_id": 23,
+    "kategori_id": 21,
+    "item": {
+        "id": 23,
+        "kode": "rok001",
+        "nama": "Kilimanjaro kretek 12",
+        "stock": 7
     }
 }, {
-    "id": 39,
-    "master_item_id": 22,
-    "supplier": "TOKOPEDIA",
-    "batch": "FEB24",
-    "jumlah": 150,
-    "sisa": 150,
-    "harga": 50000,
-    "tanggal": 1706054400,
-    "barang": {
-        "id": 22,
-        "item_id": 22,
-        "kategori_id": 11,
-        "item": {
-            "id": 22,
-            "kode": "a6001",
-            "nama": "A6",
-            "stock": 440
-        },
-        "kategori": {
-            "id": 11,
-            "nama": "Kertas",
-            "toko": "SGH_Studio"
-        }
+    "id": 24,
+    "item_id": 24,
+    "kategori_id": 21,
+    "item": {
+        "id": 24,
+        "kode": "rok002",
+        "nama": "Makna 12 kretek",
+        "stock": 0
     }
 }]

@@ -6,6 +6,8 @@ use App\Http\Controllers\MotorBarangController;
 use App\Http\Controllers\MotorPembelianController;
 use App\Http\Controllers\MotorPenjualanController;
 use App\Http\Controllers\BatchController;
+use App\Http\Controllers\BatchSalesController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\StudioKategoriController;
 use App\Http\Controllers\StudioBarangController;
 use App\Http\Controllers\StudioProdukController;
@@ -39,6 +41,8 @@ Route::get('/', function () {
 });
 
 Route::get('/fetch-batch', [BatchController::class, 'fetchData'])->name('fetch.batch');
+Route::get('/fetch-batch-sales', [BatchSalesController::class, 'fetchData'])->name('fetch.batchsales');
+Route::get('/fetch-mitem', [BarangController::class, 'fetchData'])->name('fetch.mitem');
 
 Route::get('/motor/kategori/search', [MotorKategoriController::class, 'search'])->name('motorkategori.search');
 Route::get('/motor/kategori', [MotorKategoriController::class, 'index'])->name('motorkategori.index');

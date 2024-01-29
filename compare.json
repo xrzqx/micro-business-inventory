@@ -1,79 +1,51 @@
-[
-    [{
-        "id": 32,
-        "master_item_id": 20,
-        "supplier": "TOKO BAGUS",
-        "batch": "SEP13",
-        "jumlah": 200,
-        "sisa": 200,
-        "harga": 20000,
-        "tanggal": 1705968000,
-        "barang": {
-            "id": 20,
-            "item_id": 20,
-            "kategori_id": 11,
-            "item": {
-                "id": 20,
-                "kode": "a6001",
-                "nama": "A6",
-                "stock": 400
-            },
-            "kategori": {
-                "id": 11,
-                "nama": "Kertas",
-                "toko": "SGH_Studio"
-            }
-        }
-    }, {
-        "id": 33,
-        "master_item_id": 20,
-        "supplier": "TOKO DORA",
-        "batch": "JAN24",
-        "jumlah": 300,
-        "sisa": 300,
-        "harga": 20000,
-        "tanggal": 1705968000,
-        "barang": {
-            "id": 20,
-            "item_id": 20,
-            "kategori_id": 11,
-            "item": {
-                "id": 20,
-                "kode": "a6001",
-                "nama": "A6",
-                "stock": 400
-            },
-            "kategori": {
-                "id": 11,
-                "nama": "Kertas",
-                "toko": "SGH_Studio"
-            }
-        }
-    }],
-    [{
-        "id": 34,
-        "master_item_id": 21,
-        "supplier": "TOKOPEDIA",
-        "batch": "OCT13",
-        "jumlah": 100,
-        "sisa": 100,
-        "harga": 10000,
-        "tanggal": 1705968000,
-        "barang": {
-            "id": 21,
-            "item_id": 21,
-            "kategori_id": 11,
-            "item": {
-                "id": 21,
-                "kode": "a5001",
-                "nama": "A5",
-                "stock": 100
-            },
-            "kategori": {
-                "id": 11,
-                "nama": "Kertas",
-                "toko": "SGH_Studio"
-            }
-        }
-    }]
-]
+[{
+    "id": 1,
+    "item_id": 1,
+    "kategori_id": 3,
+    "item": {
+        "id": 1,
+        "kode": "06401KPH881",
+        "nama": "DRIVE CHAIN KIT",
+        "stock": 26
+    }
+}, {
+    "id": 2,
+    "item_id": 2,
+    "kategori_id": 7,
+    "item": {
+        "id": 2,
+        "kode": "1LBE13110000",
+        "nama": "Ban MPM",
+        "stock": 78
+    }
+}, {
+    "id": 11,
+    "item_id": 11,
+    "kategori_id": 4,
+    "item": {
+        "id": 11,
+        "kode": "HC92RH102",
+        "nama": "CHAIN CAM",
+        "stock": 2
+    }
+}, {
+    "id": 23,
+    "item_id": 23,
+    "kategori_id": 21,
+    "item": {
+        "id": 23,
+        "kode": "rok001",
+        "nama": "Kilimanjaro kretek 12",
+        "stock": 7
+    }
+}, {
+    "id": 24,
+    "item_id": 24,
+    "kategori_id": 21,
+    "item": {
+        "id": 24,
+        "kode": "rok002",
+        "nama": "Makna 12 kretek",
+        "stock": 0
+    }
+}]
