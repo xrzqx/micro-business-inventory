@@ -181,10 +181,8 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
-                <li class="sublist-item">Daftar Paket</li>
-                <li class="sublist-item">Transaksi</li>
-                <!-- Add more sublist items as needed -->
+                <li class="sublist-item"><a href="{{route('brilinkbank.index')}}">Daftar Bank</a></li>
+                <li class="sublist-item"><a href="{{route('brilink.index')}}">Daftar Transaksi</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">

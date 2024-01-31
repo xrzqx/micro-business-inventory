@@ -78,9 +78,9 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('minyakkategori.index')}}">Daftar Kategori</a></li>
-                <li class="sublist-item selected"><a href="{{route('minyak.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item"><a href="{{route('minyak.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('minyakpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('minyakpenjualan.index')}}">Penjualan</a></li>
                 <!-- Add more sublist items as needed -->
@@ -93,9 +93,9 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('beraskategori.index')}}">Daftar Kategori</a></li>
-                <li class="sublist-item selected"><a href="{{route('beras.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item"><a href="{{route('beras.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('beraspembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('beraspenjualan.index')}}">Penjualan</a></li>
                 <!-- Add more sublist items as needed -->
@@ -108,9 +108,9 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{route('brilinkbank.index')}}">Daftar Bank</a></li>
-                <li class="sublist-item"><a href="{{route('brilink.index')}}">Daftar Transaksi</a></li>
+                <li class="sublist-item selected"><a href="{{route('brilink.index')}}">Daftar Transaksi</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -153,17 +153,17 @@
 
         </script>
         @endif
-        <form method="POST" action="{{route('beras.update', $barang[0]->item->id)}}">
+        <form method="POST" action="{{route('brilink.update', $brilink[0]->id)}}">
             @csrf
             @method('POST')
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 form-group">
-                        <label>Kode Barang</label>
-                        <input type="text" value="{{ $barang[0]->item->kode }}"
-                            class="form-control form-control-sm kode-produk" name="kode" />
+                        <label>Nama Customer</label>
+                        <input type="text" value="{{ $brilink[0]->nama }}"
+                            class="form-control form-control-sm customer-produk" name="customer" />
                         <div class="text-err">
-                            @error('kode')
+                            @error('customer')
                             <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                 width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                                 <path
@@ -175,29 +175,28 @@
                         </div>
                     </div>
                     <div class="col-sm-12 form-group">
-                        <label>Nama Barang</label>
-                        <input type="text" value="{{ $barang[0]->item->nama }}"
-                            class="form-control form-control-sm nama-produk" name="nama" />
-                        <div class="text-err">
-                            @error('nama')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <label>Jumlah</label>
+                        <input type="text" class="form-control form-control-sm jumlah-produk"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                            placeholder="input harus angka" name="jumlah" value="{{ $brilink[0]->jumlah }}"/>
+                        @error('jumlah')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col-sm-12 form-group">
-                        <label>Kategori</label>
+                        <label>Bank</label>
                         <div class="input-group">
-                            <select class="js-example-basic-single col-sm-12" name="kategori" id="kategori-produk">
+                            <select class="js-example-basic-single col-sm-12" name="bank" id="bank-produk">
                                 {{-- <option value="{{$barang[0]->kategori_id}}" selected>Pilih Kategori</option> --}}
-                                <option value="#" disabled selected hidden>Pilih Kategori</option>
+                                <option value="#" disabled selected hidden>Pilih Bank</option>
                                 @foreach ($kategori as $item)
-                                    @if ($item->id == $barang[0]->kategori_id)
+                                    @if ($item->id == $brilink[0]->bank_id)
                                         <option selected value="{{ $item->id }}">{{ $item->nama }}</option>
                                     @else
                                         <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -205,7 +204,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        @error('kategori')
+                        @error('bank')
                             <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                 width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                                 <path
@@ -215,12 +214,43 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Admin</label>
+                        <input type="text" class="form-control form-control-sm admin-produk"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                            placeholder="input harus angka" name="admin" value="{{ $brilink[0]->admin }}"/>
+                        @error('admin')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Tanggal</label>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
+                            name="tanggal" autocomplete="off" value="{{date('d-m-Y', $brilink[0]->tanggal)}}"/>
+                        <div class="text-err">
+                            @error('tanggal')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row-12">
                 <div class="col-12">
                     <button type="button" class="btn btn-secondary">
-                        <a href="{{route('minyak.index')}}"
+                        <a href="{{route('brilink.index')}}"
                             style="color: white; text-decoration-line: none">back</a>
                     </button>
                     <input type="submit" class="btn btn-primary btn-save" value="Save changes">

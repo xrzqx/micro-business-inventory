@@ -35,6 +35,9 @@ use App\Http\Controllers\BerasBarangController;
 use App\Http\Controllers\BerasPembelianController;
 use App\Http\Controllers\BerasPenjualanController;
 
+use App\Http\Controllers\BrilinkTransaksiController;
+use App\Http\Controllers\BrilinkBankController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -236,4 +239,16 @@ Route::get('/beras/{id}', [BerasBarangController::class, 'edit'])->name('beras.e
 Route::post('/beras/{id}', [BerasBarangController::class, 'update'])->name('beras.update');
 Route::delete('/beras/{id}', [BerasBarangController::class, 'destroy'])->name('beras.destroy');
 
+Route::get('/brilink/bank/search', [BrilinkBankController::class, 'search'])->name('brilinkbank.search');
+Route::get('/brilink/bank', [BrilinkBankController::class, 'index'])->name('brilinkbank.index');
+Route::post('/brilink/bank', [BrilinkBankController::class, 'store'])->name('brilinkbank.store');
+Route::get('/brilink/bank/{id}', [BrilinkBankController::class, 'edit'])->name('brilinkbank.edit');
+Route::post('/brilink/bank/{id}', [BrilinkBankController::class, 'update'])->name('brilinkbank.update');
+Route::delete('/brilink/bank/{id}', [BrilinkBankController::class, 'destroy'])->name('brilinkbank.destroy');
 
+Route::get('/brilink/search', [BrilinkTransaksiController::class, 'search'])->name('brilink.search');
+Route::get('/brilink', [BrilinkTransaksiController::class, 'index'])->name('brilink.index');
+Route::post('/brilink', [BrilinkTransaksiController::class, 'store'])->name('brilink.store');
+Route::get('/brilink/{id}', [BrilinkTransaksiController::class, 'edit'])->name('brilink.edit');
+Route::post('/brilink/{id}', [BrilinkTransaksiController::class, 'update'])->name('brilink.update');
+Route::delete('/brilink/{id}', [BrilinkTransaksiController::class, 'destroy'])->name('brilink.destroy');
