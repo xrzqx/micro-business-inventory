@@ -34,7 +34,7 @@
                                 <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
                                     <option value="" disabled selected hidden>Pilih Barang</option>
                                     @foreach ($barang as $value)
-                                    <option value="{{ $value->id }}">{{ $value->item->nama }}</option>
+                                        <option value="{{ $value->id }}">{{ $value->item->kode }} | {{ $value->item->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -255,14 +255,16 @@
     <div class="content">
         <h1>Daftar Pembelian Barang</h1>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                     Tambah Stock
                 </button>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <form class="d-flex" action="{{route('motorpembelian.search')}}" method="GET">
                     <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="kodebarang" value="{{ request('search') }}"
+                            placeholder="Cari Kode">
                         <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
                             placeholder="Cari Barang">
                         <div class="input-group-append">
@@ -302,6 +304,7 @@
             <table class="table">
                 <tr>
                     <th>Supplier</th>
+                    <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Batch</th>
                     <th>Jumlah</th>
@@ -313,6 +316,9 @@
                 <tr>
                     <td>
                         {{ $value->supplier }}
+                    </td>
+                    <td>
+                        {{ $value->barang->item->kode }}
                     </td>
                     <td>
                         {{ $value->barang->item->nama }}

@@ -135,6 +135,7 @@
     </button>
     <div class="content">
         <h1>Edit Barang</h1>
+        {{$barang}}
         @if ($errors->any())
         <div class="alert alert-danger" id="failed-alert">
             <button type="button" class="close" data-dismiss="alert">x</button>
@@ -152,7 +153,7 @@
 
         </script>
         @endif
-        <form method="POST" action="{{route('studio.update', $barang[0]->item->id)}}">
+        <form method="POST" action="{{route('studio.update', $barang[0]->id)}}">
             @csrf
             @method('POST')
             <div class="modal-body">

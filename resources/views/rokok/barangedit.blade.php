@@ -153,7 +153,7 @@
 
         </script>
         @endif
-        <form method="POST" action="{{route('rokok.update', $barang[0]->item->id)}}">
+        <form method="POST" action="{{route('rokok.update', $barang[0]->id)}}">
             @csrf
             @method('POST')
             <div class="modal-body">

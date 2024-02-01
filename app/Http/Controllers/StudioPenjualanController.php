@@ -131,9 +131,11 @@ class StudioPenjualanController extends Controller
         for ($i = 0; $i < $minLength; $i++) {
             $batchValue = $batchDynamic[$i];
             $jumlahValue = $jumlahDynamic[$i];
-            $itemId = $namaDynamic[$i];
+            $barangId = $namaDynamic[$i];
+
+            $barang = Barang::find($barangId);
             
-            $item = Item::find($itemId);
+            $item = Item::find($barang->item_id);
             if (!$item) {
                 // Handle case where the resource is not found
                 abort(404, 'Resource not found');

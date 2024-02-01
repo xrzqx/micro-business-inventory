@@ -192,6 +192,8 @@ class MotorPembelianController extends Controller
     public function search(Request $request)
     {
         $searchQuery = $request->input('namabarang');
+
+        $searchQueryBarang = $request->input('kodebarang');
         
         $barang = Barang::with('item', 'kategori')
         ->whereHas('kategori', function (Builder $query) {
@@ -205,8 +207,9 @@ class MotorPembelianController extends Controller
         ->join('item', 'item.id', '=', 'master_item.item_id')
         ->where('kategori.toko', '=', 'SGH_Motor')
         ->where('item.nama', 'like', '%' . $searchQuery . '%')
+        ->where('item.kode', 'like', '%' . $searchQueryBarang . '%')
         ->distinct()
-        ->with(['barang' => function ($query) use ($searchQuery){
+        ->with(['barang' => function ($query) {
             $query->with('item');
         }])
         ->paginate(7);

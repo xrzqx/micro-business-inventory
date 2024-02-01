@@ -5,7 +5,7 @@ use sgh_main;
 CREATE TABLE item
 (
 	id INT NOT NULL AUTO_INCREMENT,
-	kode VARCHAR(100) NOT NULL,
+	kode VARCHAR(100) NOT NULL UNIQUE,
     nama VARCHAR(255) NOT NULL,
     stock INT NOT NULL DEFAULT 0,
     PRIMARY KEY (id)
@@ -94,6 +94,56 @@ CREATE TABLE penjualan_produk_transaksi_pembelian
     FOREIGN KEY fk_transaksi_pembelian_penjualan_produk_transaksi_pembelian (transaksi_pembelian_id) REFERENCES transaksi_pembelian (id),
     FOREIGN KEY fk_penjualan_produk_penjualan_produk_transaksi_pembelian (penjualan_produk_id) REFERENCES penjualan_produk (id),
     PRIMARY KEY (id)
+)ENGINE InnoDB;
+
+CREATE TABLE sales
+(
+	id INT NOT NULL AUTO_INCREMENT,
+    nama VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
+)ENGINE InnoDB;
+
+CREATE TABLE sales_pembelian
+(
+	id INT NOT NULL AUTO_INCREMENT,
+    sales_id INT NOT NULL,
+    transaksi_pembelian_id INT NOT NULL,
+    jumlah INT NOT NULL,
+    sisa INT NOT NULL,
+    harga INT NOT NULL,
+    tanggal BIGINT NOT NULL,
+	PRIMARY KEY (id),
+    FOREIGN KEY fk_sales_sales_pembelian (sales_id) REFERENCES sales (id),
+    FOREIGN KEY fk_transaksi_pembelian_sales_pembelian (transaksi_pembelian_id) REFERENCES transaksi_pembelian (id)
+)ENGINE InnoDB;
+
+CREATE TABLE sales_penjualan
+(
+	id INT NOT NULL AUTO_INCREMENT,
+    sales_pembelian_id INT NOT NULL,
+    jumlah INT NOT NULL,
+    tanggal BIGINT NOT NULL,
+	PRIMARY KEY (id),
+    FOREIGN KEY fk_sales_pembelian_sales_penjualan (sales_pembelian_id) REFERENCES sales_pembelian (id)
+)ENGINE InnoDB;
+
+CREATE TABLE bank
+(
+	id INT NOT NULL AUTO_INCREMENT,
+    nama VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id)
+)ENGINE InnoDB;
+
+CREATE TABLE brilink
+(
+	id INT NOT NULL AUTO_INCREMENT,
+    bank_id INT NOT NULL,
+    nama VARCHAR(100) NOT NULL,
+    jumlah INT NOT NULL,
+    admin INT NOT NULL,
+    tanggal BIGINT NOT NULL,
+	PRIMARY KEY (id),
+    FOREIGN KEY fk_bank_brilink (bank_id) REFERENCES bank (id)
 )ENGINE InnoDB;
 
 CREATE TABLE item_pengeluaran

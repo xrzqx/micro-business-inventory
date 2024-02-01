@@ -240,7 +240,7 @@
                     <div class="col-sm-12 form-group">
                         <label>Tanggal</label>
                         <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
-                            name="tanggal" value="{{date('m/d/Y', $value->tanggal)}}"/>
+                            name="tanggal" value="{{date('m/d/Y', $value->tanggal)}}" autocomplete="off"/>
                         <div class="text-err">
                             @error('tanggal')
                             <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"

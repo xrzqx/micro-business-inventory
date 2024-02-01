@@ -305,6 +305,7 @@
             <table class="table">
                 <tr>
                     <th>Customer</th>
+                    <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Batch</th>
                     <th>Jumlah</th>
@@ -316,6 +317,9 @@
                 <tr>
                     <td>
                         {{ $value->nama }}
+                    </td>
+                    <td>
+                        {{ $value->pembelian->barang->item->kode }}
                     </td>
                     <td>
                         {{ $value->pembelian->barang->item->nama }}
