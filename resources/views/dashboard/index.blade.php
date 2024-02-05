@@ -4,6 +4,28 @@
 <div class="container-f">
     <div class="sidenav">
         <ul class="main-list">
+            <div class="toggle-sublist">
+                <div class="flex-row-list">
+                    <span>Store</span>
+                    <span class="material-symbols-outlined toggle-icon">
+                        chevron_right
+                    </span>
+                </div>
+            </div>
+            <li class="toggle-sublist test hide">
+                <div class="flex-row-list">
+                    <span>Salesperson</span>
+                    <span class="material-symbols-outlined toggle-icon">
+                        chevron_right
+                    </span>
+                </div>
+            </li>
+            <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{ route('sales.index') }}">Daftar Sales</a></li>
+                <li class="sublist-item"><a href="{{route('salespembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item"><a href="{{route('salespenjualan.index')}}">Penjualan</a></li>
+            </ul>
+
             <li class="nonlist-item selected">
                 <a href="/">Dashboard</a>
             </li>

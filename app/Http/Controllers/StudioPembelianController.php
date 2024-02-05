@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Kategori;
 use App\Models\Pembelian;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class StudioPembelianController extends Controller

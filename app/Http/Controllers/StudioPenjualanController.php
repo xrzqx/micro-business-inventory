@@ -11,6 +11,7 @@ use App\Models\Produk;
 use App\Models\PenjualanProduk;
 use App\Models\PenjualanProdukBarang;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class StudioPenjualanController extends Controller
@@ -192,27 +193,40 @@ class StudioPenjualanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-        $penjualan = PenjualanProdukBarang::where('penjualan_produk_id','=',$id)->get();
-        if (!$penjualan) {
-            // Handle case where the resource is not found
-            abort(404, 'Resource not found');
+        DB::beginTransaction();
+
+        try {
+            $penjualan = PenjualanProdukBarang::where('penjualan_produk_id','=',$id)->get();
+            if (!$penjualan) {
+                // Handle case where the resource is not found
+                abort(404, 'Resource not found');
+            }
+    
+            foreach ($penjualan as $record) {
+                $pembelian = Pembelian::find($record->transaksi_pembelian_id);
+                $pembelian->sisa = $pembelian->sisa + $record->jumlah;
+                $pembelian->save();
+                $barang = Barang::find($pembelian->master_item_id);
+                $item = Item::find($barang->item_id);
+                $item->stock = $item->stock + $record->jumlah;
+                $item->save();
+    
+                $record->delete();
+            }
+    
+            $penjualan_produk = PenjualanProduk::find($id);
+            $penjualan_produk->delete();
+        
+            // If everything went well, commit the transaction
+            DB::commit();
+        } catch (\Exception $e) {
+            // If an exception occurs, rollback the transaction
+            DB::rollBack();
+        
+            // Handle the exception or log it as needed
+            return response()->json(['error' => 'Transaction failed.'], 500);
         }
 
-        foreach ($penjualan as $record) {
-            $pembelian = Pembelian::find($record->transaksi_pembelian_id);
-            $pembelian->sisa = $pembelian->sisa + $record->jumlah;
-            $pembelian->save();
-            $barang = Barang::find($pembelian->master_item_id);
-            $item = Item::find($barang->item_id);
-            $item->stock = $item->stock + $record->jumlah;
-            $item->save();
-
-            $record->delete();
-        }
-
-        $penjualan_produk = PenjualanProduk::find($id);
-        $penjualan_produk->delete();
 
         return redirect()->route('studiopenjualan.index')->with('success', 'menghapus penjualan produk');
     }

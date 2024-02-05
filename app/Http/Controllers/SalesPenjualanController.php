@@ -7,6 +7,7 @@ use App\Models\Sales;
 use App\Models\SalesPenjualan;
 use App\Models\SalesPembelian;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SalesPenjualanController extends Controller
 {
@@ -118,18 +119,31 @@ class SalesPenjualanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-        $sales_penjualan = SalesPenjualan::find($id);
-        if (!$sales_penjualan) {
-            // Handle case where the resource is not found
-            abort(404, 'Resource not found');
+
+        DB::beginTransaction();
+
+        try {
+            $sales_penjualan = SalesPenjualan::find($id);
+            if (!$sales_penjualan) {
+                // Handle case where the resource is not found
+                abort(404, 'Resource not found');
+            }
+    
+            $sales_pembelian = SalesPembelian::find($sales_penjualan->sales_pembelian_id);
+            $sales_pembelian->sisa = $sales_pembelian->sisa + $sales_penjualan->jumlah;
+            $sales_pembelian->save();
+    
+            $sales_penjualan->delete();
+
+            // If everything went well, commit the transaction
+            DB::commit();
+        } catch (\Exception $e) {
+            // If an exception occurs, rollback the transaction
+            DB::rollBack();
+
+            // Handle the exception or log it as needed
+            return response()->json(['error' => 'Transaction failed.'], 500);
         }
-
-        $sales_pembelian = SalesPembelian::find($sales_penjualan->sales_pembelian_id);
-        $sales_pembelian->sisa = $sales_pembelian->sisa + $sales_penjualan->jumlah;
-        $sales_pembelian->save();
-
-        $sales_penjualan->delete();
 
         return redirect()->route('salespenjualan.index')->with('success', 'menghapus penjualan barang');
     }

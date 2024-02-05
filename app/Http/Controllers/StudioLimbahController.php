@@ -8,6 +8,7 @@ use App\Models\Pembelian;
 use App\Models\Barang;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class StudioLimbahController extends Controller
@@ -153,22 +154,36 @@ class StudioLimbahController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-        $limbah = Limbah::find($id);
-        if (!$limbah) {
-            // Handle case where the resource is not found
-            abort(404, 'Resource not found');
+
+        DB::beginTransaction();
+
+        try {
+            $limbah = Limbah::find($id);
+            if (!$limbah) {
+                // Handle case where the resource is not found
+                abort(404, 'Resource not found');
+            }
+    
+            $pembelian = Pembelian::find($limbah->transaksi_pembelian_id);
+            $pembelian->sisa = $pembelian->sisa + $limbah->jumlah;
+            $pembelian->save();
+            $barang = Barang::find($pembelian->master_item_id);
+            $item = Item::find($barang->item_id);
+            $item->stock = $item->stock + $limbah->jumlah;
+            $item->save();
+    
+            $limbah->delete();
+
+            // If everything went well, commit the transaction
+            DB::commit();
+        } catch (\Exception $e) {
+            // If an exception occurs, rollback the transaction
+            DB::rollBack();
+
+            // Handle the exception or log it as needed
+            return response()->json(['error' => 'Transaction failed.'], 500);
         }
 
-        $pembelian = Pembelian::find($limbah->transaksi_pembelian_id);
-        $pembelian->sisa = $pembelian->sisa + $limbah->jumlah;
-        $pembelian->save();
-        $barang = Barang::find($pembelian->master_item_id);
-        $item = Item::find($barang->item_id);
-        $item->stock = $item->stock + $limbah->jumlah;
-        $item->save();
-
-        $limbah->delete();
         return redirect()->route('studiolimbah.index')->with('success', 'menghapus limbah barang');
     }
 }

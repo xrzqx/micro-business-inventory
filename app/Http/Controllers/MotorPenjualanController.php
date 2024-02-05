@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Pembelian;
 use App\Models\Barang;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class MotorPenjualanController extends Controller
@@ -146,21 +147,36 @@ class MotorPenjualanController extends Controller
 
     public function destroy($id)
     {
-        $penjualan = Penjualan::find($id);
-        if (!$penjualan) {
-            // Handle case where the resource is not found
-            abort(404, 'Resource not found');
+        
+        DB::beginTransaction();
+        try {
+            $penjualan = Penjualan::find($id);
+            if (!$penjualan) {
+                // Handle case where the resource is not found
+                abort(404, 'Resource not found');
+            }
+    
+            $pembelian = Pembelian::find($penjualan->transaksi_pembelian_id);
+            $pembelian->sisa = $pembelian->sisa + $penjualan->jumlah;
+            $pembelian->save();
+            
+            $barang = Barang::find($pembelian->master_item_id);
+            $item = Item::find($barang->item_id);
+            $item->stock = $item->stock + $penjualan->jumlah;
+            $item->save();
+    
+            $penjualan->delete();
+
+            // If everything went well, commit the transaction
+            DB::commit();
+        } catch (\Exception $e) {
+            // If an exception occurs, rollback the transaction
+            DB::rollBack();
+
+            // Handle the exception or log it as needed
+            return response()->json(['error' => 'Transaction failed.'], 500);
         }
 
-        $pembelian = Pembelian::find($penjualan->transaksi_pembelian_id);
-        $pembelian->sisa = $pembelian->sisa + $penjualan->jumlah;
-        $pembelian->save();
-        $barang = Barang::find($pembelian->master_item_id);
-        $item = Item::find($barang->item_id);
-        $item->stock = $item->stock + $penjualan->jumlah;
-        $item->save();
-
-        $penjualan->delete();
         return redirect()->route('motorpenjualan.index')->with('success', 'menghapus penjualan barang');
     }
 

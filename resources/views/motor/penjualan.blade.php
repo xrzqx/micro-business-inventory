@@ -34,7 +34,7 @@
                                 <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
                                     <option value="" disabled selected hidden>Pilih Barang</option>
                                     @foreach ($barang as $value)
-                                        <option value="{{ $value->master_item_id }}">{{ $value->barang->item->nama }}</option>
+                                        <option value="{{ $value->master_item_id }}">{{ $value->barang->item->kode }} | {{ $value->barang->item->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Kategori;
 use App\Models\Pembelian;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class MotorPembelianController extends Controller
@@ -175,17 +176,31 @@ class MotorPembelianController extends Controller
 
     public function destroy($id)
     {
-        $pembelian = Pembelian::find($id);
-        if (!$pembelian) {
-            // Handle case where the resource is not found
-            abort(404, 'Resource not found');
-        }
-        $barang = Barang::find($pembelian->master_item_id);
-        $item = Item::find($barang->item_id);
-        $item->stock = $item->stock - $pembelian->jumlah;
-        $item->save();
 
-        $pembelian->delete();
+        DB::beginTransaction();
+        try {
+            $pembelian = Pembelian::find($id);
+            if (!$pembelian) {
+                // Handle case where the resource is not found
+                abort(404, 'Resource not found');
+            }
+            $barang = Barang::find($pembelian->master_item_id);
+            $item = Item::find($barang->item_id);
+            $item->stock = $item->stock - $pembelian->jumlah;
+            $item->save();
+
+            $pembelian->delete();
+
+            // If everything went well, commit the transaction
+            DB::commit();
+        } catch (\Exception $e) {
+            // If an exception occurs, rollback the transaction
+            DB::rollBack();
+
+            // Handle the exception or log it as needed
+            return response()->json(['error' => 'Transaction failed.'], 500);
+        }
+        
         return redirect()->route('motorpembelian.index')->with('success', 'menghapus pembelian barang');
     }
 

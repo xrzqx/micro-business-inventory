@@ -39,7 +39,7 @@
                                 <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
                                     <option value="" disabled selected hidden>Pilih Barang</option>
                                     @foreach ($barang as $value)
-                                    <option value="{{ $value->id }}">{{ $value->item->nama }}</option>
+                                        <option value="{{ $value->id }}">{{ $value->item->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -338,10 +338,10 @@
                         {{date('d-m-Y', $value->tanggal)}}
                     </td>
                     <td>
-                        {{-- <button type="button" style="background-color: yellow">
+                        <button type="button" style="background-color: yellow">
                             <a href="{{ route('salespembelian.edit', $value->id) }}"
                                 style="color: black;text-decoration-line: none">edit</a>
-                        </button> --}}
+                        </button>
                         <form method="post" action="{{ route('salespembelian.destroy', $value->id) }}"
                             style="display: inline;">
                             @csrf
@@ -354,7 +354,7 @@
                 @endforeach
             </table>
         </div>
-        {{-- {{ $pembelian->appends(request()->input())->links() }} --}}
+        {{ $pembelian->appends(request()->input())->links() }}
     </div>
 </div>
 

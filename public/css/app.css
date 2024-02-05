@@ -120,6 +120,12 @@ li {
     background-color: rgba(33, 32, 156, 0.3);
 }
 
+.tree-list {
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+}
+
 .flex-row-list{
     /* background: cadetblue; */
     display: flex;
@@ -206,3 +212,4 @@ h1{
 .add-more-group .col-4{
     padding: 0;
 }
+
