@@ -46,7 +46,7 @@ class MotorPembelianController extends Controller
             'nama' => 'required|numeric',
             'batch' => 'required|max:255',
             'jumlah' => 'required|numeric',
-            'het' => 'numeric',
+            'het' => 'nullable|numeric',
             'harga' => 'required|numeric',
             'tanggal' => 'required|max:255',
         ], [
@@ -126,7 +126,7 @@ class MotorPembelianController extends Controller
             'nama' => 'required|numeric',
             'batch' => 'required|max:255',
             'jumlah' => 'required|numeric',
-            'het' => 'numeric',
+            'het' => 'nullable|numeric',
             'harga' => 'required|numeric',
             'tanggal' => 'required|max:255',
         ], [
