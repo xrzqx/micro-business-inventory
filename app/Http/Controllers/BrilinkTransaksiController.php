@@ -18,7 +18,9 @@ class BrilinkTransaksiController extends Controller
     {
         //
         $bank = Bank::all();
-        $brilink = Brilink::with('bank')->paginate(7);
+        $brilink = Brilink::with('bank')
+        ->orderBy('tanggal', 'desc')
+        ->paginate(7);
         return view("brilink.transaksi", 
         [
             "kategori" => $bank,

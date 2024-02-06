@@ -393,8 +393,14 @@
                 $('#batch-produk').append('<option value="" disabled selected hidden>Pilih Batch</option>');
                 // Populate options based on the AJAX response
                 $.each(response, function (index, value) {
-                    $('#batch-produk').append('<option value="' + value.id + '">' + value
-                        .batch + " | Stock: " + value.sisa +'</option>');
+                    if (value.het != null) {
+                        $('#batch-produk').append('<option value="' + value.id + '">' + value
+                        .batch + " | Stock: " + value.sisa + ' | HB: ' + value.harga/value.jumlah + ' | HET: ' + value.het +'</option>');
+                    }
+                    else{
+                        $('#batch-produk').append('<option value="' + value.id + '">' + value
+                        .batch + " | Stock: " + value.sisa + ' | HB: ' + value.harga/value.jumlah +'</option>');
+                    }
                 });
 
                 // Trigger Select2 to update the UI

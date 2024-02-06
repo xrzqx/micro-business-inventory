@@ -29,7 +29,8 @@ class MotorPembelianController extends Controller
             ->with(['barang' => function ($query) {
                 $query->with('item', 'kategori');
             }])
-            ->paginate(7);
+            ->orderBy('transaksi_pembelian.tanggal', 'desc')
+            ->paginate(6);
 
         return view("motor.pembelian",
         [
@@ -45,6 +46,7 @@ class MotorPembelianController extends Controller
             'nama' => 'required|numeric',
             'batch' => 'required|max:255',
             'jumlah' => 'required|numeric',
+            'het' => 'numeric',
             'harga' => 'required|numeric',
             'tanggal' => 'required|max:255',
         ], [
@@ -54,6 +56,7 @@ class MotorPembelianController extends Controller
             'nama.numeric' => 'Input nama barang harus benar',
             'batch.required' => 'Input batch barang tidak boleh kosong',
             'batch.max' => 'Input batch barang tidak boleh lebih dari 255 karakter',
+            'het.numeric' => 'Input het harus nomor',
             'jumlah.required' => 'Input jumlah tidak boleh kosong',
             'jumlah.numeric' => 'Input jumlah harus nomor',
             'harga.required' => 'Input harga tidak boleh kosong',
@@ -76,6 +79,7 @@ class MotorPembelianController extends Controller
             'batch' => $request->batch,
             'jumlah' => $request->jumlah,
             'sisa' => $request->jumlah,
+            'het' => $request->het,
             'harga' => $request->harga,
             // 'tanggal' => $request->tanggal,
             'tanggal' => $timestamp,
@@ -122,6 +126,7 @@ class MotorPembelianController extends Controller
             'nama' => 'required|numeric',
             'batch' => 'required|max:255',
             'jumlah' => 'required|numeric',
+            'het' => 'numeric',
             'harga' => 'required|numeric',
             'tanggal' => 'required|max:255',
         ], [
@@ -133,6 +138,7 @@ class MotorPembelianController extends Controller
             'batch.max' => 'Input batch barang tidak boleh lebih dari 255 karakter',
             'jumlah.required' => 'Input jumlah tidak boleh kosong',
             'jumlah.numeric' => 'Input jumlah harus nomor',
+            'het.numeric' => 'Input harga harus nomor',
             'harga.required' => 'Input harga tidak boleh kosong',
             'harga.numeric' => 'Input harga harus nomor',
             'tanggal.required' => 'Input tanggal tidak boleh kosong',
@@ -167,6 +173,7 @@ class MotorPembelianController extends Controller
         $pembelian->master_item_id = $request->nama;
         $pembelian->batch = $request->batch;
         $pembelian->jumlah = $request->jumlah;
+        $pembelian->het = $request->het;
         $pembelian->harga = $request->harga;
         $pembelian->tanggal = $timestamp;
         $pembelian->save();

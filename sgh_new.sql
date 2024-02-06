@@ -37,6 +37,7 @@ CREATE TABLE transaksi_pembelian
     batch VARCHAR(100) NOT NULL,
     jumlah INT NOT NULL,
     sisa INT NOT NULL  DEFAULT 0,
+    het INT,
     harga INT NOT NULL,
     tanggal BIGINT NOT NULL,
     PRIMARY KEY (id),

@@ -53,6 +53,7 @@ class MotorPenjualanController extends Controller
                     $query->with(['item', 'kategori']);
                 }]);
             }])
+            ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->paginate(7);
 
         return view('motor.penjualan',

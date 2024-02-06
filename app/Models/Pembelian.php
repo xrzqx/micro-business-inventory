@@ -13,7 +13,7 @@ class Pembelian extends Model
     public $timestamps = false;
     protected $primaryKey = 'id';
     protected $fillable = [
-        'master_item_id', 'supplier','batch','jumlah','harga','tanggal','sisa'
+        'master_item_id', 'supplier','batch','jumlah', 'het', 'harga','tanggal','sisa'
     ];
     public function barang(): BelongsTo
     {
