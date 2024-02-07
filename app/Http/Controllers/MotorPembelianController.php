@@ -163,18 +163,19 @@ class MotorPembelianController extends Controller
             $item->stock = $item->stock - $selisih;
             $item->save();
             $pembelian->sisa = $pembelian->sisa - $selisih;
+            $pembelian->jumlah = $request->jumlah - $selisih;
         }
         if ($pembelian->jumlah < $request->jumlah) {
             $selisih = $request->jumlah - $pembelian->jumlah;
             $item->stock = $item->stock + $selisih;
             $item->save();
             $pembelian->sisa = $pembelian->sisa + $selisih;
+            $pembelian->jumlah = $request->jumlah + $selisih;
         }
 
         $pembelian->supplier = $request->supplier;
         $pembelian->master_item_id = $request->nama;
         $pembelian->batch = $request->batch;
-        $pembelian->jumlah = $request->jumlah;
         $pembelian->het = $request->het;
         $pembelian->harga = $request->harga;
         $pembelian->tanggal = $timestamp;
