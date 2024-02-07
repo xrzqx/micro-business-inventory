@@ -1,21 +1,51 @@
 [{
-    "id": 23,
-    "item_id": 23,
-    "kategori_id": 21,
-    "item": {
-        "id": 23,
-        "kode": "rok001",
-        "nama": "Kilimanjaro kretek 12",
-        "stock": 7
+    "id": 304,
+    "master_item_id": 1409,
+    "supplier": "test",
+    "batch": "SEP13",
+    "jumlah": 1000,
+    "sisa": 990,
+    "het": 2000,
+    "harga": 1000,
+    "tanggal": 1707350400,
+    "barang": {
+        "id": 1409,
+        "item_id": 1478,
+        "kategori_id": 1,
+        "item": {
+            "id": 1478,
+            "kode": "test",
+            "nama": "test",
+            "stock": 990
+        }
     }
 }, {
-    "id": 24,
-    "item_id": 24,
-    "kategori_id": 21,
-    "item": {
-        "id": 24,
-        "kode": "rok002",
-        "nama": "Makna 12 kretek",
-        "stock": 0
+    "id": 124,
+    "transaksi_pembelian_id": 304,
+    "nama": "test penjualan",
+    "jumlah": 10,
+    "harga": 2000,
+    "tanggal": 1707350400,
+    "pembelian": {
+        "id": 304,
+        "master_item_id": 1409,
+        "supplier": "test",
+        "batch": "SEP13",
+        "jumlah": 1000,
+        "sisa": 990,
+        "het": 2000,
+        "harga": 1000,
+        "tanggal": 1707350400,
+        "barang": {
+            "id": 1409,
+            "item_id": 1478,
+            "kategori_id": 1,
+            "item": {
+                "id": 1478,
+                "kode": "test",
+                "nama": "test",
+                "stock": 990
+            }
+        }
     }
 }]

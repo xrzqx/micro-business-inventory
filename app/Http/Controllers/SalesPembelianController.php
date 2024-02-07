@@ -110,7 +110,6 @@ class SalesPembelianController extends Controller
             }])
             ->where('id' , $id)
             ->get();
-        // return $sales_pembelian;
 
         if (!$sales_pembelian) {
             // Handle case where the resource is not found
@@ -127,25 +126,13 @@ class SalesPembelianController extends Controller
             ->with('item')
             ->get();
         
-        // return $barang;
-
-        // $batchData = Pembelian::where('master_item_id', $masterItemId)->where('sisa', '>', 0)->select('id', 'batch', 'sisa')->get();
-        
         $batchData = SalesPembelian::select(['sales_pembelian.id', 'transaksi_pembelian.batch', 'sales_pembelian.sisa', 'transaksi_pembelian.sisa as toko'])
             ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'sales_pembelian.transaksi_pembelian_id')
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
             ->join('item', 'item.id', '=', 'master_item.item_id')
             ->where('sales_pembelian.id', '=', $id)
-            // ->where('sales_pembelian.sales_id', '=', $sales_pembelian[0]->sales_id)
-            // ->where('sales_pembelian.sisa', '>', 0)
-            // ->where('master_item.id', '=', $sales_pembelian[0]->pembelian->master_item_id)
-            // ->distinct('item.id')
             ->get();
-
-        // return $batchData;
-        // return $sales_pembelian;
-        // return $sales_pembelian[0]->pembelian->master_item_id;
 
         return view("sales.pembelianedit",
         [

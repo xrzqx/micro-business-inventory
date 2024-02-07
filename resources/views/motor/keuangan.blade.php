@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container-f">
     <div class="sidenav">
         <ul class="main-list">
@@ -41,12 +40,12 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{route('motorkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
-                <li class="sublist-item"><a href="{{route('motorkeuangan.index')}}">Laporan Keuangan</a></li>
+                <li class="sublist-item selected"><a href="{{route('motorkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
@@ -57,14 +56,14 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
-                <li class="sublist-item selected"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
+                <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
@@ -147,13 +146,17 @@
         </span>
     </button>
     <div class="content">
-        <h1>Laporan Stock</h1>
+        <h1>Laporan Keuangan</h1>
         <div class="row">
-            <div class="col-sm-12">
-                <form class="d-flex align-items-center text-center" action="{{ route('studiostock.search') }}" method="GET">
+            <div class="col-sm-6">
+                <form class="d-flex" action="{{route('motorkeuangan.search')}}" method="GET">
                     <div class="input-group mb-3">
-                        <label for="my_date_picker" class="mr-2" style="display:flex; align-items: center; font-size: 1.2rem">Date:</label>
-                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker" name="tanggal" value="{{ request('date') }}" autocomplete="off"/>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
+                            name="start" autocomplete="off" value="{{ request('search') }}" 
+                            placeholder="Cari Tanggal Mulai"/>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker2"
+                            name="end" autocomplete="off" value="{{ request('search') }}" 
+                            placeholder="Cari Tanggal Akhir"/>
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
@@ -162,102 +165,79 @@
             </div>
         </div>
 
+        @if (Session::has('success'))
+        <div class="alert alert-success" id="success-alert">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Berhasil </strong> {{ Session::get('success') }}
+        </div>
+        <script>
+            $("#success-alert").fadeTo(5000, 500).slideUp(500);
+
+        </script>
+        @endif
+        @if ($errors->any())
+        <div class="alert alert-danger" id="failed-alert">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Tidak berhasil </strong> menambahkan/mengubah data
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        <script>
+            $("#failed-alert").fadeTo(5000, 500).slideUp(500);
+
+        </script>
+        @endif
         <div class="table-responsive">
             <table class="table">
-                <tr>
-                    <th>Nama Barang</th>
-                    <th>Stock Akhir</th>
-                    <th>Masuk</th>
-                    <th>Pemakaian</th>
-                </tr>
-                @foreach ($data as $key => $value)
-                <tr>
-                    <td>
-                        {{ $value['nama'] }}
-                    </td>
-                    <td>
-                        {{ $value['stock'] }}
-                    </td>
-                    <td>
-                        {{ $value['masuk'] }}
-                    </td>
-                    <td>
-                        {{ $value['pemakaian'] }}
-                    </td>
-                </tr>
-                @endforeach
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Tanggal</th>
+                        <th>Uraian</th>
+                        <th>Debit</th>
+                        <th>Kredit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $no = 0;
+                        $totalDebit = 0;
+                        $totalKredit = 0;
+                    @endphp
+                    @foreach ($data as $key => $value)
+                        <tr>
+                            <td>{{ ++$no }}</td>
+                            <td>{{ date('d-m-Y', $value->tanggal) }}</td>
+                            @if (isset($value->transaksi_pembelian_id))
+                                <td>Penjualan {{ $value->pembelian->barang->item->nama }}</td>
+                                <td>{{ number_format($value->harga, 0, ',', '.') }}</td>
+                                <td>0</td>
+                                @php
+                                    $totalDebit += $value->harga;
+                                @endphp
+                            @else
+                                <td>Pembelian {{ $value->barang->item->nama }}</td>
+                                <td>0</td>
+                                <td>{{ number_format($value->harga, 0, ',', '.') }}</td>
+                                @php
+                                    $totalKredit += $value->harga;
+                                @endphp
+                            @endif
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td><strong>Total:</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>{{ number_format($totalDebit, 0, ',', '.') }}</strong></td>
+                        <td><strong>{{ number_format($totalKredit, 0, ',', '.') }}</strong></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
-        {{-- {{ $data->appends(request()->input())->links() }} --}}
     </div>
 </div>
-
-<script>
-    function validateInput(input) {
-      // Remove non-numeric characters
-      input.value = input.value.replace(/[^0-9]/g, '');
-  
-      // Remove leading zeros
-      input.value = input.value.replace(/^0+/g, '');
-  
-      // Limit the input to a maximum of stock
-      var maxStock = document.getElementById('jumlahInp').getAttribute('data-dynamic-value');
-      var numericMaxStock = parseInt(maxStock, 10);
-      const numericValue = parseInt(input.value, 10);
-      if (!isNaN(numericValue) && numericValue > numericMaxStock) {
-        input.value = maxStock;
-      }
-    }
-</script>
-
-<script>
-    // Attach an event listener to the select2:select event for "kategori-produk"
-    $('#kategori-produk').on('select2:select', function (e) {
-        var selectedCategoryId = e.params.data.id;
-
-        // Make an AJAX request to fetch data for "batch-produk" based on the selected category
-        $.ajax({
-            url: '{{ route('fetch.batch') }}', // Replace with your actual endpoint
-            method: 'GET',
-            data: {
-                masterItemId: selectedCategoryId
-            },
-            success: function (response) {
-                // Clear existing options
-                $('#batch-produk').empty();
-                $('#batch-produk').append('<option value="" disabled selected hidden>Pilih Batch</option>');
-                // Populate options based on the AJAX response
-                $.each(response, function (index, value) {
-                    $('#batch-produk').append('<option value="' + value.id + '">' + value
-                        .batch + " | Stock: " + value.sisa +'</option>');
-                });
-
-                // Trigger Select2 to update the UI
-                $('#batch-produk').trigger('change');
-            },
-            error: function (error) {
-                console.error('Error:', error);
-            }
-        });
-    });
-
-    $('#batch-produk').on('change', function (e) {
-        $('#jumlahInp').val('');
-        console.log("Change event triggered");
-    });
-
-    $('#batch-produk').on('select2:select', function (e) {
-        var selectedBatchText = e.params.data.text;
-        // Split the string by '|'
-        var parts = selectedBatchText.split('|');
-
-        // Extract the stock data (assuming it's in the second part after the '|')
-        var stockData = parts[1].trim().split(':')[1].trim();
-        
-        // Access the data attribute using JavaScript
-        document.getElementById('jumlahInp').setAttribute('data-dynamic-value', stockData);
-        console.log(stockData);
-    });
-
-</script>
 @endsection

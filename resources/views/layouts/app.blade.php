@@ -97,6 +97,10 @@
                 $("#my_date_picker").datepicker({ dateFormat: 'dd-mm-yy' });
                 // $("#my_date_picker").datepicker();
             });
+            $(function () {
+                $("#my_date_picker2").datepicker({ dateFormat: 'dd-mm-yy' });
+                // $("#my_date_picker").datepicker();
+            });
         })
 
     </script>

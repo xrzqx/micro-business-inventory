@@ -5,6 +5,8 @@ use App\Http\Controllers\MotorKategoriController;
 use App\Http\Controllers\MotorBarangController;
 use App\Http\Controllers\MotorPembelianController;
 use App\Http\Controllers\MotorPenjualanController;
+use App\Http\Controllers\MotorLaporanKeuanganController;
+
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchSalesController;
 use App\Http\Controllers\BarangController;
@@ -94,6 +96,9 @@ Route::post('/motor/penjualan', [MotorPenjualanController::class, 'store'])->nam
 Route::get('/motor/penjualan/{id}', [MotorPenjualanController::class, 'edit'])->name('motorpenjualan.edit');
 Route::post('/motor/penjualan/{id}', [MotorPenjualanController::class, 'update'])->name('motorpenjualan.update');
 Route::delete('/motor/penjualan/{id}', [MotorPenjualanController::class, 'destroy'])->name('motorpenjualan.destroy');
+
+Route::get('/motor/keuangan/search', [MotorLaporanKeuanganController::class, 'search'])->name('motorkeuangan.search');
+Route::get('/motor/keuangan', [MotorLaporanKeuanganController::class, 'index'])->name('motorkeuangan.index');
 
 Route::get('/motor/search', [MotorBarangController::class, 'search'])->name('motor.search');
 Route::get('/motor', [MotorBarangController::class, 'index'])->name('motor.index');
