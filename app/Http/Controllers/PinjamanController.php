@@ -95,6 +95,10 @@ class PinjamanController extends Controller
         //
         $customer = Customer::all();
         $pinjaman = Pinjaman::find($id);
+        if (!$pinjaman) {
+            // Handle case where the resource is not found
+            abort(404, 'Resource not found');
+        }
         return view('pinjaman.indexedit', 
         [
             "customer" => $customer,
