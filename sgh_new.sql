@@ -162,3 +162,21 @@ CREATE TABLE pengeluaran
     PRIMARY KEY (id),
     FOREIGN KEY fk_item_pengeluaran_pengeluaran (item_pengeluaran_id) REFERENCES item_pengeluaran (id)
 )ENGINE InnoDB;
+
+CREATE TABLE customer
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	nama VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
+)ENGINE InnoDB;
+
+CREATE TABLE pinjaman
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	customer_id INT NOT NULL,
+    debit INT NOT NULL,
+    kredit INT NOT NULL,
+    tanggal BIGINT,
+    PRIMARY KEY (id),
+    FOREIGN KEY fk_customer_pinjaman (customer_id) REFERENCES customer (id)
+)ENGINE InnoDB;

@@ -122,6 +122,18 @@
             </li>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
+                    <span>Pinjaman</span>
+                    <span class="material-symbols-outlined toggle-icon rotate">
+                        chevron_right
+                    </span>
+                </div>
+            </li>
+            <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{ route('customer.index') }}">Daftar Customer</a></li>
+                <li class="sublist-item"><a href="{{route('pinjaman.index')}}">Daftar Pinjaman</a></li>
+            </ul>
+            <li class="toggle-sublist">
+                <div class="flex-row-list">
                     <span>Salesperson</span>
                     <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right

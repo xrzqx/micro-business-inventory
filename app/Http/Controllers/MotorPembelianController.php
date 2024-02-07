@@ -178,7 +178,7 @@ class MotorPembelianController extends Controller
         $pembelian->tanggal = $timestamp;
         $pembelian->save();
 
-        return redirect()->route('motorpembelian.index')->with('success', 'menambahkan pembelian barang');
+        return redirect()->route('motorpembelian.index')->with('success', 'mengedit pembelian barang');
     }
 
     public function destroy($id)

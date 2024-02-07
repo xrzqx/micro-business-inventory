@@ -38,6 +38,9 @@ use App\Http\Controllers\BerasPenjualanController;
 use App\Http\Controllers\BrilinkTransaksiController;
 use App\Http\Controllers\BrilinkBankController;
 
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PinjamanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,6 +59,20 @@ Route::get('/', function () {
 Route::get('/fetch-batch', [BatchController::class, 'fetchData'])->name('fetch.batch');
 Route::get('/fetch-batch-sales', [BatchSalesController::class, 'fetchData'])->name('fetch.batchsales');
 Route::get('/fetch-mitem', [BarangController::class, 'fetchData'])->name('fetch.mitem');
+
+Route::get('/pinjaman/customer/search', [CustomerController::class, 'search'])->name('customer.search');
+Route::get('/pinjaman/customer', [CustomerController::class, 'index'])->name('customer.index');
+Route::post('/pinjaman/customer', [CustomerController::class, 'store'])->name('customer.store');
+Route::get('/pinjaman/customer/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
+Route::post('/pinjaman/customer/{id}', [CustomerController::class, 'update'])->name('customer.update');
+Route::delete('/pinjaman/customer/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+
+Route::get('/pinjaman/search', [PinjamanController::class, 'search'])->name('pinjaman.search');
+Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman.index');
+Route::post('/pinjaman', [PinjamanController::class, 'store'])->name('pinjaman.store');
+Route::get('/pinjaman/{id}', [PinjamanController::class, 'edit'])->name('pinjaman.edit');
+Route::post('/pinjaman/{id}', [PinjamanController::class, 'update'])->name('pinjaman.update');
+Route::delete('/pinjaman/{id}', [PinjamanController::class, 'destroy'])->name('pinjaman.destroy');
 
 Route::get('/motor/kategori/search', [MotorKategoriController::class, 'search'])->name('motorkategori.search');
 Route::get('/motor/kategori', [MotorKategoriController::class, 'index'])->name('motorkategori.index');

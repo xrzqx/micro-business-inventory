@@ -111,7 +111,7 @@
                         <div class="col-sm-12 form-group">
                             <label>Tanggal</label>
                             <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
-                                name="tanggal" />
+                                name="tanggal" autocomplete="off"/>
                             <div class="text-err">
                                 @error('tanggal')
                                 <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
@@ -142,6 +142,18 @@
             <li class="nonlist-item">
                 <a href="/">Dashboard</a>
             </li>
+            <li class="toggle-sublist">
+                <div class="flex-row-list">
+                    <span>Pinjaman</span>
+                    <span class="material-symbols-outlined toggle-icon rotate">
+                        chevron_right
+                    </span>
+                </div>
+            </li>
+            <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{ route('customer.index') }}">Daftar Customer</a></li>
+                <li class="sublist-item"><a href="{{route('pinjaman.index')}}">Daftar Pinjaman</a></li>
+            </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Salesperson</span>
