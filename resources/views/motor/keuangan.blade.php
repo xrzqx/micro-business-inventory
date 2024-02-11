@@ -238,6 +238,7 @@
                 </tbody>
             </table>
         </div>
+        {{-- {{ $data->appends(request()->input())->links() }} --}}
     </div>
 </div>
 @endsection

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container-f">
     <div class="sidenav">
         <ul class="main-list">
@@ -42,7 +41,7 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                <li class="sublist-item"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{route('motorkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
@@ -57,8 +56,7 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
@@ -66,7 +64,7 @@
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
-                <li class="sublist-item"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
+                <li class="sublist-item selected"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
@@ -77,9 +75,9 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('rokokkategori.index')}}">Daftar Kategori</a></li>
-                <li class="sublist-item selected"><a href="{{route('rokok.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item"><a href="{{route('rokok.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpenjualan.index')}}">Penjualan</a></li>
                 <!-- Add more sublist items as needed -->
@@ -149,11 +147,39 @@
         </span>
     </button>
     <div class="content">
-        <h1>Edit Barang</h1>
+        <h1>Laporan Keuangan</h1>
+        <div class="row">
+            <div class="col-sm-6">
+                <form class="d-flex" action="{{route('motorkeuangan.search')}}" method="GET">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
+                            name="start" autocomplete="off" value="{{ request('search') }}" 
+                            placeholder="Cari Tanggal Mulai"/>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker2"
+                            name="end" autocomplete="off" value="{{ request('search') }}" 
+                            placeholder="Cari Tanggal Akhir"/>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @if (Session::has('success'))
+        <div class="alert alert-success" id="success-alert">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Berhasil </strong> {{ Session::get('success') }}
+        </div>
+        <script>
+            $("#success-alert").fadeTo(5000, 500).slideUp(500);
+
+        </script>
+        @endif
         @if ($errors->any())
         <div class="alert alert-danger" id="failed-alert">
             <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong>Tidak berhasil </strong> menambahkan/mengubah barang
+            <strong>Tidak berhasil </strong> menambahkan/mengubah data
             <ul>
                 @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -161,86 +187,59 @@
             </ul>
         </div>
         <script>
-            $("#failed-alert").fadeTo(2000, 500).slideUp(500, function () {
-                $("#failed-alert").slideUp(500);
-            });
+            $("#failed-alert").fadeTo(5000, 500).slideUp(500);
 
         </script>
         @endif
-        <form method="POST" action="{{route('rokok.update', $barang[0]->id)}}">
-            @csrf
-            @method('POST')
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12 form-group">
-                        <label>Kode Barang</label>
-                        <input type="text" value="{{ $barang[0]->item->kode }}"
-                            class="form-control form-control-sm kode-produk" name="kode" />
-                        <div class="text-err">
-                            @error('kode')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-sm-12 form-group">
-                        <label>Nama Barang</label>
-                        <input type="text" value="{{ $barang[0]->item->nama }}"
-                            class="form-control form-control-sm nama-produk" name="nama" />
-                        <div class="text-err">
-                            @error('nama')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-sm-12 form-group">
-                        <label>Kategori</label>
-                        <div class="input-group">
-                            <select class="js-example-basic-single col-sm-12" name="kategori" id="kategori-produk">
-                                {{-- <option value="{{$barang[0]->kategori_id}}" selected>Pilih Kategori</option> --}}
-                                <option value="#" disabled selected hidden>Pilih Kategori</option>
-                                @foreach ($kategori as $item)
-                                    @if ($item->id == $barang[0]->kategori_id)
-                                        <option selected value="{{ $item->id }}">{{ $item->nama }}</option>
-                                    @else
-                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        @error('kategori')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-            <div class="row-12">
-                <div class="col-12">
-                    <button type="button" class="btn btn-secondary">
-                        <a href="{{route('rokok.index')}}"
-                            style="color: white; text-decoration-line: none">back</a>
-                    </button>
-                    <input type="submit" class="btn btn-primary btn-save" value="Save changes">
-                </div>
-            </div>
-        </form>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Tanggal</th>
+                        <th>Uraian</th>
+                        <th>Debit</th>
+                        <th>Kredit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $no = 0;
+                        $totalDebit = 0;
+                        $totalKredit = 0;
+                    @endphp
+                    @foreach ($data as $key => $value)
+                        <tr>
+                            <td>{{ ++$no }}</td>
+                            <td>{{ date('d-m-Y', $value->tanggal) }}</td>
+                            @if (isset($value->transaksi_pembelian_id))
+                                <td>Penjualan {{ $value->pembelian->barang->item->nama }}</td>
+                                <td>{{ number_format($value->harga, 0, ',', '.') }}</td>
+                                <td>0</td>
+                                @php
+                                    $totalDebit += $value->harga;
+                                @endphp
+                            @else
+                                <td>Pembelian {{ $value->barang->item->nama }}</td>
+                                <td>0</td>
+                                <td>{{ number_format($value->harga, 0, ',', '.') }}</td>
+                                @php
+                                    $totalKredit += $value->harga;
+                                @endphp
+                            @endif
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td><strong>Total:</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>{{ number_format($totalDebit, 0, ',', '.') }}</strong></td>
+                        <td><strong>{{ number_format($totalKredit, 0, ',', '.') }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {{-- {{ $data->appends(request()->input())->links() }} --}}
     </div>
 </div>
 @endsection

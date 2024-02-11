@@ -30,6 +30,7 @@ class MotorLaporanKeuanganController extends Controller
             ->with(['barang' => function ($query) {
                 $query->with('item');
             }])
+            // ->paginate(7);
             ->get();
         
         $penjualan = Penjualan::select('transaksi_penjualan.*')
@@ -47,6 +48,7 @@ class MotorLaporanKeuanganController extends Controller
             }])
             ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->get();
+            // ->paginate(7);
 
         // return $penjualan;
 
@@ -54,9 +56,20 @@ class MotorLaporanKeuanganController extends Controller
 
         $sortedData = $combinedData->sortByDesc('tanggal')->values();
 
+        // $combinedData = $pembelian->union($penjualan)->sortByDesc('tanggal')->values();
+
+        // $page = request()->get('page', 1);
+        // $perPage = 7;
+        // $offset = ($page - 1) * $perPage;
+
+        // $paginatedData = $combinedData->forPage($page, $perPage);
+
+        // return $paginatedData;
+
         return view("motor.keuangan", 
         [
             "data" => $sortedData,
+            // "data" => $paginatedData,
         ]);
     }
 
