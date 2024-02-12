@@ -150,8 +150,8 @@ Route::post('/studio/stock', [StudioStockController::class, 'store'])->name('stu
 // Route::post('/studio/stock/{id}', [StudioStockController::class, 'update'])->name('studiostock.update');
 // Route::delete('/studio/stock/{id}', [StudioStockController::class, 'destroy'])->name('studiostock.destroy');
 
-Route::get('/motor/keuangan/search', [StudioLaporanKeuanganController::class, 'search'])->name('studiokeuangan.search');
-Route::get('/motor/keuangan', [StudioLaporanKeuanganController::class, 'index'])->name('studiokeuangan.index');
+Route::get('/studio/keuangan/search', [StudioLaporanKeuanganController::class, 'search'])->name('studiokeuangan.search');
+Route::get('/studio/keuangan', [StudioLaporanKeuanganController::class, 'index'])->name('studiokeuangan.index');
 
 Route::get('/studio/search', [StudioBarangController::class, 'search'])->name('studio.search');
 Route::get('/studio', [StudioBarangController::class, 'index'])->name('studio.index');

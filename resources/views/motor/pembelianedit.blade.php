@@ -58,7 +58,6 @@
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
