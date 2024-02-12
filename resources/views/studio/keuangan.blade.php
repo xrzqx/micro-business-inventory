@@ -150,7 +150,7 @@
         <h1>Laporan Keuangan</h1>
         <div class="row">
             <div class="col-sm-6">
-                <form class="d-flex" action="{{route('motorkeuangan.search')}}" method="GET">
+                <form class="d-flex" action="{{route('studiokeuangan.search')}}" method="GET">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
                             name="start" autocomplete="off" value="{{ request('search') }}" 
@@ -208,23 +208,28 @@
                         $totalDebit = 0;
                         $totalKredit = 0;
                     @endphp
-                    @foreach ($data as $key => $value)
+                    @foreach ($data as $value)
                         <tr>
                             <td>{{ ++$no }}</td>
-                            <td>{{ date('d-m-Y', $value->tanggal) }}</td>
-                            @if (isset($value->transaksi_pembelian_id))
-                                <td>Penjualan {{ $value->pembelian->barang->item->nama }}</td>
-                                <td>{{ number_format($value->harga, 0, ',', '.') }}</td>
+                            @if (isset($value['tanggal']))
+                                <td>{{ date('d-m-Y', $value['tanggal']) }}</td>
+                            @else
+                                <td>{{ date('d-m-Y', $value['penjualan_produk']['tanggal']) }}</td>
+                            @endif
+
+                            @if (isset($value['penjualan_produk']))
+                                <td>Penjualan {{ $value['penjualan_produk']['produk']['nama']}}</td>
+                                <td>{{ number_format($value['penjualan_produk']['harga'], 0, ',', '.') }}</td>
                                 <td>0</td>
                                 @php
-                                    $totalDebit += $value->harga;
+                                    $totalDebit += $value['penjualan_produk']['harga'];
                                 @endphp
                             @else
-                                <td>Pembelian {{ $value->barang->item->nama }}</td>
+                                <td>Pembelian {{ $value['barang']['item']['nama'] }}</td>
                                 <td>0</td>
-                                <td>{{ number_format($value->harga, 0, ',', '.') }}</td>
+                                <td>{{ number_format($value['harga'], 0, ',', '.') }}</td>
                                 @php
-                                    $totalKredit += $value->harga;
+                                    $totalKredit += $value['harga'];
                                 @endphp
                             @endif
                         </tr>
