@@ -52,24 +52,23 @@ class MotorLaporanKeuanganController extends Controller
 
         // return $penjualan;
 
-        $combinedData = $pembelian->merge($penjualan);
+        // Append results to $data array
+        $data = array_merge($pembelian->toArray(), $penjualan->toArray());
 
-        $sortedData = $combinedData->sortByDesc('tanggal')->values();
+        // Sort $data array by 'tanggal' field
+        usort($data, function ($a, $b) {
+            $timeA = Carbon::parse($a['tanggal'])->timestamp;
+            $timeB = Carbon::parse($b['tanggal'])->timestamp;
+        
+            return $timeB - $timeA;
+        });
 
-        // $combinedData = $pembelian->union($penjualan)->sortByDesc('tanggal')->values();
-
-        // $page = request()->get('page', 1);
-        // $perPage = 7;
-        // $offset = ($page - 1) * $perPage;
-
-        // $paginatedData = $combinedData->forPage($page, $perPage);
-
-        // return $paginatedData;
+        // Convert back to an associative array with numeric keys
+        $associativeArray = array_values($data);
 
         return view("motor.keuangan", 
         [
-            "data" => $sortedData,
-            // "data" => $paginatedData,
+            "data" => $associativeArray,
         ]);
     }
 
@@ -110,14 +109,25 @@ class MotorLaporanKeuanganController extends Controller
             }])
             ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->get();
+        // return $pembelian;
 
-        $combinedData = $pembelian->merge($penjualan);
+        // Append results to $data array
+        $data = array_merge($pembelian->toArray(), $penjualan->toArray());
 
-        $sortedData = $combinedData->sortByDesc('tanggal')->values();
+        // Sort $data array by 'tanggal' field
+        usort($data, function ($a, $b) {
+            $timeA = Carbon::parse($a['tanggal'])->timestamp;
+            $timeB = Carbon::parse($b['tanggal'])->timestamp;
+        
+            return $timeB - $timeA;
+        });
+
+        // Convert back to an associative array with numeric keys
+        $associativeArray = array_values($data);
 
         return view("motor.keuangan", 
         [
-            "data" => $sortedData,
+            "data" => $associativeArray,
         ]);
     }
 }

@@ -208,23 +208,23 @@
                         $totalDebit = 0;
                         $totalKredit = 0;
                     @endphp
-                    @foreach ($data as $key => $value)
+                    @foreach ($data as $value)
                         <tr>
                             <td>{{ ++$no }}</td>
-                            <td>{{ date('d-m-Y', $value->tanggal) }}</td>
-                            @if (isset($value->transaksi_pembelian_id))
-                                <td>Penjualan {{ $value->pembelian->barang->item->nama }}</td>
-                                <td>{{ number_format($value->harga, 0, ',', '.') }}</td>
+                            <td>{{ date('d-m-Y', $value['tanggal']) }}</td>
+                            @if (isset($value['barang']))
+                                <td>Pembelian {{ $value['barang']['item']['nama']}}</td>
                                 <td>0</td>
+                                <td>{{ number_format($value['harga'], 0, ',', '.') }}</td>
                                 @php
-                                    $totalDebit += $value->harga;
+                                    $totalKredit += $value['harga'];
                                 @endphp
                             @else
-                                <td>Pembelian {{ $value->barang->item->nama }}</td>
+                                <td>Penjualan {{ $value['pembelian']['barang']['item']['nama'] }}</td>
+                                <td>{{ number_format($value['harga'], 0, ',', '.') }}</td>
                                 <td>0</td>
-                                <td>{{ number_format($value->harga, 0, ',', '.') }}</td>
                                 @php
-                                    $totalKredit += $value->harga;
+                                    $totalDebit += $value['harga'];
                                 @endphp
                             @endif
                         </tr>
