@@ -39,14 +39,6 @@ class SalesPenjualanController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -77,10 +69,14 @@ class SalesPenjualanController extends Controller
         $timestamp = Carbon::parse($selectedDate)->timestamp;
 
         $sales_pembelian = SalesPembelian::find($request->batch);
-        // return $item;
+
+        $sales_pembelian_harga = $sales_pembelian->harga / $sales_pembelian->jumlah;
+        $sales_penjualan_harga = $sales_pembelian_harga * $request->jumlah;
+
         SalesPenjualan::create([
             'sales_pembelian_id' => $request->batch,
             'jumlah' => $request->jumlah,
+            'harga' => $sales_penjualan_harga,
             'tanggal' => $timestamp,
         ]);
 
@@ -88,30 +84,6 @@ class SalesPenjualanController extends Controller
         $sales_pembelian->save();
 
         return redirect()->route('salespenjualan.index')->with('success', 'menambahkan penjualan barang');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
     }
 
     /**
