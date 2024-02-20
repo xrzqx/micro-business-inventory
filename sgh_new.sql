@@ -123,6 +123,7 @@ CREATE TABLE sales_penjualan
 	id INT NOT NULL AUTO_INCREMENT,
     sales_pembelian_id INT NOT NULL,
     jumlah INT NOT NULL,
+    harga INT NOT NULL,
     tanggal BIGINT NOT NULL,
 	PRIMARY KEY (id),
     FOREIGN KEY fk_sales_pembelian_sales_penjualan (sales_pembelian_id) REFERENCES sales_pembelian (id)
@@ -174,8 +175,8 @@ CREATE TABLE pinjaman
 (
 	id INT NOT NULL AUTO_INCREMENT,
 	customer_id INT NOT NULL,
-    debit INT NOT NULL,
-    kredit INT NOT NULL,
+    debit INT NOT NULL default 0,
+    kredit INT NOT NULL default 0,
     tanggal BIGINT,
     PRIMARY KEY (id),
     FOREIGN KEY fk_customer_pinjaman (customer_id) REFERENCES customer (id)
