@@ -69,6 +69,7 @@
                 <li class="sublist-item"><a href="{{ route('sales.index') }}">Daftar Sales</a></li>
                 <li class="sublist-item"><a href="{{route('salespembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('salespenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('saleskeuangan.index')}}">Laporan Keuangan</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">

@@ -31,6 +31,7 @@
                 <li class="sublist-item"><a href="{{ route('sales.index') }}">Daftar Sales</a></li>
                 <li class="sublist-item"><a href="{{route('salespembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('salespenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('saleskeuangan.index')}}">Laporan Keuangan</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -196,7 +197,6 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Tanggal</th>
                         <th>Uraian</th>
                         <th>Debit</th>
                         <th>Kredit</th>
@@ -211,27 +211,26 @@
                     @foreach ($data as $value)
                         <tr>
                             <td>{{ ++$no }}</td>
-                            <td>{{ date('d-m-Y', $value['tanggal']) }}</td>
+                            {{-- <td>{{ date('d-m-Y', $value['tanggal']) }}</td> --}}
                             @if (isset($value['barang']))
-                                <td>Pembelian {{ $value['barang']['item']['nama']}}</td>
+                                <td>Pembelian {{ $value['barang']['item']['nama']}} ({{ $value['barang']['item']['kode']}})</td>
                                 <td>0</td>
-                                <td>{{ number_format($value['harga'], 0, ',', '.') }}</td>
+                                <td>{{ number_format($value['total_harga'], 0, ',', '.') }}</td>
                                 @php
-                                    $totalKredit += $value['harga'];
+                                    $totalKredit += $value['total_harga'];
                                 @endphp
                             @else
-                                <td>Penjualan {{ $value['pembelian']['barang']['item']['nama'] }}</td>
-                                <td>{{ number_format($value['harga'], 0, ',', '.') }}</td>
+                                <td>Penjualan {{ $value['pembelian']['barang']['item']['nama'] }} ({{ $value['pembelian']['barang']['item']['kode'] }})</td>
+                                <td>{{ number_format($value['total_harga'], 0, ',', '.') }}</td>
                                 <td>0</td>
                                 @php
-                                    $totalDebit += $value['harga'];
+                                    $totalDebit += $value['total_harga'];
                                 @endphp
                             @endif
                         </tr>
                     @endforeach
                     <tr>
                         <td><strong>Total:</strong></td>
-                        <td></td>
                         <td></td>
                         <td><strong>{{ number_format($totalDebit, 0, ',', '.') }}</strong></td>
                         <td><strong>{{ number_format($totalKredit, 0, ',', '.') }}</strong></td>

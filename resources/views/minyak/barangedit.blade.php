@@ -32,6 +32,7 @@
                 <li class="sublist-item"><a href="{{ route('sales.index') }}">Daftar Sales</a></li>
                 <li class="sublist-item"><a href="{{route('salespembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('salespenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('saleskeuangan.index')}}">Laporan Keuangan</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -233,7 +234,7 @@
             <div class="row-12">
                 <div class="col-12">
                     <button type="button" class="btn btn-secondary">
-                        <a href="{{route('rokok.index')}}"
+                        <a href="{{route('minyak.index')}}"
                             style="color: white; text-decoration-line: none">back</a>
                     </button>
                     <input type="submit" class="btn btn-primary btn-save" value="Save changes">

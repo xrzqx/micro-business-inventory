@@ -60,6 +60,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
+            $('.js-example-basic-multiple').select2();
             $('body').on('shown.bs.modal', '#exampleModalCenter', function () {
                 $(this).find('select').each(function () {
                     var dropdownParent = $(document.body);

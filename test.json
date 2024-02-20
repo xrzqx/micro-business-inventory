@@ -1,50 +1,179 @@
 [{
-    "id": 304,
-    "master_item_id": 1409,
-    "supplier": "test",
-    "batch": "SEP13",
-    "jumlah": 1000,
-    "sisa": 990,
-    "het": 2000,
-    "harga": 1000,
-    "tanggal": 1707350400,
-    "barang": {
-        "id": 1409,
-        "item_id": 1478,
-        "kategori_id": 1,
-        "item": {
-            "id": 1478,
-            "kode": "test",
-            "nama": "test",
-            "stock": 990
+    "sales_id": 2,
+    "transaksi_pembelian_id": 346,
+    "total_harga": "347500",
+    "total_barang": "5",
+    "pembelian": {
+        "id": 346,
+        "master_item_id": 1403,
+        "supplier": "test",
+        "batch": "TEST",
+        "jumlah": 20,
+        "sisa": 0,
+        "het": null,
+        "harga": 100000,
+        "tanggal": 1708387200,
+        "barang": {
+            "id": 1403,
+            "item_id": 1471,
+            "kategori_id": 17,
+            "item": {
+                "id": 1471,
+                "kode": "BRS001",
+                "nama": "Beras Sultan Aji",
+                "stock": 0
+            }
+        }
+    },
+    "sales": {
+        "id": 2,
+        "nama": "Pak Pri"
+    }
+}, {
+    "sales_id": 1,
+    "transaksi_pembelian_id": 346,
+    "total_harga": "347500",
+    "total_barang": "5",
+    "pembelian": {
+        "id": 346,
+        "master_item_id": 1403,
+        "supplier": "test",
+        "batch": "TEST",
+        "jumlah": 20,
+        "sisa": 0,
+        "het": null,
+        "harga": 100000,
+        "tanggal": 1708387200,
+        "barang": {
+            "id": 1403,
+            "item_id": 1471,
+            "kategori_id": 17,
+            "item": {
+                "id": 1471,
+                "kode": "BRS001",
+                "nama": "Beras Sultan Aji",
+                "stock": 0
+            }
+        }
+    },
+    "sales": {
+        "id": 1,
+        "nama": "Pak Dar"
+    }
+}, {
+    "sales_pembelian_id": 67,
+    "total_barang": "5",
+    "total_harga": "347500",
+    "sales_pembelian": {
+        "id": 67,
+        "sales_id": 1,
+        "transaksi_pembelian_id": 346,
+        "jumlah": 5,
+        "sisa": 0,
+        "harga": 347500,
+        "tanggal": 1708387200,
+        "sales": {
+            "id": 1,
+            "nama": "Pak Dar"
+        },
+        "pembelian": {
+            "id": 346,
+            "master_item_id": 1403,
+            "supplier": "test",
+            "batch": "TEST",
+            "jumlah": 20,
+            "sisa": 0,
+            "het": null,
+            "harga": 100000,
+            "tanggal": 1708387200,
+            "barang": {
+                "id": 1403,
+                "item_id": 1471,
+                "kategori_id": 17,
+                "item": {
+                    "id": 1471,
+                    "kode": "BRS001",
+                    "nama": "Beras Sultan Aji",
+                    "stock": 0
+                }
+            }
         }
     }
 }, {
-    "id": 124,
-    "transaksi_pembelian_id": 304,
-    "nama": "test penjualan",
-    "jumlah": 10,
-    "harga": 2000,
-    "tanggal": 1707350400,
-    "pembelian": {
-        "id": 304,
-        "master_item_id": 1409,
-        "supplier": "test",
-        "batch": "SEP13",
-        "jumlah": 1000,
-        "sisa": 990,
-        "het": 2000,
-        "harga": 1000,
-        "tanggal": 1707350400,
-        "barang": {
-            "id": 1409,
-            "item_id": 1478,
-            "kategori_id": 1,
-            "item": {
-                "id": 1478,
-                "kode": "test",
-                "nama": "test",
-                "stock": 990
+    "sales_pembelian_id": 69,
+    "total_barang": "5",
+    "total_harga": "347500",
+    "sales_pembelian": {
+        "id": 69,
+        "sales_id": 2,
+        "transaksi_pembelian_id": 346,
+        "jumlah": 5,
+        "sisa": 0,
+        "harga": 347500,
+        "tanggal": 1708387200,
+        "sales": {
+            "id": 2,
+            "nama": "Pak Pri"
+        },
+        "pembelian": {
+            "id": 346,
+            "master_item_id": 1403,
+            "supplier": "test",
+            "batch": "TEST",
+            "jumlah": 20,
+            "sisa": 0,
+            "het": null,
+            "harga": 100000,
+            "tanggal": 1708387200,
+            "barang": {
+                "id": 1403,
+                "item_id": 1471,
+                "kategori_id": 17,
+                "item": {
+                    "id": 1471,
+                    "kode": "BRS001",
+                    "nama": "Beras Sultan Aji",
+                    "stock": 0
+                }
+            }
+        }
+    }
+}, {
+    "sales_pembelian_id": 70,
+    "total_barang": "10",
+    "total_harga": "695000",
+    "sales_pembelian": {
+        "id": 70,
+        "sales_id": 1,
+        "transaksi_pembelian_id": 346,
+        "jumlah": 10,
+        "sisa": 0,
+        "harga": 695000,
+        "tanggal": 1708992000,
+        "sales": {
+            "id": 1,
+            "nama": "Pak Dar"
+        },
+        "pembelian": {
+            "id": 346,
+            "master_item_id": 1403,
+            "supplier": "test",
+            "batch": "TEST",
+            "jumlah": 20,
+            "sisa": 0,
+            "het": null,
+            "harga": 100000,
+            "tanggal": 1708387200,
+            "barang": {
+                "id": 1403,
+                "item_id": 1471,
+                "kategori_id": 17,
+                "item": {
+                    "id": 1471,
+                    "kode": "BRS001",
+                    "nama": "Beras Sultan Aji",
+                    "stock": 0
+                }
             }
         }
     }

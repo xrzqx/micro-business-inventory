@@ -19,13 +19,14 @@ class MotorLaporanKeuanganController extends Controller
         $formattedDate = $currentTimestamp->format('d-m-Y');
         $timestamp = Carbon::parse($formattedDate)->timestamp;
         
-        $pembelian = Pembelian::select('transaksi_pembelian.*')
+        $pembelian = Pembelian::select('transaksi_pembelian.master_item_id', \DB::raw('SUM(transaksi_pembelian.harga) as total_harga'))
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
             ->join('item', 'item.id', '=', 'master_item.item_id')
             ->where('kategori.toko', '=', 'SGH_Motor')
             ->where('transaksi_pembelian.tanggal', '>=', $timestamp)
             ->where('transaksi_pembelian.tanggal', '<=', $timestamp)
+            ->groupBy('transaksi_pembelian.master_item_id')
             ->orderBy('transaksi_pembelian.tanggal', 'desc')
             ->with(['barang' => function ($query) {
                 $query->with('item');
@@ -33,14 +34,17 @@ class MotorLaporanKeuanganController extends Controller
             // ->paginate(7);
             ->get();
         
-        $penjualan = Penjualan::select('transaksi_penjualan.*')
+        // return $pembelian;
+        
+        $penjualan = Penjualan::select('transaksi_penjualan.transaksi_pembelian_id', \DB::raw('SUM(transaksi_pembelian.harga) as total_harga'))
             ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
             ->where('kategori.toko', '=', 'SGH_Motor')
-            ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->where('transaksi_penjualan.tanggal', '>=', $timestamp)
             ->where('transaksi_penjualan.tanggal', '<=', $timestamp)
+            ->groupBy('transaksi_penjualan.transaksi_pembelian_id')
+            ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->with(['pembelian' => function ($query) {
                 $query->with(['barang' => function ($query) {
                     $query->with('item');
@@ -56,12 +60,12 @@ class MotorLaporanKeuanganController extends Controller
         $data = array_merge($pembelian->toArray(), $penjualan->toArray());
 
         // Sort $data array by 'tanggal' field
-        usort($data, function ($a, $b) {
-            $timeA = Carbon::parse($a['tanggal'])->timestamp;
-            $timeB = Carbon::parse($b['tanggal'])->timestamp;
+        // usort($data, function ($a, $b) {
+        //     $timeA = Carbon::parse($a['tanggal'])->timestamp;
+        //     $timeB = Carbon::parse($b['tanggal'])->timestamp;
         
-            return $timeB - $timeA;
-        });
+        //     return $timeB - $timeA;
+        // });
 
         // Convert back to an associative array with numeric keys
         $associativeArray = array_values($data);
@@ -81,27 +85,31 @@ class MotorLaporanKeuanganController extends Controller
         $timestampStart = Carbon::parse($searchStart)->timestamp;
         $timestampEnd = Carbon::parse($searchEnd)->timestamp;
         
-        $pembelian = Pembelian::select('transaksi_pembelian.*')
+        $pembelian = Pembelian::select('transaksi_pembelian.master_item_id', \DB::raw('SUM(transaksi_pembelian.harga) as total_harga'))
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
             ->join('item', 'item.id', '=', 'master_item.item_id')
             ->where('kategori.toko', '=', 'SGH_Motor')
             ->where('transaksi_pembelian.tanggal', '>=', $timestampStart)
             ->where('transaksi_pembelian.tanggal', '<=', $timestampEnd)
+            ->groupBy('transaksi_pembelian.master_item_id')
             ->orderBy('transaksi_pembelian.tanggal', 'desc')
             ->with(['barang' => function ($query) {
                 $query->with('item');
             }])
+            // ->paginate(7);
             ->get();
+        // return $pembelian;
         
-        $penjualan = Penjualan::select('transaksi_penjualan.*')
+        $penjualan = Penjualan::select('transaksi_penjualan.transaksi_pembelian_id', \DB::raw('SUM(transaksi_penjualan.harga) as total_harga'))
             ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
             ->where('kategori.toko', '=', 'SGH_Motor')
-            ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->where('transaksi_penjualan.tanggal', '>=', $timestampStart)
             ->where('transaksi_penjualan.tanggal', '<=', $timestampEnd)
+            ->groupBy('transaksi_penjualan.transaksi_pembelian_id')
+            ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->with(['pembelian' => function ($query) {
                 $query->with(['barang' => function ($query) {
                     $query->with('item');
@@ -115,12 +123,12 @@ class MotorLaporanKeuanganController extends Controller
         $data = array_merge($pembelian->toArray(), $penjualan->toArray());
 
         // Sort $data array by 'tanggal' field
-        usort($data, function ($a, $b) {
-            $timeA = Carbon::parse($a['tanggal'])->timestamp;
-            $timeB = Carbon::parse($b['tanggal'])->timestamp;
+        // usort($data, function ($a, $b) {
+        //     $timeA = Carbon::parse($a['tanggal'])->timestamp;
+        //     $timeB = Carbon::parse($b['tanggal'])->timestamp;
         
-            return $timeB - $timeA;
-        });
+        //     return $timeB - $timeA;
+        // });
 
         // Convert back to an associative array with numeric keys
         $associativeArray = array_values($data);

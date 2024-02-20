@@ -22,6 +22,8 @@ use App\Http\Controllers\StudioLaporanKeuanganController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SalesPenjualanController;
 use App\Http\Controllers\SalesPembelianController;
+use App\Http\Controllers\SalesLaporanKeuanganController;
+use App\Http\Controllers\SalesKeuanganController;
 
 use App\Http\Controllers\RokokKategoriController;
 use App\Http\Controllers\RokokBarangController;
@@ -62,6 +64,7 @@ Route::get('/', function () {
 Route::get('/fetch-batch', [BatchController::class, 'fetchData'])->name('fetch.batch');
 Route::get('/fetch-batch-sales', [BatchSalesController::class, 'fetchData'])->name('fetch.batchsales');
 Route::get('/fetch-mitem', [BarangController::class, 'fetchData'])->name('fetch.mitem');
+Route::get('/fetch-keuangan-sales', [SalesKeuanganController::class, 'fetchData'])->name('fetch.keuangansales');
 
 Route::get('/pinjaman/customer/search', [CustomerController::class, 'search'])->name('customer.search');
 Route::get('/pinjaman/customer', [CustomerController::class, 'index'])->name('customer.index');
@@ -173,6 +176,9 @@ Route::post('/sales/penjualan', [SalesPenjualanController::class, 'store'])->nam
 Route::get('/sales/penjualan/{id}', [SalesPenjualanController::class, 'edit'])->name('salespenjualan.edit');
 Route::post('/sales/penjualan/{id}', [SalesPenjualanController::class, 'update'])->name('salespenjualan.update');
 Route::delete('/sales/penjualan/{id}', [SalesPenjualanController::class, 'destroy'])->name('salespenjualan.destroy');
+
+Route::get('/sales/keuangan/search', [SalesLaporanKeuanganController::class, 'search'])->name('saleskeuangan.search');
+Route::get('/sales/keuangan', [SalesLaporanKeuanganController::class, 'index'])->name('saleskeuangan.index');
 
 Route::get('/sales/search', [SalesController::class, 'search'])->name('sales.search');
 Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');

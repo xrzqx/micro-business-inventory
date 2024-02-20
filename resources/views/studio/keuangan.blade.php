@@ -31,6 +31,7 @@
                 <li class="sublist-item"><a href="{{ route('sales.index') }}">Daftar Sales</a></li>
                 <li class="sublist-item"><a href="{{route('salespembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('salespenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('saleskeuangan.index')}}">Laporan Keuangan</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -191,12 +192,14 @@
 
         </script>
         @endif
+        <span>Tanggal : {{$tanggalStart}} </span>
+        <span style="margin-left:1rem">Sampai Tanggal: {{$tanggalEnd}}</span>
         <div class="table-responsive">
             <table class="table">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Tanggal</th>
+                        {{-- <th>Tanggal</th> --}}
                         <th>Uraian</th>
                         <th>Debit</th>
                         <th>Kredit</th>
@@ -211,32 +214,31 @@
                     @foreach ($data as $value)
                         <tr>
                             <td>{{ ++$no }}</td>
-                            @if (isset($value['tanggal']))
+                            {{-- @if (isset($value['tanggal']))
                                 <td>{{ date('d-m-Y', $value['tanggal']) }}</td>
                             @else
                                 <td>{{ date('d-m-Y', $value['penjualan_produk']['tanggal']) }}</td>
-                            @endif
+                            @endif --}}
 
-                            @if (isset($value['penjualan_produk']))
-                                <td>Penjualan {{ $value['penjualan_produk']['produk']['nama']}}</td>
-                                <td>{{ number_format($value['penjualan_produk']['harga'], 0, ',', '.') }}</td>
+                            @if (isset($value['produk']))
+                                <td>Penjualan {{ $value['produk']['nama']}}</td>
+                                <td>{{ number_format($value['total_harga'], 0, ',', '.') }}</td>
                                 <td>0</td>
                                 @php
-                                    $totalDebit += $value['penjualan_produk']['harga'];
+                                    $totalDebit += $value['total_harga'];
                                 @endphp
                             @else
                                 <td>Pembelian {{ $value['barang']['item']['nama'] }}</td>
                                 <td>0</td>
-                                <td>{{ number_format($value['harga'], 0, ',', '.') }}</td>
+                                <td>{{ number_format($value['total_harga'], 0, ',', '.') }}</td>
                                 @php
-                                    $totalKredit += $value['harga'];
+                                    $totalKredit += $value['total_harga'];
                                 @endphp
                             @endif
                         </tr>
                     @endforeach
                     <tr>
                         <td><strong>Total:</strong></td>
-                        <td></td>
                         <td></td>
                         <td><strong>{{ number_format($totalDebit, 0, ',', '.') }}</strong></td>
                         <td><strong>{{ number_format($totalKredit, 0, ',', '.') }}</strong></td>
