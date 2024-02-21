@@ -29,19 +29,23 @@ use App\Http\Controllers\RokokKategoriController;
 use App\Http\Controllers\RokokBarangController;
 use App\Http\Controllers\RokokPembelianController;
 use App\Http\Controllers\RokokPenjualanController;
+use App\Http\Controllers\RokokLaporanKeuanganController;
 
 use App\Http\Controllers\MinyakKategoriController;
 use App\Http\Controllers\MinyakBarangController;
 use App\Http\Controllers\MinyakPembelianController;
 use App\Http\Controllers\MinyakPenjualanController;
+use App\Http\Controllers\MinyakLaporanKeuanganController;
 
 use App\Http\Controllers\BerasKategoriController;
 use App\Http\Controllers\BerasBarangController;
 use App\Http\Controllers\BerasPembelianController;
 use App\Http\Controllers\BerasPenjualanController;
+use App\Http\Controllers\BerasLaporanKeuanganController;
 
 use App\Http\Controllers\BrilinkTransaksiController;
 use App\Http\Controllers\BrilinkBankController;
+use App\Http\Controllers\BrilinkLaporanKeuanganController;
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PinjamanController;
@@ -208,6 +212,9 @@ Route::get('/rokok/penjualan/{id}', [RokokPenjualanController::class, 'edit'])->
 Route::post('/rokok/penjualan/{id}', [RokokPenjualanController::class, 'update'])->name('rokokpenjualan.update');
 Route::delete('/rokok/penjualan/{id}', [RokokPenjualanController::class, 'destroy'])->name('rokokpenjualan.destroy');
 
+Route::get('/rokok/keuangan/search', [RokokLaporanKeuanganController::class, 'search'])->name('rokokkeuangan.search');
+Route::get('/rokok/keuangan', [RokokLaporanKeuanganController::class, 'index'])->name('rokokkeuangan.index');
+
 Route::get('/rokok/search', [RokokBarangController::class, 'search'])->name('rokok.search');
 Route::get('/rokok', [RokokBarangController::class, 'index'])->name('rokok.index');
 Route::post('/rokok', [RokokBarangController::class, 'store'])->name('rokok.store');
@@ -235,6 +242,9 @@ Route::post('/minyak/penjualan', [MinyakPenjualanController::class, 'store'])->n
 Route::get('/minyak/penjualan/{id}', [MinyakPenjualanController::class, 'edit'])->name('minyakpenjualan.edit');
 Route::post('/minyak/penjualan/{id}', [MinyakPenjualanController::class, 'update'])->name('minyakpenjualan.update');
 Route::delete('/minyak/penjualan/{id}', [MinyakPenjualanController::class, 'destroy'])->name('minyakpenjualan.destroy');
+
+Route::get('/minyak/keuangan/search', [MinyakLaporanKeuanganController::class, 'search'])->name('minyakkeuangan.search');
+Route::get('/minyak/keuangan', [MinyakLaporanKeuanganController::class, 'index'])->name('minyakkeuangan.index');
 
 Route::get('/minyak/search', [MinyakBarangController::class, 'search'])->name('minyak.search');
 Route::get('/minyak', [MinyakBarangController::class, 'index'])->name('minyak.index');
@@ -264,6 +274,9 @@ Route::get('/beras/penjualan/{id}', [BerasPenjualanController::class, 'edit'])->
 Route::post('/beras/penjualan/{id}', [BerasPenjualanController::class, 'update'])->name('beraspenjualan.update');
 Route::delete('/beras/penjualan/{id}', [BerasPenjualanController::class, 'destroy'])->name('beraspenjualan.destroy');
 
+Route::get('/beras/keuangan/search', [BerasLaporanKeuanganController::class, 'search'])->name('beraskeuangan.search');
+Route::get('/beras/keuangan', [BerasLaporanKeuanganController::class, 'index'])->name('beraskeuangan.index');
+
 Route::get('/beras/search', [BerasBarangController::class, 'search'])->name('beras.search');
 Route::get('/beras', [BerasBarangController::class, 'index'])->name('beras.index');
 Route::post('/beras', [BerasBarangController::class, 'store'])->name('beras.store');
@@ -277,6 +290,9 @@ Route::post('/brilink/bank', [BrilinkBankController::class, 'store'])->name('bri
 Route::get('/brilink/bank/{id}', [BrilinkBankController::class, 'edit'])->name('brilinkbank.edit');
 Route::post('/brilink/bank/{id}', [BrilinkBankController::class, 'update'])->name('brilinkbank.update');
 Route::delete('/brilink/bank/{id}', [BrilinkBankController::class, 'destroy'])->name('brilinkbank.destroy');
+
+Route::get('/brilink/keuangan/search', [BrilinkLaporanKeuanganController::class, 'search'])->name('brilinkkeuangan.search');
+Route::get('/brilink/keuangan', [BrilinkLaporanKeuanganController::class, 'index'])->name('brilinkkeuangan.index');
 
 Route::get('/brilink/search', [BrilinkTransaksiController::class, 'search'])->name('brilink.search');
 Route::get('/brilink', [BrilinkTransaksiController::class, 'index'])->name('brilink.index');

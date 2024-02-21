@@ -1,179 +1,348 @@
 [{
-    "sales_id": 2,
-    "transaksi_pembelian_id": 346,
-    "total_harga": "347500",
-    "total_barang": "5",
+    "id": 214,
+    "transaksi_pembelian_id": 339,
+    "nama": "Monica",
+    "jumlah": 2,
+    "harga": 322000,
+    "tanggal": 1708300800,
     "pembelian": {
-        "id": 346,
-        "master_item_id": 1403,
-        "supplier": "test",
-        "batch": "TEST",
-        "jumlah": 20,
+        "id": 339,
+        "master_item_id": 1408,
+        "supplier": "PT Minyakita",
+        "batch": "16Feb2024",
+        "jumlah": 50,
+        "sisa": 12,
+        "het": null,
+        "harga": 7900000,
+        "tanggal": 1708041600,
+        "barang": {
+            "id": 1408,
+            "item_id": 1476,
+            "kategori_id": 15,
+            "item": {
+                "id": 1476,
+                "kode": "MYK001",
+                "nama": "Minyakita 1 L",
+                "stock": 31
+            }
+        }
+    }
+}, {
+    "id": 213,
+    "transaksi_pembelian_id": 339,
+    "nama": "Pak Sumardi",
+    "jumlah": 3,
+    "harga": 489000,
+    "tanggal": 1708300800,
+    "pembelian": {
+        "id": 339,
+        "master_item_id": 1408,
+        "supplier": "PT Minyakita",
+        "batch": "16Feb2024",
+        "jumlah": 50,
+        "sisa": 12,
+        "het": null,
+        "harga": 7900000,
+        "tanggal": 1708041600,
+        "barang": {
+            "id": 1408,
+            "item_id": 1476,
+            "kategori_id": 15,
+            "item": {
+                "id": 1476,
+                "kode": "MYK001",
+                "nama": "Minyakita 1 L",
+                "stock": 31
+            }
+        }
+    }
+}, {
+    "id": 212,
+    "transaksi_pembelian_id": 339,
+    "nama": "Mas Wahyudi",
+    "jumlah": 1,
+    "harga": 161000,
+    "tanggal": 1708214400,
+    "pembelian": {
+        "id": 339,
+        "master_item_id": 1408,
+        "supplier": "PT Minyakita",
+        "batch": "16Feb2024",
+        "jumlah": 50,
+        "sisa": 12,
+        "het": null,
+        "harga": 7900000,
+        "tanggal": 1708041600,
+        "barang": {
+            "id": 1408,
+            "item_id": 1476,
+            "kategori_id": 15,
+            "item": {
+                "id": 1476,
+                "kode": "MYK001",
+                "nama": "Minyakita 1 L",
+                "stock": 31
+            }
+        }
+    }
+}, {
+    "id": 210,
+    "transaksi_pembelian_id": 339,
+    "nama": "Tetangga Pak Bintang",
+    "jumlah": 1,
+    "harga": 161000,
+    "tanggal": 1708214400,
+    "pembelian": {
+        "id": 339,
+        "master_item_id": 1408,
+        "supplier": "PT Minyakita",
+        "batch": "16Feb2024",
+        "jumlah": 50,
+        "sisa": 12,
+        "het": null,
+        "harga": 7900000,
+        "tanggal": 1708041600,
+        "barang": {
+            "id": 1408,
+            "item_id": 1476,
+            "kategori_id": 15,
+            "item": {
+                "id": 1476,
+                "kode": "MYK001",
+                "nama": "Minyakita 1 L",
+                "stock": 31
+            }
+        }
+    }
+}, {
+    "id": 211,
+    "transaksi_pembelian_id": 333,
+    "nama": "Tetangga Pak Bintang",
+    "jumlah": 1,
+    "harga": 148000,
+    "tanggal": 1708214400,
+    "pembelian": {
+        "id": 333,
+        "master_item_id": 1426,
+        "supplier": "PT Sanky",
+        "batch": "31Jan2024",
+        "jumlah": 42,
+        "sisa": 39,
+        "het": null,
+        "harga": 6090000,
+        "tanggal": 1706659200,
+        "barang": {
+            "id": 1426,
+            "item_id": 1495,
+            "kategori_id": 15,
+            "item": {
+                "id": 1495,
+                "kode": "MYK002",
+                "nama": "Sanky 800 ML",
+                "stock": 64
+            }
+        }
+    }
+}, {
+    "id": 205,
+    "transaksi_pembelian_id": 339,
+    "nama": "Bu Us",
+    "jumlah": 1,
+    "harga": 161000,
+    "tanggal": 1708128000,
+    "pembelian": {
+        "id": 339,
+        "master_item_id": 1408,
+        "supplier": "PT Minyakita",
+        "batch": "16Feb2024",
+        "jumlah": 50,
+        "sisa": 12,
+        "het": null,
+        "harga": 7900000,
+        "tanggal": 1708041600,
+        "barang": {
+            "id": 1408,
+            "item_id": 1476,
+            "kategori_id": 15,
+            "item": {
+                "id": 1476,
+                "kode": "MYK001",
+                "nama": "Minyakita 1 L",
+                "stock": 31
+            }
+        }
+    }
+}, {
+    "id": 209,
+    "transaksi_pembelian_id": 339,
+    "nama": "Pak Sumardi",
+    "jumlah": 4,
+    "harga": 644000,
+    "tanggal": 1708128000,
+    "pembelian": {
+        "id": 339,
+        "master_item_id": 1408,
+        "supplier": "PT Minyakita",
+        "batch": "16Feb2024",
+        "jumlah": 50,
+        "sisa": 12,
+        "het": null,
+        "harga": 7900000,
+        "tanggal": 1708041600,
+        "barang": {
+            "id": 1408,
+            "item_id": 1476,
+            "kategori_id": 15,
+            "item": {
+                "id": 1476,
+                "kode": "MYK001",
+                "nama": "Minyakita 1 L",
+                "stock": 31
+            }
+        }
+    }
+}, {
+    "id": 201,
+    "transaksi_pembelian_id": 334,
+    "nama": "Mas Wahyudi",
+    "jumlah": 1,
+    "harga": 161000,
+    "tanggal": 1707264000,
+    "pembelian": {
+        "id": 334,
+        "master_item_id": 1408,
+        "supplier": "PT Minyakita",
+        "batch": "31Jan2024",
+        "jumlah": 76,
+        "sisa": 19,
+        "het": null,
+        "harga": 11932000,
+        "tanggal": 1706659200,
+        "barang": {
+            "id": 1408,
+            "item_id": 1476,
+            "kategori_id": 15,
+            "item": {
+                "id": 1476,
+                "kode": "MYK001",
+                "nama": "Minyakita 1 L",
+                "stock": 31
+            }
+        }
+    }
+}, {
+    "id": 185,
+    "transaksi_pembelian_id": 336,
+    "nama": "PT KTI",
+    "jumlah": 40,
+    "harga": 5880000,
+    "tanggal": 1707177600,
+    "pembelian": {
+        "id": 336,
+        "master_item_id": 1426,
+        "supplier": "PT Sanky",
+        "batch": "06Feb2024",
+        "jumlah": 40,
         "sisa": 0,
         "het": null,
-        "harga": 100000,
-        "tanggal": 1708387200,
+        "harga": 5880000,
+        "tanggal": 1707177600,
         "barang": {
-            "id": 1403,
-            "item_id": 1471,
-            "kategori_id": 17,
+            "id": 1426,
+            "item_id": 1495,
+            "kategori_id": 15,
             "item": {
-                "id": 1471,
-                "kode": "BRS001",
-                "nama": "Beras Sultan Aji",
-                "stock": 0
+                "id": 1495,
+                "kode": "MYK002",
+                "nama": "Sanky 800 ML",
+                "stock": 64
             }
         }
-    },
-    "sales": {
-        "id": 2,
-        "nama": "Pak Pri"
     }
 }, {
-    "sales_id": 1,
-    "transaksi_pembelian_id": 346,
-    "total_harga": "347500",
-    "total_barang": "5",
+    "id": 186,
+    "transaksi_pembelian_id": 335,
+    "nama": "PT KTI",
+    "jumlah": 80,
+    "harga": 12800000,
+    "tanggal": 1707177600,
     "pembelian": {
-        "id": 346,
-        "master_item_id": 1403,
-        "supplier": "test",
-        "batch": "TEST",
-        "jumlah": 20,
+        "id": 335,
+        "master_item_id": 1408,
+        "supplier": "PT Minyakita",
+        "batch": "06Feb2024",
+        "jumlah": 80,
         "sisa": 0,
         "het": null,
-        "harga": 100000,
-        "tanggal": 1708387200,
+        "harga": 12640000,
+        "tanggal": 1704499200,
         "barang": {
-            "id": 1403,
-            "item_id": 1471,
-            "kategori_id": 17,
+            "id": 1408,
+            "item_id": 1476,
+            "kategori_id": 15,
             "item": {
-                "id": 1471,
-                "kode": "BRS001",
-                "nama": "Beras Sultan Aji",
-                "stock": 0
-            }
-        }
-    },
-    "sales": {
-        "id": 1,
-        "nama": "Pak Dar"
-    }
-}, {
-    "sales_pembelian_id": 67,
-    "total_barang": "5",
-    "total_harga": "347500",
-    "sales_pembelian": {
-        "id": 67,
-        "sales_id": 1,
-        "transaksi_pembelian_id": 346,
-        "jumlah": 5,
-        "sisa": 0,
-        "harga": 347500,
-        "tanggal": 1708387200,
-        "sales": {
-            "id": 1,
-            "nama": "Pak Dar"
-        },
-        "pembelian": {
-            "id": 346,
-            "master_item_id": 1403,
-            "supplier": "test",
-            "batch": "TEST",
-            "jumlah": 20,
-            "sisa": 0,
-            "het": null,
-            "harga": 100000,
-            "tanggal": 1708387200,
-            "barang": {
-                "id": 1403,
-                "item_id": 1471,
-                "kategori_id": 17,
-                "item": {
-                    "id": 1471,
-                    "kode": "BRS001",
-                    "nama": "Beras Sultan Aji",
-                    "stock": 0
-                }
+                "id": 1476,
+                "kode": "MYK001",
+                "nama": "Minyakita 1 L",
+                "stock": 31
             }
         }
     }
 }, {
-    "sales_pembelian_id": 69,
-    "total_barang": "5",
-    "total_harga": "347500",
-    "sales_pembelian": {
-        "id": 69,
-        "sales_id": 2,
-        "transaksi_pembelian_id": 346,
-        "jumlah": 5,
-        "sisa": 0,
-        "harga": 347500,
-        "tanggal": 1708387200,
-        "sales": {
-            "id": 2,
-            "nama": "Pak Pri"
-        },
-        "pembelian": {
-            "id": 346,
-            "master_item_id": 1403,
-            "supplier": "test",
-            "batch": "TEST",
-            "jumlah": 20,
-            "sisa": 0,
-            "het": null,
-            "harga": 100000,
-            "tanggal": 1708387200,
-            "barang": {
-                "id": 1403,
-                "item_id": 1471,
-                "kategori_id": 17,
-                "item": {
-                    "id": 1471,
-                    "kode": "BRS001",
-                    "nama": "Beras Sultan Aji",
-                    "stock": 0
-                }
+    "id": 184,
+    "transaksi_pembelian_id": 334,
+    "nama": "Mas Feri",
+    "jumlah": 3,
+    "harga": 428000,
+    "tanggal": 1707177600,
+    "pembelian": {
+        "id": 334,
+        "master_item_id": 1408,
+        "supplier": "PT Minyakita",
+        "batch": "31Jan2024",
+        "jumlah": 76,
+        "sisa": 19,
+        "het": null,
+        "harga": 11932000,
+        "tanggal": 1706659200,
+        "barang": {
+            "id": 1408,
+            "item_id": 1476,
+            "kategori_id": 15,
+            "item": {
+                "id": 1476,
+                "kode": "MYK001",
+                "nama": "Minyakita 1 L",
+                "stock": 31
             }
         }
     }
 }, {
-    "sales_pembelian_id": 70,
-    "total_barang": "10",
-    "total_harga": "695000",
-    "sales_pembelian": {
-        "id": 70,
-        "sales_id": 1,
-        "transaksi_pembelian_id": 346,
-        "jumlah": 10,
-        "sisa": 0,
-        "harga": 695000,
-        "tanggal": 1708992000,
-        "sales": {
-            "id": 1,
-            "nama": "Pak Dar"
-        },
-        "pembelian": {
-            "id": 346,
-            "master_item_id": 1403,
-            "supplier": "test",
-            "batch": "TEST",
-            "jumlah": 20,
-            "sisa": 0,
-            "het": null,
-            "harga": 100000,
-            "tanggal": 1708387200,
-            "barang": {
-                "id": 1403,
-                "item_id": 1471,
-                "kategori_id": 17,
-                "item": {
-                    "id": 1471,
-                    "kode": "BRS001",
-                    "nama": "Beras Sultan Aji",
-                    "stock": 0
-                }
+    "id": 187,
+    "transaksi_pembelian_id": 334,
+    "nama": "Mba Izmy (istri nanang)",
+    "jumlah": 2,
+    "harga": 322000,
+    "tanggal": 1706832000,
+    "pembelian": {
+        "id": 334,
+        "master_item_id": 1408,
+        "supplier": "PT Minyakita",
+        "batch": "31Jan2024",
+        "jumlah": 76,
+        "sisa": 19,
+        "het": null,
+        "harga": 11932000,
+        "tanggal": 1706659200,
+        "barang": {
+            "id": 1408,
+            "item_id": 1476,
+            "kategori_id": 15,
+            "item": {
+                "id": 1476,
+                "kode": "MYK001",
+                "nama": "Minyakita 1 L",
+                "stock": 31
             }
         }
     }

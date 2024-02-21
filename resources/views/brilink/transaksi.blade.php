@@ -115,7 +115,7 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Pinjaman</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
@@ -127,7 +127,7 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Salesperson</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
@@ -141,7 +141,7 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>SGH Motor</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
@@ -186,6 +186,7 @@
                 <li class="sublist-item"><a href="{{route('rokok.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('rokokkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
@@ -201,6 +202,7 @@
                 <li class="sublist-item"><a href="{{route('minyak.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('minyakpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('minyakpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('minyakkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
@@ -216,12 +218,13 @@
                 <li class="sublist-item"><a href="{{route('beras.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('beraspembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('beraspenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('beraskeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Brilink</span>
-                    <span class="material-symbols-outlined toggle-icon">
+                    <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
                     </span>
                 </div>
@@ -229,6 +232,7 @@
             <ul class="sublist">
                 <li class="sublist-item"><a href="{{route('brilinkbank.index')}}">Daftar Bank</a></li>
                 <li class="sublist-item selected"><a href="{{route('brilink.index')}}">Daftar Transaksi</a></li>
+                <li class="sublist-item"><a href="{{route('brilinkkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
