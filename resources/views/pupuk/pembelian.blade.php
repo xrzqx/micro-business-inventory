@@ -7,17 +7,17 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title exampleModalLabel" id="exampleModalLabel">Tambah Penjualan</h5>
+                <h5 class="modal-title exampleModalLabel" id="exampleModalLabel">Tambah Produk</h5>
             </div>
-            <form method="POST" action="{{route('beraspenjualan.store')}}">
+            <form method="POST" action="{{route('pupukpembelian.store')}}">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12 form-group">
-                            <label>Nama Customer</label>
-                            <input type="text" class="form-control form-control-sm supplier-produk" name="customer" />
+                            <label>Supplier</label>
+                            <input type="text" class="form-control form-control-sm supplier-produk" name="supplier" />
                             <div class="text-err">
-                                @error('customer')
+                                @error('supplier')
                                 <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                     width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                                     <path
@@ -34,7 +34,7 @@
                                 <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
                                     <option value="" disabled selected hidden>Pilih Barang</option>
                                     @foreach ($barang as $value)
-                                        <option value="{{ $value->master_item_id }}">{{ $value->barang->item->nama }}</option>
+                                        <option value="{{ $value->id }}">{{ $value->item->kode }} | {{ $value->item->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -50,27 +50,24 @@
                         </div>
                         <div class="col-sm-12 form-group">
                             <label>Batch</label>
-                            <div class="input-group">
-                                <select class="js-example-basic-single col-sm-12" name="batch" id="batch-produk">
-                                    <option value="" disabled selected hidden>Pilih Batch</option>
-                                </select>
+                            <input type="text" class="form-control form-control-sm batch-produk" name="batch" />
+                            <div class="text-err">
+                                @error('batch')
+                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                    </path>
+                                </svg>
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
-                            @error('batch')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
                         </div>
                         <div class="col-sm-12 form-group">
-                            <label>Jumlah</label>
-                            <input type="text" class="form-control form-control-sm jumlah-produk" 
-                            oninput="validateInput(this)" placeholder="Input harus angka" name="jumlah" 
-                            id="jumlahInp" data-dynamic-value="0"
-                            />
+                            <label>Jumlah (Kg)</label>
+                            <input type="text" class="form-control form-control-sm jumlah-produk"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                placeholder="input harus angka" name="jumlah" />
                             @error('jumlah')
                             <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                 width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
@@ -82,7 +79,7 @@
                             @enderror
                         </div>
                         <div class="col-sm-12 form-group">
-                            <label>Harga</label>
+                            <label>Harga (Kg)</label>
                             <input type="text" class="form-control form-control-sm harga-produk"
                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                 placeholder="input harus angka" name="harga" />
@@ -99,7 +96,7 @@
                         <div class="col-sm-12 form-group">
                             <label>Tanggal</label>
                             <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
-                                name="tanggal" />
+                                name="tanggal" autocomplete="off"/>
                             <div class="text-err">
                                 @error('tanggal')
                                 <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
@@ -227,16 +224,16 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Beras</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('beraskategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('beras.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('beraspembelian.index')}}">Pembelian</a></li>
-                <li class="sublist-item selected"><a href="{{route('beraspenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('beraspenjualan.index')}}">Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('beraskeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
@@ -256,15 +253,15 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Pupuk</span>
-                    <span class="material-symbols-outlined toggle-icon">
+                    <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{route('pupukkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
-                <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item selected"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpenjualan.index')}}">Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('pupukkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
@@ -277,16 +274,18 @@
         </span>
     </button>
     <div class="content">
-        <h1>Daftar Penjualan Barang</h1>
+        <h1>Daftar Pembelian Barang</h1>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Tambah Penjualan
+                    Tambah Stock
                 </button>
             </div>
-            <div class="col-sm-4">
-                <form class="d-flex" action="{{route('beraspenjualan.search')}}" method="GET">
+            <div class="col-sm-6">
+                <form class="d-flex" action="{{route('pupukpembelian.search')}}" method="GET">
                     <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="kodebarang" value="{{ request('search') }}"
+                            placeholder="Cari Kode">
                         <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
                             placeholder="Cari Barang">
                         <div class="input-group-append">
@@ -325,24 +324,28 @@
         <div class="table-responsive">
             <table class="table">
                 <tr>
-                    <th>Customer</th>
+                    <th>Supplier</th>
+                    <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Batch</th>
-                    <th>Jumlah</th>
+                    <th>Jumlah (Kg)</th>
                     <th>Harga</th>
                     <th>Tanggal</th>
                     <th>Action</th>
                 </tr>
-                @foreach ($penjualan as $key => $value)
+                @foreach ($pembelian as $key => $value)
                 <tr>
                     <td>
-                        {{ $value->nama }}
+                        {{ $value->supplier }}
                     </td>
                     <td>
-                        {{ $value->pembelian->barang->item->nama }}
+                        {{ $value->barang->item->kode }}
                     </td>
                     <td>
-                        {{ $value->pembelian->batch }}
+                        {{ $value->barang->item->nama }}
+                    </td>
+                    <td>
+                        {{ $value->batch }}
                     </td>
                     <td>
                         {{ $value->jumlah }}
@@ -354,7 +357,11 @@
                         {{date('d-m-Y', $value->tanggal)}}
                     </td>
                     <td>
-                        <form method="post" action="{{ route('beraspenjualan.destroy', $value->id) }}"
+                        <button type="button" style="background-color: yellow">
+                            <a href="{{ route('pupukpembelian.edit', $value->id) }}"
+                                style="color: black;text-decoration-line: none">edit</a>
+                        </button>
+                        <form method="post" action="{{ route('pupukpembelian.destroy', $value->id) }}"
                             style="display: inline;">
                             @csrf
                             @method('delete')
@@ -366,76 +373,7 @@
                 @endforeach
             </table>
         </div>
-        {{ $penjualan->appends(request()->input())->links() }}
+        {{ $pembelian->appends(request()->input())->links() }}
     </div>
 </div>
-
-<script>
-    function validateInput(input) {
-      // Remove non-numeric characters
-      input.value = input.value.replace(/[^0-9]/g, '');
-  
-      // Remove leading zeros
-      input.value = input.value.replace(/^0+/g, '');
-  
-      // Limit the input to a maximum of stock
-      var maxStock = document.getElementById('jumlahInp').getAttribute('data-dynamic-value');
-      var numericMaxStock = parseInt(maxStock, 10);
-      const numericValue = parseInt(input.value, 10);
-      if (!isNaN(numericValue) && numericValue > numericMaxStock) {
-        input.value = maxStock;
-      }
-    }
-</script>
-
-<script>
-    // Attach an event listener to the select2:select event for "kategori-produk"
-    $('#kategori-produk').on('select2:select', function (e) {
-        var selectedCategoryId = e.params.data.id;
-
-        // Make an AJAX request to fetch data for "batch-produk" based on the selected category
-        $.ajax({
-            url: '{{ route('fetch.batch') }}', // Replace with your actual endpoint
-            method: 'GET',
-            data: {
-                masterItemId: selectedCategoryId
-            },
-            success: function (response) {
-                // Clear existing options
-                $('#batch-produk').empty();
-                $('#batch-produk').append('<option value="" disabled selected hidden>Pilih Batch</option>');
-                // Populate options based on the AJAX response
-                $.each(response, function (index, value) {
-                    $('#batch-produk').append('<option value="' + value.id + '">' + value
-                        .batch + " | Stock: " + value.sisa +'</option>');
-                });
-
-                // Trigger Select2 to update the UI
-                $('#batch-produk').trigger('change');
-            },
-            error: function (error) {
-                console.error('Error:', error);
-            }
-        });
-    });
-
-    $('#batch-produk').on('change', function (e) {
-        $('#jumlahInp').val('');
-        console.log("Change event triggered");
-    });
-
-    $('#batch-produk').on('select2:select', function (e) {
-        var selectedBatchText = e.params.data.text;
-        // Split the string by '|'
-        var parts = selectedBatchText.split('|');
-
-        // Extract the stock data (assuming it's in the second part after the '|')
-        var stockData = parts[1].trim().split(':')[1].trim();
-        
-        // Access the data attribute using JavaScript
-        document.getElementById('jumlahInp').setAttribute('data-dynamic-value', stockData);
-        console.log(stockData);
-    });
-
-</script>
 @endsection

@@ -1,80 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Modal -->
-<div class="modal fade modal-item" id="exampleModalCenter" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title exampleModalLabel" id="exampleModalLabel">Tambah Produk</h5>
-            </div>
-            <form method="POST" action="{{route('beras.store')}}">
-                @csrf
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-12 form-group">
-                            <label>Kode Item</label>
-                            <input type="text" class="form-control form-control-sm kode-produk" name="kode" />
-                            <div class="text-err">
-                                @error('kode')
-                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                    </path>
-                                </svg>
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-12 form-group">
-                            <label>Nama Produk</label>
-                            <input type="text" class="form-control form-control-sm nama-produk" name="nama" />
-                            <div class="text-err">
-                                @error('nama')
-                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                    </path>
-                                </svg>
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-12 form-group">
-                            <label>Kategori</label>
-                            <div class="input-group">
-                                <select class="js-example-basic-single col-sm-12" name="kategori" id="kategori-produk">
-                                    <option value="" disabled selected hidden>Pilih Kategori</option>
-                                    @foreach ($kategori as $item)
-                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @error('kategori')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary btn-save" value="Save changes">
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
-
 <div class="container-f">
     <div class="sidenav">
         <ul class="main-list">
@@ -178,14 +104,14 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Beras</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('beraskategori.index')}}">Daftar Kategori</a></li>
-                <li class="sublist-item selected"><a href="{{route('beras.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item"><a href="{{route('beras.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('beraspembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('beraspenjualan.index')}}">Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('beraskeuangan.index')}}">Laporan Keuangan</a></li>
@@ -207,17 +133,17 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Pupuk</span>
-                    <span class="material-symbols-outlined toggle-icon">
+                    <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{route('pupukkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpenjualan.index')}}">Penjualan</a></li>
-                <li class="sublist-item"><a href="{{route('pupukkeuangan.index')}}">Laporan Keuangan</a></li>
+                <li class="sublist-item selected"><a href="{{route('pupukkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
         </ul>
@@ -228,18 +154,17 @@
         </span>
     </button>
     <div class="content">
-        <h1>Daftar Barang</h1>
+        <h1>Laporan Keuangan</h1>
         <div class="row">
-            <div class="col-sm-8">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Tambah Produk
-                </button>
-            </div>
-            <div class="col-sm-4">
-                <form class="d-flex" action="{{route('beras.search')}}" method="GET">
+            <div class="col-sm-6">
+                <form class="d-flex" action="{{route('pupukkeuangan.search')}}" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
-                            placeholder="Cari Barang">
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
+                            name="start" autocomplete="off" value="{{ request('search') }}" 
+                            placeholder="Cari Tanggal Mulai"/>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker2"
+                            name="end" autocomplete="off" value="{{ request('search') }}" 
+                            placeholder="Cari Tanggal Akhir"/>
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
@@ -247,6 +172,7 @@
                 </form>
             </div>
         </div>
+
         @if (Session::has('success'))
         <div class="alert alert-success" id="success-alert">
             <button type="button" class="close" data-dismiss="alert">x</button>
@@ -274,45 +200,51 @@
         @endif
         <div class="table-responsive">
             <table class="table">
-                <tr>
-                    <th>Kode Item</th>
-                    <th>Nama Barang</th>
-                    <th>Kategori</th>
-                    <th>Stock</th>
-                    <th>Action</th>
-                </tr>
-                @foreach ($barang as $key => $value)
-                <tr>
-                    <td>
-                        {{ $value->item->kode }}
-                    </td>
-                    <td>
-                        {{ $value->item->nama }}
-                    </td>
-                    <td>
-                        {{ $value->kategori->nama }}
-                    </td>
-                    <td>
-                        {{ $value->item->stock }}
-                    </td>
-                    <td>
-                        <button type="button" style="background-color: yellow">
-                            <a href="{{ route('beras.edit', $value->id) }}"
-                                style="color: black;text-decoration-line: none">edit</a>
-                        </button>
-                        <form method="post" action="{{route('beras.destroy', $value->id)}}"
-                            style="display: inline;">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" style="background-color: lightcoral"
-                                onclick="return confirm('Are you sure you want to delete this post?')">hapus</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Uraian</th>
+                        <th>Debit</th>
+                        <th>Kredit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $no = 0;
+                        $totalDebit = 0;
+                        $totalKredit = 0;
+                    @endphp
+                    @foreach ($data as $value)
+                        <tr>
+                            <td>{{ ++$no }}</td>
+                            {{-- <td>{{ date('d-m-Y', $value['tanggal']) }}</td> --}}
+                            @if (isset($value['barang']))
+                                <td>Pembelian {{ $value['barang']['item']['nama']}} ({{ $value['barang']['item']['kode']}})</td>
+                                <td>0</td>
+                                <td>{{ number_format($value['total_harga'], 0, ',', '.') }}</td>
+                                @php
+                                    $totalKredit += $value['total_harga'];
+                                @endphp
+                            @else
+                                <td>Penjualan {{ $value['pembelian']['barang']['item']['nama'] }} ({{ $value['pembelian']['barang']['item']['kode'] }})</td>
+                                <td>{{ number_format($value['total_harga'], 0, ',', '.') }}</td>
+                                <td>0</td>
+                                @php
+                                    $totalDebit += $value['total_harga'];
+                                @endphp
+                            @endif
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td><strong>Total:</strong></td>
+                        <td></td>
+                        <td><strong>{{ number_format($totalDebit, 0, ',', '.') }}</strong></td>
+                        <td><strong>{{ number_format($totalKredit, 0, ',', '.') }}</strong></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
-        {{ $barang->appends(request()->input())->links() }}
+        {{-- {{ $data->appends(request()->input())->links() }} --}}
     </div>
 </div>
 @endsection

@@ -9,7 +9,7 @@
             <div class="modal-header">
                 <h5 class="modal-title exampleModalLabel" id="exampleModalLabel">Tambah Penjualan</h5>
             </div>
-            <form method="POST" action="{{route('beraspenjualan.store')}}">
+            <form method="POST" action="{{route('pupukpenjualan.store')}}">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
@@ -34,7 +34,7 @@
                                 <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
                                     <option value="" disabled selected hidden>Pilih Barang</option>
                                     @foreach ($barang as $value)
-                                        <option value="{{ $value->master_item_id }}">{{ $value->barang->item->nama }}</option>
+                                        <option value="{{ $value->master_item_id }}">{{ $value->barang->item->kode }} | {{ $value->barang->item->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -66,7 +66,7 @@
                             @enderror
                         </div>
                         <div class="col-sm-12 form-group">
-                            <label>Jumlah</label>
+                            <label>Jumlah (Kg)</label>
                             <input type="text" class="form-control form-control-sm jumlah-produk" 
                             oninput="validateInput(this)" placeholder="Input harus angka" name="jumlah" 
                             id="jumlahInp" data-dynamic-value="0"
@@ -82,11 +82,26 @@
                             @enderror
                         </div>
                         <div class="col-sm-12 form-group">
-                            <label>Harga</label>
+                            <label>Harga(Kg)</label>
                             <input type="text" class="form-control form-control-sm harga-produk"
                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                 placeholder="input harus angka" name="harga" />
                             @error('harga')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-sm-12 form-group">
+                            <label>COD (optional)</label>
+                            <input type="text" class="form-control form-control-sm cod-produk"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                placeholder="input harus angka" name="cod" />
+                            @error('cod')
                             <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                 width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                                 <path
@@ -160,7 +175,7 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>SGH Motor</span>
-                    <span class="material-symbols-outlined toggle-icon">
+                    <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
                     </span>
                 </div>
@@ -227,16 +242,16 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Beras</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('beraskategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('beras.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('beraspembelian.index')}}">Pembelian</a></li>
-                <li class="sublist-item selected"><a href="{{route('beraspenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('beraspenjualan.index')}}">Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('beraskeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
@@ -261,11 +276,11 @@
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{route('pupukkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
-                <li class="sublist-item"><a href="{{route('pupukpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item selected"><a href="{{route('pupukpenjualan.index')}}">Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('pupukkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
@@ -285,7 +300,7 @@
                 </button>
             </div>
             <div class="col-sm-4">
-                <form class="d-flex" action="{{route('beraspenjualan.search')}}" method="GET">
+                <form class="d-flex" action="{{route('pupukpenjualan.search')}}" method="GET">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
                             placeholder="Cari Barang">
@@ -326,9 +341,10 @@
             <table class="table">
                 <tr>
                     <th>Customer</th>
+                    <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Batch</th>
-                    <th>Jumlah</th>
+                    <th>Jumlah (Kg)</th>
                     <th>Harga</th>
                     <th>Tanggal</th>
                     <th>Action</th>
@@ -337,6 +353,9 @@
                 <tr>
                     <td>
                         {{ $value->nama }}
+                    </td>
+                    <td>
+                        {{ $value->pembelian->barang->item->kode }}
                     </td>
                     <td>
                         {{ $value->pembelian->barang->item->nama }}
@@ -354,7 +373,11 @@
                         {{date('d-m-Y', $value->tanggal)}}
                     </td>
                     <td>
-                        <form method="post" action="{{ route('beraspenjualan.destroy', $value->id) }}"
+                        {{-- <button type="button" style="background-color: yellow">
+                            <a href="{{ route('pupukpenjualan.edit', $value->id) }}"
+                                style="color: black;text-decoration-line: none">edit</a>
+                        </button> --}}
+                        <form method="post" action="{{ route('pupukpenjualan.destroy', $value->id) }}"
                             style="display: inline;">
                             @csrf
                             @method('delete')
@@ -406,8 +429,14 @@
                 $('#batch-produk').append('<option value="" disabled selected hidden>Pilih Batch</option>');
                 // Populate options based on the AJAX response
                 $.each(response, function (index, value) {
-                    $('#batch-produk').append('<option value="' + value.id + '">' + value
-                        .batch + " | Stock: " + value.sisa +'</option>');
+                    if (value.het != null) {
+                        $('#batch-produk').append('<option value="' + value.id + '">' + value
+                        .batch + " | Stock: " + value.sisa + ' | HB: ' + value.harga/value.jumlah + ' | HET: ' + value.het +'</option>');
+                    }
+                    else{
+                        $('#batch-produk').append('<option value="' + value.id + '">' + value
+                        .batch + " | Stock: " + value.sisa + ' | HB: ' + value.harga/value.jumlah +'</option>');
+                    }
                 });
 
                 // Trigger Select2 to update the UI

@@ -18,6 +18,7 @@
             <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{ route('customer.index') }}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('pinjaman.index')}}">Daftar Pinjaman</a></li>
+                <li class="sublist-item"><a href="{{route('pinjamankeuangan.index')}}">Laporan Keuangan</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -128,16 +129,19 @@
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
-                    <span>Kafe</span>
+                    <span>Pupuk</span>
                     <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
             </li>
             <ul class="sublist hide">
-                <li class="sublist-item">Daftar Barang</li>
-                <li class="sublist-item">Pembelian</li>
-                <li class="sublist-item">Penjualan</li>
+                <li class="sublist-item"><a href="{{route('pupukkategori.index')}}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item"><a href="{{route('pupukpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('pupukkeuangan.index')}}">Laporan Keuangan</a></li>
+                <!-- Add more sublist items as needed -->
             </ul>
         </ul>
     </div>

@@ -47,8 +47,15 @@ use App\Http\Controllers\BrilinkTransaksiController;
 use App\Http\Controllers\BrilinkBankController;
 use App\Http\Controllers\BrilinkLaporanKeuanganController;
 
+use App\Http\Controllers\PupukKategoriController;
+use App\Http\Controllers\PupukBarangController;
+use App\Http\Controllers\PupukPembelianController;
+use App\Http\Controllers\PupukPenjualanController;
+use App\Http\Controllers\PupukLaporanKeuanganController;
+
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PinjamanController;
+use App\Http\Controllers\PinjamanLaporanKeuanganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +83,9 @@ Route::post('/pinjaman/customer', [CustomerController::class, 'store'])->name('c
 Route::get('/pinjaman/customer/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
 Route::post('/pinjaman/customer/{id}', [CustomerController::class, 'update'])->name('customer.update');
 Route::delete('/pinjaman/customer/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+
+Route::get('/pinjaman/keuangan/search', [PinjamanLaporanKeuanganController::class, 'search'])->name('pinjamankeuangan.search');
+Route::get('/pinjaman/keuangan', [PinjamanLaporanKeuanganController::class, 'index'])->name('pinjamankeuangan.index');
 
 Route::get('/pinjaman/search', [PinjamanController::class, 'search'])->name('pinjaman.search');
 Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman.index');
@@ -300,3 +310,34 @@ Route::post('/brilink', [BrilinkTransaksiController::class, 'store'])->name('bri
 Route::get('/brilink/{id}', [BrilinkTransaksiController::class, 'edit'])->name('brilink.edit');
 Route::post('/brilink/{id}', [BrilinkTransaksiController::class, 'update'])->name('brilink.update');
 Route::delete('/brilink/{id}', [BrilinkTransaksiController::class, 'destroy'])->name('brilink.destroy');
+
+Route::get('/pupuk/kategori/search', [PupukKategoriController::class, 'search'])->name('pupukkategori.search');
+Route::get('/pupuk/kategori', [PupukKategoriController::class, 'index'])->name('pupukkategori.index');
+Route::post('/pupuk/kategori', [PupukKategoriController::class, 'store'])->name('pupukkategori.store');
+Route::get('/pupuk/kategori/{id}', [PupukKategoriController::class, 'edit'])->name('pupukkategori.edit');
+Route::post('/pupuk/kategori/{id}', [PupukKategoriController::class, 'update'])->name('pupukkategori.update');
+Route::delete('/pupuk/kategori/{id}', [PupukKategoriController::class, 'destroy'])->name('pupukkategori.destroy');
+
+Route::get('/pupuk/pembelian/search', [PupukPembelianController::class, 'search'])->name('pupukpembelian.search');
+Route::get('/pupuk/pembelian', [PupukPembelianController::class, 'index'])->name('pupukpembelian.index');
+Route::post('/pupuk/pembelian', [PupukPembelianController::class, 'store'])->name('pupukpembelian.store');
+Route::get('/pupuk/pembelian/{id}', [PupukPembelianController::class, 'edit'])->name('pupukpembelian.edit');
+Route::post('/pupuk/pembelian/{id}', [PupukPembelianController::class, 'update'])->name('pupukpembelian.update');
+Route::delete('/pupuk/pembelian/{id}', [PupukPembelianController::class, 'destroy'])->name('pupukpembelian.destroy');
+
+Route::get('/pupuk/penjualan/search', [PupukPenjualanController::class, 'search'])->name('pupukpenjualan.search');
+Route::get('/pupuk/penjualan', [PupukPenjualanController::class, 'index'])->name('pupukpenjualan.index');
+Route::post('/pupuk/penjualan', [PupukPenjualanController::class, 'store'])->name('pupukpenjualan.store');
+Route::get('/pupuk/penjualan/{id}', [PupukPenjualanController::class, 'edit'])->name('pupukpenjualan.edit');
+Route::post('/pupuk/penjualan/{id}', [PupukPenjualanController::class, 'update'])->name('pupukpenjualan.update');
+Route::delete('/pupuk/penjualan/{id}', [PupukPenjualanController::class, 'destroy'])->name('pupukpenjualan.destroy');
+
+Route::get('/pupuk/keuangan/search', [PupukLaporanKeuanganController::class, 'search'])->name('pupukkeuangan.search');
+Route::get('/pupuk/keuangan', [PupukLaporanKeuanganController::class, 'index'])->name('pupukkeuangan.index');
+
+Route::get('/pupuk/search', [PupukBarangController::class, 'search'])->name('pupuk.search');
+Route::get('/pupuk', [PupukBarangController::class, 'index'])->name('pupuk.index');
+Route::post('/pupuk', [PupukBarangController::class, 'store'])->name('pupuk.store');
+Route::get('/pupuk/{id}', [PupukBarangController::class, 'edit'])->name('pupuk.edit');
+Route::post('/pupuk/{id}', [PupukBarangController::class, 'update'])->name('pupuk.update');
+Route::delete('/pupuk/{id}', [PupukBarangController::class, 'destroy'])->name('pupuk.destroy');

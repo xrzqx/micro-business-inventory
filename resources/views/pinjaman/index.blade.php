@@ -110,6 +110,7 @@
             <ul class="sublist">
                 <li class="sublist-item"><a href="{{ route('customer.index') }}">Daftar Customer</a></li>
                 <li class="sublist-item selected"><a href="{{route('pinjaman.index')}}">Daftar Pinjaman</a></li>
+                <li class="sublist-item"><a href="{{route('pinjamankeuangan.index')}}">Laporan Keuangan</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -223,17 +224,18 @@
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
-                    <span>Kafe</span>
+                    <span>Pupuk</span>
                     <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
             </li>
             <ul class="sublist hide">
-                {{-- <li class="sublist-item" onclick="toggleSublistItem(this)">Master Item</li> --}}
-                <li class="sublist-item">Daftar Barang</li>
-                <li class="sublist-item">Pembelian</li>
-                <li class="sublist-item">Penjualan</li>
+                <li class="sublist-item"><a href="{{route('pupukkategori.index')}}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
+                <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item"><a href="{{route('pupukpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('pupukkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
         </ul>
@@ -248,14 +250,14 @@
         <div class="row">
             <div class="col-sm-8">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Tambah Produk
+                    Tambah Pinjaman
                 </button>
             </div>
             <div class="col-sm-4">
                 <form class="d-flex" action="{{route('pinjaman.search')}}" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
-                            placeholder="Cari Barang">
+                        <input type="text" class="form-control" name="nama" value="{{ request('search') }}"
+                            placeholder="Cari Nama Customer">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>

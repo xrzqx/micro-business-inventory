@@ -61,6 +61,7 @@ CREATE TABLE transaksi_penjualan
     nama VARCHAR(100) NOT NULL,
     jumlah INT NOT NULL,
     harga INT NOT NULL,
+    cod INT,
     tanggal BIGINT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY fk_transaksi_pembelian_transaksi_penjualan (transaksi_pembelian_id) REFERENCES transaksi_pembelian (id)

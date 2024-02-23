@@ -162,4 +162,24 @@ class PinjamanController extends Controller
         $pinjaman->delete();
         return redirect()->route('pinjaman.index')->with('success', 'menghapus pinjaman');
     }
+
+    public function search(Request $request)
+    {
+        $searchQuery = $request->input('nama');
+
+        $pinjaman = Pinjaman::select('pinjaman.*')
+            ->join('customer', 'customer.id', '=', 'pinjaman.customer_id')
+            ->where('customer.nama', 'like', '%' . $searchQuery . '%')
+            ->with('customer')
+            ->orderBy('tanggal', 'desc')
+            ->paginate(7);
+
+        $customer = Customer::all();
+
+        return view("pinjaman.index", 
+        [
+            "pinjaman" => $pinjaman,
+            "customer" => $customer,
+        ]);
+    }
 }
