@@ -26,6 +26,8 @@ class PinjamanLaporanKeuanganController extends Controller
 
         return view("pinjaman.keuangan", 
         [
+            "tanggalStart" => $formattedDate,
+            "tanggalEnd" => $formattedDate,
             "data" => $pinjaman,
         ]);
     }
@@ -34,6 +36,11 @@ class PinjamanLaporanKeuanganController extends Controller
     {
         $searchStart = $request->input('start');
         $searchEnd = $request->input('end');
+        if (!$searchEnd) {
+            # code...
+            $currentTimestamp = Carbon::now();
+            $searchEnd = $currentTimestamp->format('d-m-Y');
+        }
 
         // Convert the selected date to a timestamp (UNIX timestamp)
         $timestampStart = Carbon::parse($searchStart)->timestamp;
@@ -52,6 +59,8 @@ class PinjamanLaporanKeuanganController extends Controller
 
         return view("pinjaman.keuangan", 
         [
+            "tanggalStart" => $searchStart,
+            "tanggalEnd" => $searchEnd,
             "data" => $pinjaman,
         ]);
     }

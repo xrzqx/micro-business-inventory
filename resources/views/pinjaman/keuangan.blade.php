@@ -10,7 +10,7 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Pinjaman</span>
-                    <span class="material-symbols-outlined toggle-icon">
+                    <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
                     </span>
                 </div>
@@ -18,7 +18,8 @@
             <ul class="sublist">
                 <li class="sublist-item"><a href="{{ route('customer.index') }}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('pinjaman.index')}}">Daftar Pinjaman</a></li>
-                <li class="sublist-item"><a href="{{route('pinjamankeuangan.index')}}">Laporan Keuangan</a></li>
+                <li class="sublist-item selected
+                "><a href="{{route('pinjamankeuangan.index')}}">Laporan Keuangan</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -198,6 +199,8 @@
 
         </script>
         @endif
+        <span>Tanggal : {{$tanggalStart}} </span>
+        <span style="margin-left:1rem">Sampai Tanggal: {{$tanggalEnd}}</span>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -233,6 +236,19 @@
                         <td><strong>{{ number_format($totalKredit, 0, ',', '.') }}</strong></td>
                     </tr>
                 </tbody>
+                
+            </table>
+            <table style="margin-left: 0.5rem">
+                @foreach ($data as $value)
+                <tr>
+                    <td><strong>Total Pinjaman {{$value->customer->nama}}:</strong></td>
+                    <td><strong style="margin-left: 0.5rem">Rp. {{number_format($value->total_kredit - $value->total_debit, 0, ',', '.')}}</strong></td>
+                </tr>
+                @endforeach
+                <tr>
+                    <td><strong>Total Pinjaman Keseluruhan:</strong></td>
+                    <td><strong style="margin-left: 0.5rem">Rp. {{number_format($totalKredit - $totalDebit, 0, ',', '.')}}</strong></td>
+                </tr>
             </table>
         </div>
         {{-- {{ $data->appends(request()->input())->links() }} --}}
