@@ -6,10 +6,12 @@ use App\Http\Controllers\MotorBarangController;
 use App\Http\Controllers\MotorPembelianController;
 use App\Http\Controllers\MotorPenjualanController;
 use App\Http\Controllers\MotorLaporanKeuanganController;
+use App\Http\Controllers\MotorLaporanPenjualanController;
 
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchSalesController;
 use App\Http\Controllers\BarangController;
+
 use App\Http\Controllers\StudioKategoriController;
 use App\Http\Controllers\StudioBarangController;
 use App\Http\Controllers\StudioProdukController;
@@ -52,6 +54,7 @@ use App\Http\Controllers\PupukBarangController;
 use App\Http\Controllers\PupukPembelianController;
 use App\Http\Controllers\PupukPenjualanController;
 use App\Http\Controllers\PupukLaporanKeuanganController;
+use App\Http\Controllers\PupukLaporanPenjualanController;
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PinjamanController;
@@ -114,6 +117,9 @@ Route::post('/motor/penjualan', [MotorPenjualanController::class, 'store'])->nam
 Route::get('/motor/penjualan/{id}', [MotorPenjualanController::class, 'edit'])->name('motorpenjualan.edit');
 Route::post('/motor/penjualan/{id}', [MotorPenjualanController::class, 'update'])->name('motorpenjualan.update');
 Route::delete('/motor/penjualan/{id}', [MotorPenjualanController::class, 'destroy'])->name('motorpenjualan.destroy');
+
+Route::get('/motor/laporanpenjualan/search', [MotorLaporanPenjualanController::class, 'search'])->name('motorlaporanpenjualan.search');
+Route::get('/motor/laporanpenjualan', [MotorLaporanPenjualanController::class, 'index'])->name('motorlaporanpenjualan.index');
 
 Route::get('/motor/keuangan/search', [MotorLaporanKeuanganController::class, 'search'])->name('motorkeuangan.search');
 Route::get('/motor/keuangan', [MotorLaporanKeuanganController::class, 'index'])->name('motorkeuangan.index');
@@ -334,6 +340,9 @@ Route::delete('/pupuk/penjualan/{id}', [PupukPenjualanController::class, 'destro
 
 Route::get('/pupuk/keuangan/search', [PupukLaporanKeuanganController::class, 'search'])->name('pupukkeuangan.search');
 Route::get('/pupuk/keuangan', [PupukLaporanKeuanganController::class, 'index'])->name('pupukkeuangan.index');
+
+Route::get('/pupuk/laporanpenjualan', [PupukLaporanPenjualanController::class, 'index'])->name('pupuklaporanpenjualan.index');
+Route::get('/pupuk/laporanpenjualan/search', [PupukLaporanPenjualanController::class, 'search'])->name('pupuklaporanpenjualan.search');
 
 Route::get('/pupuk/search', [PupukBarangController::class, 'search'])->name('pupuk.search');
 Route::get('/pupuk', [PupukBarangController::class, 'index'])->name('pupuk.index');

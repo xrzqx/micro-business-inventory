@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
+use App\Models\Kategori;
 use Carbon\Carbon;
 
 class PupukLaporanKeuanganController extends Controller
@@ -18,6 +19,12 @@ class PupukLaporanKeuanganController extends Controller
         $currentTimestamp = Carbon::now();
         $formattedDate = $currentTimestamp->format('d-m-Y');
         $timestamp = Carbon::parse($formattedDate)->timestamp;
+
+        $kategoriOpt = Kategori::select(['kategori.id','kategori.nama'])
+            ->where('toko', 'pupuk')
+            ->get();
+
+        $kategori_selected = [];
         
         $pembelian = Pembelian::select('transaksi_pembelian.master_item_id', \DB::raw('SUM(transaksi_pembelian.harga) as total_harga'))
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
@@ -58,20 +65,14 @@ class PupukLaporanKeuanganController extends Controller
 
         // Append results to $data array
         $data = array_merge($pembelian->toArray(), $penjualan->toArray());
-
-        // Sort $data array by 'tanggal' field
-        // usort($data, function ($a, $b) {
-        //     $timeA = Carbon::parse($a['tanggal'])->timestamp;
-        //     $timeB = Carbon::parse($b['tanggal'])->timestamp;
-        
-        //     return $timeB - $timeA;
-        // });
-
-        // Convert back to an associative array with numeric keys
         $associativeArray = array_values($data);
 
         return view("pupuk.keuangan", 
         [
+            "tanggalStart" => $formattedDate,
+            "tanggalEnd" => $formattedDate,
+            "kategori" => $kategoriOpt,
+            "kategori_selected" => $kategori_selected,
             "data" => $associativeArray,
         ]);
     }
@@ -80,18 +81,32 @@ class PupukLaporanKeuanganController extends Controller
     {
         $searchStart = $request->input('start');
         $searchEnd = $request->input('end');
+        if (!$searchEnd) {
+            # code...
+            $currentTimestamp = Carbon::now();
+            $searchEnd = $currentTimestamp->format('d-m-Y');
+        }
 
         // Convert the selected date to a timestamp (UNIX timestamp)
         $timestampStart = Carbon::parse($searchStart)->timestamp;
         $timestampEnd = Carbon::parse($searchEnd)->timestamp;
+
+        $kategoriOpt = Kategori::select(['kategori.id','kategori.nama'])
+            ->where('toko', 'pupuk')
+            ->get();
+
+        $kategori_selected = $request->input('kategori', []);
+        // return $kategori_selected;
+        // return $kategori_selected;
         
         $pembelian = Pembelian::select('transaksi_pembelian.master_item_id', \DB::raw('SUM(transaksi_pembelian.harga) as total_harga'))
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
             ->join('item', 'item.id', '=', 'master_item.item_id')
-            ->where('kategori.toko', '=', 'pupuk')
+            // ->where('kategori.toko', '=', 'pupuk')
             ->where('transaksi_pembelian.tanggal', '>=', $timestampStart)
             ->where('transaksi_pembelian.tanggal', '<=', $timestampEnd)
+            ->whereIn('kategori.id', $kategori_selected)
             ->groupBy('transaksi_pembelian.master_item_id')
             ->orderBy('transaksi_pembelian.tanggal', 'desc')
             ->with(['barang' => function ($query) {
@@ -105,9 +120,10 @@ class PupukLaporanKeuanganController extends Controller
             ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
-            ->where('kategori.toko', '=', 'pupuk')
+            // ->where('kategori.toko', '=', 'pupuk')
             ->where('transaksi_penjualan.tanggal', '>=', $timestampStart)
             ->where('transaksi_penjualan.tanggal', '<=', $timestampEnd)
+            ->whereIn('kategori.id', $kategori_selected)
             ->groupBy('transaksi_penjualan.transaksi_pembelian_id')
             ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->with(['pembelian' => function ($query) {
@@ -135,6 +151,10 @@ class PupukLaporanKeuanganController extends Controller
 
         return view("pupuk.keuangan", 
         [
+            "tanggalStart" => $searchStart,
+            "tanggalEnd" => $searchEnd,
+            "kategori" => $kategoriOpt,
+            "kategori_selected" => $kategori_selected,
             "data" => $associativeArray,
         ]);
     }

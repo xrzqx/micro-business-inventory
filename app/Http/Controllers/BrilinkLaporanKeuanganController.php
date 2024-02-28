@@ -25,6 +25,8 @@ class BrilinkLaporanKeuanganController extends Controller
 
         return view("brilink.keuangan", 
         [
+            "tanggalStart" => $formattedDate,
+            "tanggalEnd" => $formattedDate,
             "data" => $trx,
         ]);
     }
@@ -49,6 +51,8 @@ class BrilinkLaporanKeuanganController extends Controller
 
         return view("brilink.keuangan", 
         [
+            "tanggalStart" => $searchStart,
+            "tanggalEnd" => $searchEnd,
             "data" => $trx,
         ]);
     }

@@ -55,6 +55,8 @@ class BerasLaporanKeuanganController extends Controller
 
         return view("beras.keuangan", 
         [
+            "tanggalStart" => $formattedDate,
+            "tanggalEnd" => $formattedDate,
             "data" => $associativeArray,
         ]);
     }
@@ -107,6 +109,8 @@ class BerasLaporanKeuanganController extends Controller
 
         return view("beras.keuangan", 
         [
+            "tanggalStart" => $searchStart,
+            "tanggalEnd" => $searchEnd,
             "data" => $associativeArray,
         ]);
     }

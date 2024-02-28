@@ -13,7 +13,7 @@ class Penjualan extends Model
     public $timestamps = false;
     protected $primaryKey = 'id';
     protected $fillable = [
-        'transaksi_pembelian_id', 'nama','jumlah','harga','tanggal'
+        'transaksi_pembelian_id', 'nama','jumlah','harga','cod','tanggal'
     ];
     public function pembelian(): BelongsTo
     {

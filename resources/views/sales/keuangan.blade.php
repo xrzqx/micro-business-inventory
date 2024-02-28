@@ -47,6 +47,7 @@
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('motorlaporanpenjualan.index')}}">Laporan Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('motorkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
@@ -143,6 +144,7 @@
                 <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('pupuklaporanpenjualan.index')}}">Laporan Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('pupukkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
@@ -162,7 +164,7 @@
                         <div class="input-group">
                             <select class="js-example-basic-multiple col-sm-12" name="sales[]" multiple="multiple">
                                 <option value="" disabled hidden>Pilih Sales</option>
-                                @foreach ($sales as $value)
+                                {{-- @foreach ($sales as $value)
                                     @if ($sales_selected)
                                         @foreach ($sales_selected as $select)
                                             @if ($value->id == $select)
@@ -174,7 +176,30 @@
                                     @else
                                         <option value="{{ $value->id }}">{{ $value->nama }}</option>
                                     @endif
-                                @endforeach
+                                @endforeach --}}
+                                @if ($sales_selected)
+                                    @foreach ($sales as $value)
+                                        @php
+                                            $selected = false;
+                                        @endphp
+                                        @foreach ($sales_selected as $select)
+                                            @if ($value->id == $select)
+                                                @php
+                                                    $selected = true;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                        @if ($selected)
+                                            <option value="{{ $value->id }}" selected>{{ $value->nama }}</option>
+                                        @else
+                                            <option value="{{ $value->id }}">{{ $value->nama }}</option>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    @foreach ($sales as $value)
+                                        <option value="{{ $value->id }}">{{ $value->nama }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                             <input type="text" class="form-control form-control-sm" id="my_date_picker"
                                 name="start" autocomplete="off" value="{{ request('search') }}" 
@@ -185,19 +210,29 @@
                         <div class="input-group">
                             <select class="js-example-basic-multiple col-sm-12" name="kategori[]" multiple="multiple">
                                 <option value="" disabled hidden>Pilih Kategori</option>
-                                @foreach ($kategori as $value)
-                                    @if ($kategori_selected)
+                                @if ($kategori_selected)
+                                    @foreach ($kategori as $value)
+                                        @php
+                                            $selected = false;
+                                        @endphp
                                         @foreach ($kategori_selected as $select)
                                             @if ($value->toko == $select)
-                                                <option value="{{ $value->toko }}" selected>{{ $value->toko }}</option>
-                                            @else
-                                                <option value="{{ $value->toko }}">{{ $value->toko }}</option>
+                                                @php
+                                                    $selected = true;
+                                                @endphp
                                             @endif
-                                        @endforeach                                        
-                                    @else
+                                        @endforeach
+                                        @if ($selected)
+                                            <option value="{{ $value->toko }}" selected>{{ $value->toko }}</option>
+                                        @else
+                                            <option value="{{ $value->toko }}">{{ $value->toko }}</option>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    @foreach ($kategori as $value)
                                         <option value="{{ $value->toko }}">{{ $value->toko }}</option>
-                                    @endif
-                                @endforeach
+                                    @endforeach
+                                @endif
                             </select>
                             <input type="text" class="form-control form-control-sm" id="my_date_picker2"
                                 name="end" autocomplete="off" value="{{ request('search') }}" 

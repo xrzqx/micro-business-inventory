@@ -72,6 +72,8 @@ class MotorLaporanKeuanganController extends Controller
 
         return view("motor.keuangan", 
         [
+            "tanggalStart" => $formattedDate,
+            "tanggalEnd" => $formattedDate,
             "data" => $associativeArray,
         ]);
     }
@@ -135,6 +137,8 @@ class MotorLaporanKeuanganController extends Controller
 
         return view("motor.keuangan", 
         [
+            "tanggalStart" => $searchStart,
+            "tanggalEnd" => $searchEnd,
             "data" => $associativeArray,
         ]);
     }

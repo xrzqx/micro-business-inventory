@@ -47,6 +47,7 @@
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('motorlaporanpenjualan.index')}}">Laporan Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('motorkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
@@ -143,6 +144,7 @@
                 <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('pupuklaporanpenjualan.index')}}">Laporan Penjualan</a></li>
                 <li class="sublist-item selected"><a href="{{route('pupukkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
@@ -153,21 +155,54 @@
             chevron_right
         </span>
     </button>
+    {{-- {{$kategori}} --}}
+    {{-- {{$kategori_selected[0]}} --}}
     <div class="content">
         <h1>Laporan Keuangan</h1>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <form class="d-flex" action="{{route('pupukkeuangan.search')}}" method="GET">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
-                            name="start" autocomplete="off" value="{{ request('search') }}" 
-                            placeholder="Cari Tanggal Mulai"/>
-                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker2"
-                            name="end" autocomplete="off" value="{{ request('search') }}" 
-                            placeholder="Cari Tanggal Akhir"/>
-                        <div class="input-group-append">
+                    <div style="display: flex;width: 100%">
+                        <div style="display: flex; flex-direction: column">
+                            <div class="input-group">
+                                <select class="js-example-basic-multiple col-sm-12" name="kategori[]" multiple="multiple">
+                                    <option value="" disabled hidden>Pilih Kategori</option>
+                                    @if ($kategori_selected)
+                                        @foreach ($kategori as $value)
+                                            @php
+                                                $selected = false;
+                                            @endphp
+                                            @foreach ($kategori_selected as $select)
+                                                @if ($value->id == $select)
+                                                    @php
+                                                        $selected = true;
+                                                    @endphp
+                                                @endif
+                                            @endforeach
+                                            @if ($selected)
+                                                <option value="{{ $value->id }}" selected>{{ $value->nama }}</option>
+                                            @else
+                                                <option value="{{ $value->id }}">{{ $value->nama }}</option>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        @foreach ($kategori as $value)
+                                            <option value="{{ $value->id }}">{{ $value->nama }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-sm" id="my_date_picker" name="start"
+                                    autocomplete="off" value="{{ request('search') }}" placeholder="Cari Tanggal Mulai" />
+                                <input type="text" class="form-control form-control-sm" id="my_date_picker2" name="end"
+                                    autocomplete="off" value="{{ request('search') }}" placeholder="Cari Tanggal Akhir" />
+                            </div>
+                        </div>
+                        <div class="input-group">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
+
                     </div>
                 </form>
             </div>
@@ -198,6 +233,8 @@
 
         </script>
         @endif
+        <span>Tanggal : {{$tanggalStart}} </span>
+        <span style="margin-left:1rem">Sampai Tanggal: {{$tanggalEnd}}</span>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -215,25 +252,26 @@
                         $totalKredit = 0;
                     @endphp
                     @foreach ($data as $value)
-                        <tr>
-                            <td>{{ ++$no }}</td>
-                            {{-- <td>{{ date('d-m-Y', $value['tanggal']) }}</td> --}}
-                            @if (isset($value['barang']))
-                                <td>Pembelian {{ $value['barang']['item']['nama']}} ({{ $value['barang']['item']['kode']}})</td>
-                                <td>0</td>
-                                <td>{{ number_format($value['total_harga'], 0, ',', '.') }}</td>
-                                @php
-                                    $totalKredit += $value['total_harga'];
-                                @endphp
-                            @else
-                                <td>Penjualan {{ $value['pembelian']['barang']['item']['nama'] }} ({{ $value['pembelian']['barang']['item']['kode'] }})</td>
-                                <td>{{ number_format($value['total_harga'], 0, ',', '.') }}</td>
-                                <td>0</td>
-                                @php
-                                    $totalDebit += $value['total_harga'];
-                                @endphp
-                            @endif
-                        </tr>
+                    <tr>
+                        <td>{{ ++$no }}</td>
+                        {{-- <td>{{ date('d-m-Y', $value['tanggal']) }}</td> --}}
+                        @if (isset($value['barang']))
+                            <td>Pembelian {{ $value['barang']['item']['nama']}} ({{ $value['barang']['item']['kode']}})</td>
+                            <td>0</td>
+                            <td>{{ number_format($value['total_harga'], 0, ',', '.') }}</td>
+                            @php
+                                $totalKredit += $value['total_harga'];
+                            @endphp
+                        @else
+                            <td>Penjualan {{ $value['pembelian']['barang']['item']['nama'] }}
+                                ({{ $value['pembelian']['barang']['item']['kode'] }})</td>
+                            <td>{{ number_format($value['total_harga'], 0, ',', '.') }}</td>
+                            <td>0</td>
+                            @php
+                                $totalDebit += $value['total_harga'];
+                            @endphp
+                        @endif
+                    </tr>
                     @endforeach
                     <tr>
                         <td><strong>Total:</strong></td>

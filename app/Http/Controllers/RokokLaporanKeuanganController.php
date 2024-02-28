@@ -55,6 +55,8 @@ class RokokLaporanKeuanganController extends Controller
 
         return view("rokok.keuangan", 
         [
+            "tanggalStart" => $formattedDate,
+            "tanggalEnd" => $formattedDate,
             "data" => $associativeArray,
         ]);
     }
@@ -107,6 +109,8 @@ class RokokLaporanKeuanganController extends Controller
 
         return view("rokok.keuangan", 
         [
+            "tanggalStart" => $searchStart,
+            "tanggalEnd" => $searchEnd,
             "data" => $associativeArray,
         ]);
     }

@@ -55,6 +55,8 @@ class MinyakLaporanKeuanganController extends Controller
 
         return view("minyak.keuangan", 
         [
+            "tanggalStart" => $formattedDate,
+            "tanggalEnd" => $formattedDate,
             "data" => $associativeArray,
         ]);
     }
@@ -107,6 +109,8 @@ class MinyakLaporanKeuanganController extends Controller
 
         return view("minyak.keuangan", 
         [
+            "tanggalStart" => $searchStart,
+            "tanggalEnd" => $searchEnd,
             "data" => $associativeArray,
         ]);
     }

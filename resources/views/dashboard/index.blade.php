@@ -69,6 +69,7 @@
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('motorlaporanpenjualan.index')}}">Laporan Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('motorkeuangan.index')}}">Laporan Keuangan</a></li>
             </ul>
             <li class="toggle-sublist">
@@ -87,6 +88,7 @@
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
+                <li class="sublist-item"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -162,6 +164,7 @@
                 <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('pupuklaporanpenjualan.index')}}">Laporan Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('pupukkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
