@@ -58,13 +58,14 @@ CREATE TABLE transaksi_penjualan
 (
 	id INT NOT NULL AUTO_INCREMENT,
     transaksi_pembelian_id INT NOT NULL,
-    nama VARCHAR(100) NOT NULL,
+    customer_id INT NOT NULL,
     jumlah INT NOT NULL,
     harga INT NOT NULL,
     cod INT,
     tanggal BIGINT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY fk_transaksi_pembelian_transaksi_penjualan (transaksi_pembelian_id) REFERENCES transaksi_pembelian (id)
+    FOREIGN KEY fk_transaksi_pembelian_transaksi_penjualan (transaksi_pembelian_id) REFERENCES transaksi_pembelian (id),
+    FOREIGN KEY fk_customer_transaksi_penjualan (customer_id) REFERENCES customer (id)
 )ENGINE InnoDB;
 
 CREATE TABLE produk
@@ -79,6 +80,7 @@ CREATE TABLE penjualan_produk
 (
 	id INT NOT NULL AUTO_INCREMENT,
 	produk_id INT NOT NULL,
+    customer_id INT NOT NULL,
     nama VARCHAR(255) NOT NULL,
 	jumlah VARCHAR(255) NOT NULL,
 	harga VARCHAR(255) NOT NULL,
@@ -149,26 +151,21 @@ CREATE TABLE brilink
     FOREIGN KEY fk_bank_brilink (bank_id) REFERENCES bank (id)
 )ENGINE InnoDB;
 
-CREATE TABLE item_pengeluaran
-(
-	id VARCHAR(100) NOT NULL,
-    PRIMARY KEY (id)
-)ENGINE InnoDB;
-
 CREATE TABLE pengeluaran
 (
 	id INT NOT NULL AUTO_INCREMENT,
-	item_pengeluaran_id VARCHAR(100) NOT NULL,
-    harga INT,
-    tanggal BIGINT,
-    PRIMARY KEY (id),
-    FOREIGN KEY fk_item_pengeluaran_pengeluaran (item_pengeluaran_id) REFERENCES item_pengeluaran (id)
+	nama VARCHAR(50) NOT NULL,
+    harga INT NOT NULL,
+    tanggal BIGINT NOT NULL,
+    toko VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id)
 )ENGINE InnoDB;
 
 CREATE TABLE customer
 (
 	id INT NOT NULL AUTO_INCREMENT,
 	nama VARCHAR(100) NOT NULL,
+    nomor VARCHAR(15),
     PRIMARY KEY (id)
 )ENGINE InnoDB;
 

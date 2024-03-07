@@ -49,9 +49,18 @@ class MotorLaporanPenjualanController extends Controller
             ->paginate(8);
 
         $totalLaba = 0;
+        $totalBeli = 0;
         foreach ($penjualan_laba as $value) {
             $total_hb = ($value->pembelian->harga / $value->pembelian->jumlah) * $value->total_jumlah;
             $totalLaba += $value->total_harga - $total_hb;
+            $totalBeli += $total_hb;
+        }
+
+        if ($totalBeli != 0) {
+            $rate = ($totalLaba/$totalBeli) * 100;
+        }
+        else{
+            $rate = 0;
         }
 
         return view("motor.laporanpenjualan", 
@@ -60,6 +69,7 @@ class MotorLaporanPenjualanController extends Controller
             "tanggalEnd" => $formattedDate,
             "data" => $penjualan,
             "totalLaba" => $totalLaba,
+            "rate" => $rate,
         ]);
     }
 
@@ -111,10 +121,22 @@ class MotorLaporanPenjualanController extends Controller
             ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->get();
 
+        // return $penjualan_laba;
+
         $totalLaba = 0;
+        $totalBeli = 0;
         foreach ($penjualan_laba as $value) {
             $total_hb = ($value->pembelian->harga / $value->pembelian->jumlah) * $value->total_jumlah;
             $totalLaba += $value->total_harga - $total_hb;
+            $totalBeli += $total_hb;
+        }
+
+        // $rate = (($totalJual - $totalBeli)/$totalBeli) * 100;
+        if ($totalBeli != 0) {
+            $rate = ($totalLaba/$totalBeli) * 100;
+        }
+        else{
+            $rate = 0;
         }
 
         return view("motor.laporanpenjualan", 
@@ -123,6 +145,7 @@ class MotorLaporanPenjualanController extends Controller
             "tanggalEnd" => $searchEnd,
             "data" => $penjualan,
             "totalLaba" => $totalLaba,
+            "rate" => $rate,
         ]);
     }
 }

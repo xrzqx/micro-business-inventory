@@ -13,10 +13,14 @@ class PenjualanProduk extends Model
     public $timestamps = false;
     protected $primaryKey = 'id';
     protected $fillable = [
-        'produk_id','nama','jumlah','harga','tanggal'
+        'produk_id','customer_id','nama','jumlah','harga','tanggal', 'keterangan'
     ];
     public function produk(): BelongsTo
     {
         return $this->belongsTo(Produk::class, 'produk_id');
+    }
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }

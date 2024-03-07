@@ -67,6 +67,9 @@
                     if ($(this).parents('.modal.in:first').length !== 0) {
                         dropdownParent = $(this).parents('.modal.in:first');
                     }
+                    $('#nama-customer').select2({
+                        dropdownParent: $('#exampleModalCenter')
+                    });
                     $('#nama-produk').select2({
                         dropdownParent: $('#exampleModalCenter')
                     });

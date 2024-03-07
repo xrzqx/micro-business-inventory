@@ -29,6 +29,7 @@ class RokokPembelianController extends Controller
             ->with(['barang' => function ($query) {
                 $query->with('item', 'kategori');
             }])
+            ->orderBy('transaksi_pembelian.tanggal', 'desc')
             ->paginate(7);
 
         return view("rokok.pembelian",

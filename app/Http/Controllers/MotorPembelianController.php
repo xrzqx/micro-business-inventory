@@ -170,7 +170,7 @@ class MotorPembelianController extends Controller
             $item->stock = $item->stock + $selisih;
             $item->save();
             $pembelian->sisa = $pembelian->sisa + $selisih;
-            $pembelian->jumlah = $request->jumlah + $selisih;
+            $pembelian->jumlah = $pembelian->jumlah + $selisih;
         }
 
         $pembelian->supplier = $request->supplier;

@@ -1,349 +1,322 @@
-[{
-    "id": 214,
-    "transaksi_pembelian_id": 339,
-    "nama": "Monica",
-    "jumlah": 2,
-    "harga": 322000,
-    "tanggal": 1708300800,
-    "pembelian": {
-        "id": 339,
-        "master_item_id": 1408,
-        "supplier": "PT Minyakita",
-        "batch": "16Feb2024",
-        "jumlah": 50,
-        "sisa": 12,
-        "het": null,
-        "harga": 7900000,
-        "tanggal": 1708041600,
-        "barang": {
-            "id": 1408,
-            "item_id": 1476,
-            "kategori_id": 15,
-            "item": {
-                "id": 1476,
-                "kode": "MYK001",
-                "nama": "Minyakita 1 L",
-                "stock": 31
+{
+    "current_page": 1,
+    "data": [{
+        "id": 596,
+        "transaksi_pembelian_id": 77,
+        "customer_id": null,
+        "nama": null,
+        "jumlah": 1,
+        "harga": 1,
+        "cod": null,
+        "tanggal": 1709510400,
+        "customer": null,
+        "pembelian": {
+            "id": 77,
+            "master_item_id": 1,
+            "supplier": "CV PADMA JAYA",
+            "batch": "31JAN2024",
+            "jumlah": 1178,
+            "sisa": 1037,
+            "het": null,
+            "harga": 55071500,
+            "tanggal": 1706659200,
+            "barang": {
+                "id": 1,
+                "item_id": 1,
+                "kategori_id": 8,
+                "item": {
+                    "id": 1,
+                    "kode": "082322MBK8LZ0",
+                    "nama": "MPX 2 (10W30 SLMB 0,8L REP)",
+                    "stock": 1037
+                },
+                "kategori": {
+                    "id": 8,
+                    "nama": "OLI & BAN",
+                    "toko": "SGH_Motor"
+                }
             }
         }
-    }
-}, {
-    "id": 213,
-    "transaksi_pembelian_id": 339,
-    "nama": "Pak Sumardi",
-    "jumlah": 3,
-    "harga": 489000,
-    "tanggal": 1708300800,
-    "pembelian": {
-        "id": 339,
-        "master_item_id": 1408,
-        "supplier": "PT Minyakita",
-        "batch": "16Feb2024",
-        "jumlah": 50,
-        "sisa": 12,
-        "het": null,
-        "harga": 7900000,
-        "tanggal": 1708041600,
-        "barang": {
-            "id": 1408,
-            "item_id": 1476,
-            "kategori_id": 15,
-            "item": {
-                "id": 1476,
-                "kode": "MYK001",
-                "nama": "Minyakita 1 L",
-                "stock": 31
+    }, {
+        "id": 553,
+        "transaksi_pembelian_id": 52,
+        "customer_id": 1,
+        "nama": "MAS NANANG",
+        "jumlah": 1,
+        "harga": 55000,
+        "cod": null,
+        "tanggal": 1708992000,
+        "customer": {
+            "id": 1,
+            "nama": "Nanang",
+            "nomor": null,
+            "module": "pinjaman"
+        },
+        "pembelian": {
+            "id": 52,
+            "master_item_id": 968,
+            "supplier": "MPM",
+            "batch": "31JAN2024",
+            "jumlah": 19,
+            "sisa": 8,
+            "het": null,
+            "harga": 846450,
+            "tanggal": 1706659200,
+            "barang": {
+                "id": 968,
+                "item_id": 968,
+                "kategori_id": 1,
+                "item": {
+                    "id": 968,
+                    "kode": "43130KZL930",
+                    "nama": "BRAKE SHOE",
+                    "stock": 8
+                },
+                "kategori": {
+                    "id": 1,
+                    "nama": "HONDA",
+                    "toko": "SGH_Motor"
+                }
             }
         }
-    }
-}, {
-    "id": 212,
-    "transaksi_pembelian_id": 339,
-    "nama": "Mas Wahyudi",
-    "jumlah": 1,
-    "harga": 161000,
-    "tanggal": 1708214400,
-    "pembelian": {
-        "id": 339,
-        "master_item_id": 1408,
-        "supplier": "PT Minyakita",
-        "batch": "16Feb2024",
-        "jumlah": 50,
-        "sisa": 12,
-        "het": null,
-        "harga": 7900000,
-        "tanggal": 1708041600,
-        "barang": {
-            "id": 1408,
-            "item_id": 1476,
-            "kategori_id": 15,
-            "item": {
-                "id": 1476,
-                "kode": "MYK001",
-                "nama": "Minyakita 1 L",
-                "stock": 31
+    }, {
+        "id": 554,
+        "transaksi_pembelian_id": 284,
+        "customer_id": 1,
+        "nama": "Mutiara",
+        "jumlah": 1,
+        "harga": 75000,
+        "cod": null,
+        "tanggal": 1708992000,
+        "customer": {
+            "id": 1,
+            "nama": "Nanang",
+            "nomor": null,
+            "module": "pinjaman"
+        },
+        "pembelian": {
+            "id": 284,
+            "master_item_id": 601,
+            "supplier": "PT PURI WIRA MAHKOTA",
+            "batch": "31JAN2024",
+            "jumlah": 3,
+            "sisa": 1,
+            "het": 86000,
+            "harga": 193500,
+            "tanggal": 1706659200,
+            "barang": {
+                "id": 601,
+                "item_id": 601,
+                "kategori_id": 4,
+                "item": {
+                    "id": 601,
+                    "kode": "WIN1114",
+                    "nama": " FRONT HANDLE COVER SUPRA X 125 07 HITAM",
+                    "stock": 1
+                },
+                "kategori": {
+                    "id": 4,
+                    "nama": "WIN",
+                    "toko": "SGH_Motor"
+                }
             }
         }
-    }
-}, {
-    "id": 210,
-    "transaksi_pembelian_id": 339,
-    "nama": "Tetangga Pak Bintang",
-    "jumlah": 1,
-    "harga": 161000,
-    "tanggal": 1708214400,
-    "pembelian": {
-        "id": 339,
-        "master_item_id": 1408,
-        "supplier": "PT Minyakita",
-        "batch": "16Feb2024",
-        "jumlah": 50,
-        "sisa": 12,
-        "het": null,
-        "harga": 7900000,
-        "tanggal": 1708041600,
-        "barang": {
-            "id": 1408,
-            "item_id": 1476,
-            "kategori_id": 15,
-            "item": {
-                "id": 1476,
-                "kode": "MYK001",
-                "nama": "Minyakita 1 L",
-                "stock": 31
+    }, {
+        "id": 555,
+        "transaksi_pembelian_id": 502,
+        "customer_id": 1,
+        "nama": "Mutiara",
+        "jumlah": 1,
+        "harga": 180000,
+        "cod": null,
+        "tanggal": 1708992000,
+        "customer": {
+            "id": 1,
+            "nama": "Nanang",
+            "nomor": null,
+            "module": "pinjaman"
+        },
+        "pembelian": {
+            "id": 502,
+            "master_item_id": 689,
+            "supplier": "PT PURI WIRA MAHKOTA",
+            "batch": "31JAN2024",
+            "jumlah": 1,
+            "sisa": 0,
+            "het": 206000,
+            "harga": 154500,
+            "tanggal": 1706659200,
+            "barang": {
+                "id": 689,
+                "item_id": 689,
+                "kategori_id": 4,
+                "item": {
+                    "id": 689,
+                    "kode": "WIN1200",
+                    "nama": "COVER BODY SUPRA X 125 07 HITAM + COVER STOP ",
+                    "stock": 0
+                },
+                "kategori": {
+                    "id": 4,
+                    "nama": "WIN",
+                    "toko": "SGH_Motor"
+                }
             }
         }
-    }
-}, {
-    "id": 211,
-    "transaksi_pembelian_id": 333,
-    "nama": "Tetangga Pak Bintang",
-    "jumlah": 1,
-    "harga": 148000,
-    "tanggal": 1708214400,
-    "pembelian": {
-        "id": 333,
-        "master_item_id": 1426,
-        "supplier": "PT Sanky",
-        "batch": "31Jan2024",
-        "jumlah": 42,
-        "sisa": 39,
-        "het": null,
-        "harga": 6090000,
-        "tanggal": 1706659200,
-        "barang": {
-            "id": 1426,
-            "item_id": 1495,
-            "kategori_id": 15,
-            "item": {
-                "id": 1495,
-                "kode": "MYK002",
-                "nama": "Sanky 800 ML",
-                "stock": 64
+    }, {
+        "id": 556,
+        "transaksi_pembelian_id": 504,
+        "customer_id": 1,
+        "nama": "PAK ABU",
+        "jumlah": 1,
+        "harga": 29000,
+        "cod": null,
+        "tanggal": 1708992000,
+        "customer": {
+            "id": 1,
+            "nama": "Nanang",
+            "nomor": null,
+            "module": "pinjaman"
+        },
+        "pembelian": {
+            "id": 504,
+            "master_item_id": 1449,
+            "supplier": "PT ASTRA OTOPARTS",
+            "batch": "12FEB2024",
+            "jumlah": 10,
+            "sisa": 9,
+            "het": 29000,
+            "harga": 234900,
+            "tanggal": 1707696000,
+            "barang": {
+                "id": 1449,
+                "item_id": 1518,
+                "kategori_id": 18,
+                "item": {
+                    "id": 1518,
+                    "kode": "H2-16155-KRS-1100",
+                    "nama": "VALVE FLOAT",
+                    "stock": 9
+                },
+                "kategori": {
+                    "id": 18,
+                    "nama": "ASPIRA",
+                    "toko": "SGH_Motor"
+                }
             }
         }
-    }
-}, {
-    "id": 205,
-    "transaksi_pembelian_id": 339,
-    "nama": "Bu Us",
-    "jumlah": 1,
-    "harga": 161000,
-    "tanggal": 1708128000,
-    "pembelian": {
-        "id": 339,
-        "master_item_id": 1408,
-        "supplier": "PT Minyakita",
-        "batch": "16Feb2024",
-        "jumlah": 50,
-        "sisa": 12,
-        "het": null,
-        "harga": 7900000,
-        "tanggal": 1708041600,
-        "barang": {
-            "id": 1408,
-            "item_id": 1476,
-            "kategori_id": 15,
-            "item": {
-                "id": 1476,
-                "kode": "MYK001",
-                "nama": "Minyakita 1 L",
-                "stock": 31
+    }, {
+        "id": 557,
+        "transaksi_pembelian_id": 505,
+        "customer_id": 1,
+        "nama": "PAK ABU",
+        "jumlah": 1,
+        "harga": 117000,
+        "cod": null,
+        "tanggal": 1708992000,
+        "customer": {
+            "id": 1,
+            "nama": "Nanang",
+            "nomor": null,
+            "module": "pinjaman"
+        },
+        "pembelian": {
+            "id": 505,
+            "master_item_id": 1458,
+            "supplier": "PT ASTRA OTOPARTS",
+            "batch": "12FEB2024",
+            "jumlah": 5,
+            "sisa": 4,
+            "het": 123000,
+            "harga": 498150,
+            "tanggal": 1707696000,
+            "barang": {
+                "id": 1458,
+                "item_id": 1527,
+                "kategori_id": 18,
+                "item": {
+                    "id": 1527,
+                    "kode": "H2-22201-KY1-1700",
+                    "nama": "DISK SET CLUTCH 4",
+                    "stock": 4
+                },
+                "kategori": {
+                    "id": 18,
+                    "nama": "ASPIRA",
+                    "toko": "SGH_Motor"
+                }
             }
         }
-    }
-}, {
-    "id": 209,
-    "transaksi_pembelian_id": 339,
-    "nama": "Pak Sumardi",
-    "jumlah": 4,
-    "harga": 644000,
-    "tanggal": 1708128000,
-    "pembelian": {
-        "id": 339,
-        "master_item_id": 1408,
-        "supplier": "PT Minyakita",
-        "batch": "16Feb2024",
-        "jumlah": 50,
-        "sisa": 12,
-        "het": null,
-        "harga": 7900000,
-        "tanggal": 1708041600,
-        "barang": {
-            "id": 1408,
-            "item_id": 1476,
-            "kategori_id": 15,
-            "item": {
-                "id": 1476,
-                "kode": "MYK001",
-                "nama": "Minyakita 1 L",
-                "stock": 31
-            }
-        }
-    }
-}, {
-    "id": 201,
-    "transaksi_pembelian_id": 334,
-    "nama": "Mas Wahyudi",
-    "jumlah": 1,
-    "harga": 161000,
-    "tanggal": 1707264000,
-    "pembelian": {
-        "id": 334,
-        "master_item_id": 1408,
-        "supplier": "PT Minyakita",
-        "batch": "31Jan2024",
-        "jumlah": 76,
-        "sisa": 19,
-        "het": null,
-        "harga": 11932000,
-        "tanggal": 1706659200,
-        "barang": {
-            "id": 1408,
-            "item_id": 1476,
-            "kategori_id": 15,
-            "item": {
-                "id": 1476,
-                "kode": "MYK001",
-                "nama": "Minyakita 1 L",
-                "stock": 31
-            }
-        }
-    }
-}, {
-    "id": 185,
-    "transaksi_pembelian_id": 336,
-    "nama": "PT KTI",
-    "jumlah": 40,
-    "harga": 5880000,
-    "tanggal": 1707177600,
-    "pembelian": {
-        "id": 336,
-        "master_item_id": 1426,
-        "supplier": "PT Sanky",
-        "batch": "06Feb2024",
-        "jumlah": 40,
-        "sisa": 0,
-        "het": null,
-        "harga": 5880000,
-        "tanggal": 1707177600,
-        "barang": {
-            "id": 1426,
-            "item_id": 1495,
-            "kategori_id": 15,
-            "item": {
-                "id": 1495,
-                "kode": "MYK002",
-                "nama": "Sanky 800 ML",
-                "stock": 64
-            }
-        }
-    }
-}, {
-    "id": 186,
-    "transaksi_pembelian_id": 335,
-    "nama": "PT KTI",
-    "jumlah": 80,
-    "harga": 12800000,
-    "tanggal": 1707177600,
-    "pembelian": {
-        "id": 335,
-        "master_item_id": 1408,
-        "supplier": "PT Minyakita",
-        "batch": "06Feb2024",
-        "jumlah": 80,
-        "sisa": 0,
-        "het": null,
-        "harga": 12640000,
-        "tanggal": 1704499200,
-        "barang": {
-            "id": 1408,
-            "item_id": 1476,
-            "kategori_id": 15,
-            "item": {
-                "id": 1476,
-                "kode": "MYK001",
-                "nama": "Minyakita 1 L",
-                "stock": 31
-            }
-        }
-    }
-}, {
-    "id": 184,
-    "transaksi_pembelian_id": 334,
-    "nama": "Mas Feri",
-    "jumlah": 3,
-    "harga": 428000,
-    "tanggal": 1707177600,
-    "pembelian": {
-        "id": 334,
-        "master_item_id": 1408,
-        "supplier": "PT Minyakita",
-        "batch": "31Jan2024",
-        "jumlah": 76,
-        "sisa": 19,
-        "het": null,
-        "harga": 11932000,
-        "tanggal": 1706659200,
-        "barang": {
-            "id": 1408,
-            "item_id": 1476,
-            "kategori_id": 15,
-            "item": {
-                "id": 1476,
-                "kode": "MYK001",
-                "nama": "Minyakita 1 L",
-                "stock": 31
-            }
-        }
-    }
-}, {
-    "id": 187,
-    "transaksi_pembelian_id": 334,
-    "nama": "Mba Izmy (istri nanang)",
-    "jumlah": 2,
-    "harga": 322000,
-    "tanggal": 1706832000,
-    "pembelian": {
-        "id": 334,
-        "master_item_id": 1408,
-        "supplier": "PT Minyakita",
-        "batch": "31Jan2024",
-        "jumlah": 76,
-        "sisa": 19,
-        "het": null,
-        "harga": 11932000,
-        "tanggal": 1706659200,
-        "barang": {
-            "id": 1408,
-            "item_id": 1476,
-            "kategori_id": 15,
-            "item": {
-                "id": 1476,
-                "kode": "MYK001",
-                "nama": "Minyakita 1 L",
-                "stock": 31
-            }
-        }
-    }
-}]
+    }],
+    "first_page_url": "http:\/\/192.168.18.85\/motor\/penjualan?page=1",
+    "from": 1,
+    "last_page": 78,
+    "last_page_url": "http:\/\/192.168.18.85\/motor\/penjualan?page=78",
+    "links": [{
+        "url": null,
+        "label": "&laquo; Previous",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=1",
+        "label": "1",
+        "active": true
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=2",
+        "label": "2",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=3",
+        "label": "3",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=4",
+        "label": "4",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=5",
+        "label": "5",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=6",
+        "label": "6",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=7",
+        "label": "7",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=8",
+        "label": "8",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=9",
+        "label": "9",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=10",
+        "label": "10",
+        "active": false
+    }, {
+        "url": null,
+        "label": "...",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=77",
+        "label": "77",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=78",
+        "label": "78",
+        "active": false
+    }, {
+        "url": "http:\/\/192.168.18.85\/motor\/penjualan?page=2",
+        "label": "Next &raquo;",
+        "active": false
+    }],
+    "next_page_url": "http:\/\/192.168.18.85\/motor\/penjualan?page=2",
+    "path": "http:\/\/192.168.18.85\/motor\/penjualan",
+    "per_page": 6,
+    "prev_page_url": null,
+    "to": 6,
+    "total": 468
+}

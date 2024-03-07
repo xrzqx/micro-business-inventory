@@ -65,10 +65,12 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('motorcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('motorkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('motorpengeluaran.index')}}">Pengeluaran</a></li>
                 <li class="sublist-item"><a href="{{route('motorlaporanpenjualan.index')}}">Laporan Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('motorkeuangan.index')}}">Laporan Keuangan</a></li>
             </ul>
@@ -81,11 +83,13 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('studiocustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
+                <li class="sublist-item"><a href="{{route('studiopengeluaran.index')}}">Pengeluaran</a></li>
                 <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
                 <li class="sublist-item"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
@@ -99,6 +103,7 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('rokokcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('rokokkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('rokok.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpembelian.index')}}">Pembelian</a></li>
@@ -115,6 +120,7 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('minyakcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('minyakkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('minyak.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('minyakpembelian.index')}}">Pembelian</a></li>
@@ -180,7 +186,7 @@
         <div class="card-container">
             <div class="card-f">
                 <div class="card-title-f">
-                    Sales
+                    Laba Kotor
                 </div>
                 <div class="card-body-f">
                     <div class="f-row">
@@ -198,6 +204,40 @@
                             <div>
                                 Total
                             </div>
+                            <div>Rp. {{ number_format($labakotor_today, 0, ',', '.') }}</div>
+                            <div>Rp. xxx.000</div>
+                            <div>Rp. x.xxx.000</div>
+                            <div>Rp. x.xxx.000</div>
+                            <div>Rp. x.xxx.000</div>
+                            <div>Rp. xx.xxx.000</div>
+                            <div>Rp. x.xxx.xxx.000</div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="card-container">
+            <div class="card-f">
+                <div class="card-title-f">
+                    Laba Kotor
+                </div>
+                <div class="card-body-f">
+                    <div class="f-row">
+                        <div class="f-col">
+                            <div>#</div>
+                            <div>Today</div>
+                            <div>Yesterday</div>
+                            <div>Last 7 days</div>
+                            <div>Last 30 days</div>
+                            <div>Last 60 days</div>
+                            <div>Last 90 days</div>
+                            <div>All time</div>
+                        </div>
+                        <div class="f-col">
+                            <div>
+                                Sparepart
+                            </div>
                             <div>Rp. 500.000</div>
                             <div>Rp. 400.000</div>
                             <div>Rp. 2.300.000</div>
@@ -208,20 +248,81 @@
                         </div>
                         <div class="f-col">
                             <div>
-                                Order
+                                Studio
                             </div>
-                            <div>70</div>
-                            <div>100</div>
-                            <div>1000</div>
-                            <div>10000</div>
-                            <div>100000</div>
-                            <div>1000000</div>
-                            <div>10000000</div>
+                            <div>Rp. 500.000</div>
+                            <div>Rp. 400.000</div>
+                            <div>Rp. 2.300.000</div>
+                            <div>Rp. 4.000.000</div>
+                            <div>Rp. 8.400.000</div>
+                            <div>Rp. 16.700.000</div>
+                            <div>Rp. 1.114.700.000</div>
+                        </div>
+                        <div class="f-col">
+                            <div>
+                                Rokok
+                            </div>
+                            <div>Rp. 500.000</div>
+                            <div>Rp. 400.000</div>
+                            <div>Rp. 2.300.000</div>
+                            <div>Rp. 4.000.000</div>
+                            <div>Rp. 8.400.000</div>
+                            <div>Rp. 16.700.000</div>
+                            <div>Rp. 1.114.700.000</div>
+                        </div>
+                        <div class="f-col">
+                            <div>
+                                Minyak
+                            </div>
+                            <div>Rp. 500.000</div>
+                            <div>Rp. 400.000</div>
+                            <div>Rp. 2.300.000</div>
+                            <div>Rp. 4.000.000</div>
+                            <div>Rp. 8.400.000</div>
+                            <div>Rp. 16.700.000</div>
+                            <div>Rp. 1.114.700.000</div>
+                        </div>
+                        <div class="f-col">
+                            <div>
+                                Beras
+                            </div>
+                            <div>Rp. 500.000</div>
+                            <div>Rp. 400.000</div>
+                            <div>Rp. 2.300.000</div>
+                            <div>Rp. 4.000.000</div>
+                            <div>Rp. 8.400.000</div>
+                            <div>Rp. 16.700.000</div>
+                            <div>Rp. 1.114.700.000</div>
+                        </div>
+                        <div class="f-col">
+                            <div>
+                                Brilink
+                            </div>
+                            <div>Rp. 500.000</div>
+                            <div>Rp. 400.000</div>
+                            <div>Rp. 2.300.000</div>
+                            <div>Rp. 4.000.000</div>
+                            <div>Rp. 8.400.000</div>
+                            <div>Rp. 16.700.000</div>
+                            <div>Rp. 1.114.700.000</div>
+                        </div>
+                        <div class="f-col">
+                            <div>
+                                Pupuk
+                            </div>
+                            <div>Rp. 500.000</div>
+                            <div>Rp. 400.000</div>
+                            <div>Rp. 2.300.000</div>
+                            <div>Rp. 4.000.000</div>
+                            <div>Rp. 8.400.000</div>
+                            <div>Rp. 16.700.000</div>
+                            <div>Rp. 1.114.700.000</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
+        
     </div>
 </div>
 @endsection

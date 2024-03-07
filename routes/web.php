@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MotorCustomerController;
 use App\Http\Controllers\MotorKategoriController;
 use App\Http\Controllers\MotorBarangController;
 use App\Http\Controllers\MotorPembelianController;
 use App\Http\Controllers\MotorPenjualanController;
+use App\Http\Controllers\MotorPengeluaranController;
 use App\Http\Controllers\MotorLaporanKeuanganController;
 use App\Http\Controllers\MotorLaporanPenjualanController;
 
@@ -13,10 +15,12 @@ use App\Http\Controllers\BatchSalesController;
 use App\Http\Controllers\BarangController;
 
 use App\Http\Controllers\StudioKategoriController;
+use App\Http\Controllers\StudioCustomerController;
 use App\Http\Controllers\StudioBarangController;
 use App\Http\Controllers\StudioProdukController;
 use App\Http\Controllers\StudioPembelianController;
 use App\Http\Controllers\StudioPenjualanController;
+use App\Http\Controllers\StudioPengeluaranController;
 use App\Http\Controllers\StudioLimbahController;
 use App\Http\Controllers\StudioStockController;
 use App\Http\Controllers\StudioLaporanKeuanganController;
@@ -27,12 +31,14 @@ use App\Http\Controllers\SalesPembelianController;
 use App\Http\Controllers\SalesLaporanKeuanganController;
 use App\Http\Controllers\SalesKeuanganController;
 
+use App\Http\Controllers\RokokCustomerController;
 use App\Http\Controllers\RokokKategoriController;
 use App\Http\Controllers\RokokBarangController;
 use App\Http\Controllers\RokokPembelianController;
 use App\Http\Controllers\RokokPenjualanController;
 use App\Http\Controllers\RokokLaporanKeuanganController;
 
+use App\Http\Controllers\MinyakCustomerController;
 use App\Http\Controllers\MinyakKategoriController;
 use App\Http\Controllers\MinyakBarangController;
 use App\Http\Controllers\MinyakPembelianController;
@@ -60,6 +66,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\PinjamanLaporanKeuanganController;
 
+use App\Http\Controllers\DasboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,9 +78,7 @@ use App\Http\Controllers\PinjamanLaporanKeuanganController;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.index');
-});
+Route::get('/', [DasboardController::class, 'index'])->name('dashboard.index');
 
 Route::get('/fetch-batch', [BatchController::class, 'fetchData'])->name('fetch.batch');
 Route::get('/fetch-batch-sales', [BatchSalesController::class, 'fetchData'])->name('fetch.batchsales');
@@ -97,6 +102,13 @@ Route::get('/pinjaman/{id}', [PinjamanController::class, 'edit'])->name('pinjama
 Route::post('/pinjaman/{id}', [PinjamanController::class, 'update'])->name('pinjaman.update');
 Route::delete('/pinjaman/{id}', [PinjamanController::class, 'destroy'])->name('pinjaman.destroy');
 
+Route::get('/motor/customer/search', [MotorCustomerController::class, 'search'])->name('motorcustomer.search');
+Route::get('/motor/customer', [MotorCustomerController::class, 'index'])->name('motorcustomer.index');
+Route::post('/motor/customer', [MotorCustomerController::class, 'store'])->name('motorcustomer.store');
+Route::get('/motor/customer/{id}', [MotorCustomerController::class, 'edit'])->name('motorcustomer.edit');
+Route::post('/motor/customer/{id}', [MotorCustomerController::class, 'update'])->name('motorcustomer.update');
+Route::delete('/motor/customer/{id}', [MotorCustomerController::class, 'destroy'])->name('motorcustomer.destroy');
+
 Route::get('/motor/kategori/search', [MotorKategoriController::class, 'search'])->name('motorkategori.search');
 Route::get('/motor/kategori', [MotorKategoriController::class, 'index'])->name('motorkategori.index');
 Route::post('/motor/kategori', [MotorKategoriController::class, 'store'])->name('motorkategori.store');
@@ -118,6 +130,13 @@ Route::get('/motor/penjualan/{id}', [MotorPenjualanController::class, 'edit'])->
 Route::post('/motor/penjualan/{id}', [MotorPenjualanController::class, 'update'])->name('motorpenjualan.update');
 Route::delete('/motor/penjualan/{id}', [MotorPenjualanController::class, 'destroy'])->name('motorpenjualan.destroy');
 
+Route::get('/motor/pengeluaran/search', [MotorPengeluaranController::class, 'search'])->name('motorpengeluaran.search');
+Route::get('/motor/pengeluaran', [MotorPengeluaranController::class, 'index'])->name('motorpengeluaran.index');
+Route::post('/motor/pengeluaran', [MotorPengeluaranController::class, 'store'])->name('motorpengeluaran.store');
+Route::get('/motor/pengeluaran/{id}', [MotorPengeluaranController::class, 'edit'])->name('motorpengeluaran.edit');
+Route::post('/motor/pengeluaran/{id}', [MotorPengeluaranController::class, 'update'])->name('motorpengeluaran.update');
+Route::delete('/motor/pengeluaran/{id}', [MotorPengeluaranController::class, 'destroy'])->name('motorpengeluaran.destroy');
+
 Route::get('/motor/laporanpenjualan/search', [MotorLaporanPenjualanController::class, 'search'])->name('motorlaporanpenjualan.search');
 Route::get('/motor/laporanpenjualan', [MotorLaporanPenjualanController::class, 'index'])->name('motorlaporanpenjualan.index');
 
@@ -130,6 +149,13 @@ Route::post('/motor', [MotorBarangController::class, 'store'])->name('motor.stor
 Route::get('/motor/{id}', [MotorBarangController::class, 'edit'])->name('motor.edit');
 Route::post('/motor/{id}', [MotorBarangController::class, 'update'])->name('motor.update');
 Route::delete('/motor/{id}', [MotorBarangController::class, 'destroy'])->name('motor.destroy');
+
+Route::get('/studio/customer/search', [StudioCustomerController::class, 'search'])->name('studiocustomer.search');
+Route::get('/studio/customer', [StudioCustomerController::class, 'index'])->name('studiocustomer.index');
+Route::post('/studio/customer', [StudioCustomerController::class, 'store'])->name('studiocustomer.store');
+Route::get('/studio/customer/{id}', [StudioCustomerController::class, 'edit'])->name('studiocustomer.edit');
+Route::post('/studio/customer/{id}', [StudioCustomerController::class, 'update'])->name('studiocustomer.update');
+Route::delete('/studio/customer/{id}', [StudioCustomerController::class, 'destroy'])->name('studiocustomer.destroy');
 
 Route::get('/studio/kategori/search', [StudioKategoriController::class, 'search'])->name('studiokategori.search');
 Route::get('/studio/kategori', [StudioKategoriController::class, 'index'])->name('studiokategori.index');
@@ -159,6 +185,13 @@ Route::get('/studio/penjualan/{id}', [StudioPenjualanController::class, 'edit'])
 Route::post('/studio/penjualan/{id}', [StudioPenjualanController::class, 'update'])->name('studiopenjualan.update');
 Route::delete('/studio/penjualan/{id}', [StudioPenjualanController::class, 'destroy'])->name('studiopenjualan.destroy');
 
+Route::get('/studio/pengeluaran/search', [StudioPengeluaranController::class, 'search'])->name('studiopengeluaran.search');
+Route::get('/studio/pengeluaran', [StudioPengeluaranController::class, 'index'])->name('studiopengeluaran.index');
+Route::post('/studio/pengeluaran', [StudioPengeluaranController::class, 'store'])->name('studiopengeluaran.store');
+Route::get('/studio/pengeluaran/{id}', [StudioPengeluaranController::class, 'edit'])->name('studiopengeluaran.edit');
+Route::post('/studio/pengeluaran/{id}', [StudioPengeluaranController::class, 'update'])->name('studiopengeluaran.update');
+Route::delete('/studio/pengeluaran/{id}', [StudioPengeluaranController::class, 'destroy'])->name('studiopengeluaran.destroy');
+
 Route::get('/studio/limbah/search', [StudioLimbahController::class, 'search'])->name('studiolimbah.search');
 Route::get('/studio/limbah', [StudioLimbahController::class, 'index'])->name('studiolimbah.index');
 Route::post('/studio/limbah', [StudioLimbahController::class, 'store'])->name('studiolimbah.store');
@@ -169,9 +202,6 @@ Route::delete('/studio/limbah/{id}', [StudioLimbahController::class, 'destroy'])
 Route::get('/studio/stock/search', [StudioStockController::class, 'search'])->name('studiostock.search');
 Route::get('/studio/stock', [StudioStockController::class, 'index'])->name('studiostock.index');
 Route::post('/studio/stock', [StudioStockController::class, 'store'])->name('studiostock.store');
-// Route::get('/studio/stock/{id}', [StudioStockController::class, 'edit'])->name('studiostock.edit');
-// Route::post('/studio/stock/{id}', [StudioStockController::class, 'update'])->name('studiostock.update');
-// Route::delete('/studio/stock/{id}', [StudioStockController::class, 'destroy'])->name('studiostock.destroy');
 
 Route::get('/studio/keuangan/search', [StudioLaporanKeuanganController::class, 'search'])->name('studiokeuangan.search');
 Route::get('/studio/keuangan', [StudioLaporanKeuanganController::class, 'index'])->name('studiokeuangan.index');
@@ -207,6 +237,13 @@ Route::get('/sales/{id}', [SalesController::class, 'edit'])->name('sales.edit');
 Route::post('/sales/{id}', [SalesController::class, 'update'])->name('sales.update');
 Route::delete('/sales/{id}', [SalesController::class, 'destroy'])->name('sales.destroy');
 
+Route::get('/rokok/customer/search', [RokokCustomerController::class, 'search'])->name('rokokcustomer.search');
+Route::get('/rokok/customer', [RokokCustomerController::class, 'index'])->name('rokokcustomer.index');
+Route::post('/rokok/customer', [RokokCustomerController::class, 'store'])->name('rokokcustomer.store');
+Route::get('/rokok/customer/{id}', [RokokCustomerController::class, 'edit'])->name('rokokcustomer.edit');
+Route::post('/rokok/customer/{id}', [RokokCustomerController::class, 'update'])->name('rokokcustomer.update');
+Route::delete('/rokok/customer/{id}', [RokokCustomerController::class, 'destroy'])->name('rokokcustomer.destroy');
+
 Route::get('/rokok/kategori/search', [RokokKategoriController::class, 'search'])->name('rokokkategori.search');
 Route::get('/rokok/kategori', [RokokKategoriController::class, 'index'])->name('rokokkategori.index');
 Route::post('/rokok/kategori', [RokokKategoriController::class, 'store'])->name('rokokkategori.store');
@@ -237,6 +274,13 @@ Route::post('/rokok', [RokokBarangController::class, 'store'])->name('rokok.stor
 Route::get('/rokok/{id}', [RokokBarangController::class, 'edit'])->name('rokok.edit');
 Route::post('/rokok/{id}', [RokokBarangController::class, 'update'])->name('rokok.update');
 Route::delete('/rokok/{id}', [RokokBarangController::class, 'destroy'])->name('rokok.destroy');
+
+Route::get('/minyak/customer/search', [MinyakCustomerController::class, 'search'])->name('minyakcustomer.search');
+Route::get('/minyak/customer', [MinyakCustomerController::class, 'index'])->name('minyakcustomer.index');
+Route::post('/minyak/customer', [MinyakCustomerController::class, 'store'])->name('minyakcustomer.store');
+Route::get('/minyak/customer/{id}', [MinyakCustomerController::class, 'edit'])->name('minyakcustomer.edit');
+Route::post('/minyak/customer/{id}', [MinyakCustomerController::class, 'update'])->name('minyakcustomer.update');
+Route::delete('/minyak/customer/{id}', [MinyakCustomerController::class, 'destroy'])->name('minyakcustomer.destroy');
 
 Route::get('/minyak/kategori/search', [MinyakKategoriController::class, 'search'])->name('minyakkategori.search');
 Route::get('/minyak/kategori', [MinyakKategoriController::class, 'index'])->name('minyakkategori.index');

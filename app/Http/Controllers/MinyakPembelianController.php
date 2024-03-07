@@ -26,6 +26,7 @@ class MinyakPembelianController extends Controller
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
             ->join('item', 'item.id', '=', 'master_item.item_id')
             ->where('kategori.toko', '=', 'minyak')
+            ->orderBy('transaksi_pembelian.tanggal', 'desc')
             ->with(['barang' => function ($query) {
                 $query->with('item', 'kategori');
             }])

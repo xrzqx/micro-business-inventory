@@ -15,18 +15,23 @@
                     <div class="row">
                         <div class="col-sm-12 form-group">
                             <label>Nama Customer</label>
-                            <input type="text" class="form-control form-control-sm supplier-produk" name="customer" />
-                            <div class="text-err">
-                                @error('customer')
-                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                    </path>
-                                </svg>
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                            <div class="input-group">
+                                <select class="js-example-basic-single col-sm-12" name="customer" id="nama-customer">
+                                    <option value="" disabled selected hidden>Pilih Customer</option>
+                                    @foreach ($customer as $value)
+                                        <option value="{{ $value->id }}">{{ $value->nama }} | {{ $value->nomor }}</option>
+                                    @endforeach
+                                </select>
                             </div>
+                            @error('customer')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="row">
@@ -154,9 +159,26 @@
                         <div class="col-sm-12 form-group">
                             <label>Tanggal</label>
                             <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
-                                name="tanggal" />
+                                name="tanggal" autocomplete="off"/>
                             <div class="text-err">
                                 @error('tanggal')
+                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                    </path>
+                                </svg>
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <label>Keterangan</label>
+                            <input type="text" class="form-control form-control-sm keterangan-produk" name="keterangan" />
+                            <div class="text-err">
+                                @error('keterangan')
                                 <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                     width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                                     <path
@@ -220,10 +242,12 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('motorcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('motorkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
+                <li class="sublist-item"><a href="{{route('motorpengeluaran.index')}}">Pengeluaran</a></li>
                 <li class="sublist-item"><a href="{{route('motorlaporanpenjualan.index')}}">Laporan Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('motorkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
@@ -237,11 +261,13 @@
                 </div>
             </li>
             <ul class="sublist">
+                <li class="sublist-item"><a href="{{route('studiocustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item selected"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
+                <li class="sublist-item"><a href="{{route('studiopengeluaran.index')}}">Pengeluaran</a></li>
                 <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
                 <li class="sublist-item"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
@@ -255,6 +281,7 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('rokokcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('rokokkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('rokok.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpembelian.index')}}">Pembelian</a></li>
@@ -270,6 +297,7 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('minyakcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('minyakkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('minyak.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('minyakpembelian.index')}}">Pembelian</a></li>
@@ -339,10 +367,10 @@
                 </button>
             </div>
             <div class="col-sm-4">
-                <form class="d-flex" action="{{route('motorpenjualan.search')}}" method="GET">
+                <form class="d-flex" action="{{route('studiopenjualan.search')}}" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
-                            placeholder="Cari Barang">
+                        <input type="text" class="form-control" name="namacustomer" value="{{ request('search') }}"
+                            placeholder="Cari Nama Customer">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
@@ -379,11 +407,14 @@
         <div class="table-responsive">
             <table class="table">
                 <tr>
+                    <th>Nama Cst</th>
                     <th>Customer</th>
+                    <th>Nomor</th>
                     <th>Nama Produk</th>
                     <th>Jumlah</th>
                     <th>Harga</th>
                     <th>Tanggal</th>
+                    <th>Keterangan</th>
                     <th>Action</th>
                 </tr>
                 @foreach ($penjualan as $key => $value)
@@ -391,6 +422,20 @@
                     <td>
                         {{ $value->penjualan_produk->nama }}
                     </td>
+                    @if ($value->penjualan_produk && $value->penjualan_produk->customer )
+                        <td>
+                            {{ $value->penjualan_produk->customer->nama }}
+                        </td>
+                        <td>
+                            {{$value->penjualan_produk->customer->nomor}}
+                        </td>
+                    @else
+                        <td></td>
+                        <td></td>
+                    @endif
+                    {{-- <td>
+                        {{$value->penjualan_produk->customer->nomor}}
+                    </td> --}}
                     <td>
                         {{ $value->penjualan_produk->produk->nama }}
                     </td>
@@ -404,6 +449,13 @@
                         {{date('d-m-Y', $value->penjualan_produk->tanggal)}}
                     </td>
                     <td>
+                        {{ $value->penjualan_produk->keterangan }}
+                    </td>
+                    <td>
+                        <button type="button" style="background-color: yellow">
+                            <a href="{{ route('studiopenjualan.edit', $value->penjualan_produk_id) }}"
+                                style="color: black;text-decoration-line: none">edit</a>
+                        </button>
                         <form method="post" action="{{ route('studiopenjualan.destroy', $value->penjualan_produk_id) }}"
                             style="display: inline;">
                             @csrf
@@ -426,7 +478,7 @@
       input.value = input.value.replace(/[^0-9]/g, '');
   
       // Remove leading zeros
-      input.value = input.value.replace(/^0+/g, '');
+      input.value = input.value.replace(/^0+(?=\d)/, '');
   
       // Limit the input to a maximum of stock
       var maxStock = document.getElementById('jumlahInp').getAttribute('data-dynamic-value');

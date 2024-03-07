@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
+use App\Models\Pengeluaran;
 use Carbon\Carbon;
 
 class MotorLaporanKeuanganController extends Controller
@@ -31,7 +32,6 @@ class MotorLaporanKeuanganController extends Controller
             ->with(['barang' => function ($query) {
                 $query->with('item');
             }])
-            // ->paginate(7);
             ->get();
         
         // return $pembelian;
@@ -50,25 +50,20 @@ class MotorLaporanKeuanganController extends Controller
                     $query->with('item');
                 }]);
             }])
-            ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->get();
-            // ->paginate(7);
-
-        // return $penjualan;
+        
+        $pengeluaran = Pengeluaran::select('pengeluaran.*')
+            ->where('toko', 'motor')
+            ->where('pengeluaran.tanggal', '>=', $timestamp)
+            ->where('pengeluaran.tanggal', '<=', $timestamp)
+            ->orderBy('pengeluaran.tanggal', 'desc')
+            ->get();
 
         // Append results to $data array
-        $data = array_merge($pembelian->toArray(), $penjualan->toArray());
-
-        // Sort $data array by 'tanggal' field
-        // usort($data, function ($a, $b) {
-        //     $timeA = Carbon::parse($a['tanggal'])->timestamp;
-        //     $timeB = Carbon::parse($b['tanggal'])->timestamp;
-        
-        //     return $timeB - $timeA;
-        // });
-
+        $data = array_merge($pembelian->toArray(), $penjualan->toArray(), $pengeluaran->toArray());
         // Convert back to an associative array with numeric keys
         $associativeArray = array_values($data);
+        // return $associativeArray;
 
         return view("motor.keuangan", 
         [
@@ -99,9 +94,7 @@ class MotorLaporanKeuanganController extends Controller
             ->with(['barang' => function ($query) {
                 $query->with('item');
             }])
-            // ->paginate(7);
             ->get();
-        // return $pembelian;
         
         $penjualan = Penjualan::select('transaksi_penjualan.transaksi_pembelian_id', \DB::raw('SUM(transaksi_penjualan.harga) as total_harga'))
             ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
@@ -119,21 +112,20 @@ class MotorLaporanKeuanganController extends Controller
             }])
             ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->get();
-        // return $pembelian;
+
+        $pengeluaran = Pengeluaran::select('pengeluaran.*')
+            ->where('toko', 'motor')
+            ->where('pengeluaran.tanggal', '>=', $timestampStart)
+            ->where('pengeluaran.tanggal', '<=', $timestampEnd)
+            ->orderBy('pengeluaran.tanggal', 'desc')
+            ->get();
 
         // Append results to $data array
-        $data = array_merge($pembelian->toArray(), $penjualan->toArray());
-
-        // Sort $data array by 'tanggal' field
-        // usort($data, function ($a, $b) {
-        //     $timeA = Carbon::parse($a['tanggal'])->timestamp;
-        //     $timeB = Carbon::parse($b['tanggal'])->timestamp;
-        
-        //     return $timeB - $timeA;
-        // });
+        $data = array_merge($pembelian->toArray(), $penjualan->toArray(), $pengeluaran->toArray());
 
         // Convert back to an associative array with numeric keys
         $associativeArray = array_values($data);
+        // return $associativeArray;
 
         return view("motor.keuangan", 
         [
