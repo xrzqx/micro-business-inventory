@@ -1,119 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Modal -->
-<div class="modal fade modal-item" id="exampleModalCenter" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade modal-item" id="kategoriModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="kategoriModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title exampleModalLabel" id="exampleModalLabel">Tambah Produk</h5>
+                <h5 class="modal-title exampleModalLabel" id="kategoriModalLabel">Tambah Kategori</h5>
             </div>
-            <form method="POST" action="{{route('motorpembelian.store')}}">
+            <form method="POST" action="{{ route('pupukcustomer.store') }}">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12 form-group">
-                            <label>Supplier</label>
-                            <input type="text" class="form-control form-control-sm supplier-produk" name="supplier" />
+                            <label>Nama Customer</label>
+                            <input type="text" class="form-control form-control-sm nama-produk" name="namacustomer" />
                             <div class="text-err">
-                                @error('supplier')
-                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                    </path>
-                                </svg>
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-12 form-group">
-                            <label>Nama Barang</label>
-                            <div class="input-group">
-                                <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
-                                    <option value="" disabled selected hidden>Pilih Barang</option>
-                                    @foreach ($barang as $value)
-                                        <option value="{{ $value->id }}">{{ $value->item->kode }} | {{ $value->item->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @error('nama')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-sm-12 form-group">
-                            <label>Batch</label>
-                            <input type="text" class="form-control form-control-sm batch-produk" name="batch" />
-                            <div class="text-err">
-                                @error('batch')
-                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                    </path>
-                                </svg>
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-12 form-group">
-                            <label>Jumlah</label>
-                            <input type="text" class="form-control form-control-sm jumlah-produk"
-                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                placeholder="input harus angka" name="jumlah" />
-                            @error('jumlah')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-sm-12 form-group">
-                            <label>HET</label>
-                            <input type="text" class="form-control form-control-sm het-produk"
-                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                placeholder="input harus angka" name="het" />
-                            @error('het')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-sm-12 form-group">
-                            <label>Harga</label>
-                            <input type="text" class="form-control form-control-sm harga-produk"
-                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                placeholder="input harus angka" name="harga" />
-                            @error('harga')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-sm-12 form-group">
-                            <label>Tanggal</label>
-                            <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
-                                name="tanggal" autocomplete="off"/>
-                            <div class="text-err">
-                                @error('tanggal')
+                                @error('namacustomer')
                                 <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                     width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                                     <path
@@ -172,21 +75,20 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>SGH Motor</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('motorcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('motorkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
-                <li class="sublist-item selected"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('motorpengeluaran.index')}}">Pengeluaran</a></li>
                 <li class="sublist-item"><a href="{{route('motorlaporanpenjualan.index')}}">Laporan Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('motorkeuangan.index')}}">Laporan Keuangan</a></li>
-                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -207,7 +109,6 @@
                 <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
                 <li class="sublist-item"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
-                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -276,13 +177,13 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Pupuk</span>
-                    <span class="material-symbols-outlined toggle-icon">
+                    <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
-                <li class="sublist-item"><a href="{{route('pupukcustomer.index')}}">Daftar Customer</a></li>
+            <ul class="sublist">
+                <li class="sublist-item selected"><a href="{{route('pupukcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('pupukkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
@@ -293,26 +194,24 @@
             </ul>
         </ul>
     </div>
-    <button class="toggle-btn-sidenav">
+    <button class="toggle-btn-sidenav" onclick="toggleSidenav()">
         <span class="material-symbols-outlined toggle-icon-sidenav">
             chevron_right
         </span>
     </button>
     <div class="content">
-        <h1>Daftar Pembelian Barang</h1>
+        <h1>Daftar Customer</h1>
         <div class="row">
-            <div class="col-sm-6">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Tambah Stock
+            <div class="col-sm-8">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kategoriModalCenter">
+                    Tambah Kategori
                 </button>
             </div>
-            <div class="col-sm-6">
-                <form class="d-flex" action="{{route('motorpembelian.search')}}" method="GET">
+            <div class="col-sm-4">
+                <form class="d-flex" action="{{route('pupukcustomer.search')}}" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="kodebarang" value="{{ request('search') }}"
-                            placeholder="Cari Kode">
-                        <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
-                            placeholder="Cari Barang">
+                        <input type="text" class="form-control" name="namacustomer" value="{{ request('search') }}"
+                            placeholder="Cari nama kategori">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
@@ -345,48 +244,23 @@
 
         </script>
         @endif
-
         <div class="table-responsive">
             <table class="table">
                 <tr>
-                    <th>Supplier</th>
-                    <th>Kode Barang</th>
-                    <th>Nama Barang</th>
-                    <th>Batch</th>
-                    <th>Jumlah</th>
-                    <th>Harga</th>
-                    <th>Tanggal</th>
+                    <th>Nama</th>
                     <th>Action</th>
                 </tr>
-                @foreach ($pembelian as $key => $value)
+                @foreach ($customer as $key => $item)
                 <tr>
                     <td>
-                        {{ $value->supplier }}
-                    </td>
-                    <td>
-                        {{ $value->barang->item->kode }}
-                    </td>
-                    <td>
-                        {{ $value->barang->item->nama }}
-                    </td>
-                    <td>
-                        {{ $value->batch }}
-                    </td>
-                    <td>
-                        {{ $value->jumlah }}
-                    </td>
-                    <td>
-                        {{ $value->harga }}
-                    </td>
-                    <td>
-                        {{date('d-m-Y', $value->tanggal)}}
+                        {{ $item->nama }}
                     </td>
                     <td>
                         <button type="button" style="background-color: yellow">
-                            <a href="{{ route('motorpembelian.edit', $value->id) }}"
+                            <a href="{{ route('pupukcustomer.edit', $item->id) }}"
                                 style="color: black;text-decoration-line: none">edit</a>
                         </button>
-                        <form method="post" action="{{ route('motorpembelian.destroy', $value->id) }}"
+                        <form method="post" action="{{ route('pupukcustomer.destroy', $item->id) }}"
                             style="display: inline;">
                             @csrf
                             @method('delete')
@@ -398,7 +272,26 @@
                 @endforeach
             </table>
         </div>
-        {{ $pembelian->appends(request()->input())->links() }}
+        {{ $customer->appends(request()->input())->links() }}
     </div>
 </div>
+
+<script>
+    function validateNumber(input) {
+        // Remove non-numeric characters
+        input.value = input.value.replace(/[^0-9]/g, '');
+
+        // Remove leading zeros
+        input.value = input.value.replace(/^0+/, '');
+
+        // Limit the input to a maximum of 13 digits
+        var maxDigits = 13;
+        if (input.value.length > maxDigits) {
+            input.value = input.value.slice(0, maxDigits);
+        }
+
+        // Parse the input value to an integer
+        var numericValue = parseInt(input.value, 10);
+    }
+</script>
 @endsection

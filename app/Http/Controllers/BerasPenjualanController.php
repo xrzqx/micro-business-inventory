@@ -7,6 +7,7 @@ use App\Models\Penjualan;
 use App\Models\Item;
 use App\Models\Pembelian;
 use App\Models\Barang;
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -28,9 +29,6 @@ class BerasPenjualanController extends Controller
             }])
             ->get();
 
-        // return $barang;
-        
-        // return $pembelian;
         $pembelian = Pembelian::with(['barang' => function ($query) {
             $query->with('item', 'kategori')
                 ->whereHas('kategori', function (Builder $query) {
@@ -55,12 +53,14 @@ class BerasPenjualanController extends Controller
             }])
             ->paginate(7);
 
+        $customer = Customer::select(['customer.id','customer.nama'])->where("module","beras")->get();
+
         return view('beras.penjualan',
         [
             "barang" => $barang,
             "pembelian" => $pembelian,
             "penjualan" => $penjualan,
-            // "item" => $item,
+            "customer" => $customer,
         ]);
     }
 
@@ -122,27 +122,111 @@ class BerasPenjualanController extends Controller
             abort(404, 'Resource not found');
         }
 
-        // $pembelianSelect = Pembelian::with(['barang' => function ($query) {
-        //     $query->with('item', 'kategori')
-        //         ->whereHas('kategori', function (Builder $query) {
-        //             $query->where('toko', '=', 'SGH_Motor');
-        //         });
-        // }])
-        // ->distinct('master_item_id')
-        // ->where('sisa', '>', 0)
-        // ->get(['master_item_id']);
-
         $pembelian = Pembelian::find($penjualan->transaksi_pembelian_id);
 
-        $barang = Barang::find($pembelian->master_item_id);
-        // $item = Item::find($barang->item_id);
+        $barang = Pembelian::select('transaksi_pembelian.master_item_id')
+            ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+            ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+            ->join('item', 'item.id', '=', 'master_item.item_id')
+            ->where('kategori.toko', '=', 'beras')
+            // ->where('sisa', '>', 0)
+            ->groupBy('transaksi_pembelian.master_item_id')
+            ->with(['barang' => function ($query) {
+                $query->with('item', 'kategori');
+            }])
+            ->get();
+        
+        $customer = Customer::select(['customer.id','customer.nama'])->where("module","beras")->get();
+
         return view('beras.penjualanedit', 
         [
-            // "pembelianSelect" => $pembelianSelect,
             "barang" => $barang,
             "pembelian" => $pembelian,
             "penjualan" => $penjualan,
+            "customer" => $customer,
         ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator =  $request->validate([
+            'customer' => 'required|numeric',
+            'nama' => 'required|numeric',
+            'batch' => 'required|numeric',
+            'jumlah' => 'required|numeric',
+            'harga' => 'required|numeric',
+            'tanggal' => 'required|max:255',
+        ], [
+            'customer.required' => 'Input customer tidak boleh kosong',
+            'customer.numeric' => 'Input nama customer harus benar',
+            'nama.required' => 'Input nama barang tidak boleh kosong',
+            'nama.numeric' => 'Input nama barang harus benar',
+            'batch.required' => 'Input batch barang tidak boleh kosong',
+            'batch.numeric' => 'Input nama barang harus benar',
+            'jumlah.required' => 'Input jumlah tidak boleh kosong',
+            'jumlah.numeric' => 'Input jumlah harus nomor',
+            'harga.required' => 'Input harga tidak boleh kosong',
+            'harga.numeric' => 'Input harga harus nomor',
+            'tanggal.required' => 'Input tanggal tidak boleh kosong',
+            'tanggal.max' => 'Input tanggal tidak boleh lebih dari 255 karakter',
+        ]);
+
+        $selectedDate = $request->tanggal;
+
+        // Convert the selected date to a timestamp (UNIX timestamp)
+        $timestamp = Carbon::parse($selectedDate)->timestamp;
+
+        $penjualan = Penjualan::find($id);
+        if (!$penjualan) {
+            // Handle case where the resource is not found
+            abort(404, 'Resource not found');
+        }
+        if ($penjualan->transaksi_pembelian_id != $request->batch) {
+            $pembelian = Pembelian::find($penjualan->transaksi_pembelian_id);
+            $barang = Barang::find($pembelian->master_item_id);
+            $item = Item::find($barang->item_id);
+
+            $item->stock = $item->stock + $penjualan->jumlah;
+            $pembelian->sisa = $pembelian->sisa + $penjualan->jumlah;
+            $item->save();
+            $pembelian->save();
+
+            $penjualan->transaksi_pembelian_id = $request->batch;
+            $pembelian_selected = Pembelian::find($penjualan->transaksi_pembelian_id);
+            $pembelian_selected->sisa = $pembelian_selected->sisa - $request->jumlah;
+            $barang_selected = Barang::find($pembelian_selected->master_item_id);
+            $item_selected = Item::find($barang_selected->item_id);
+            $item_selected->stock = $item_selected->stock - $request->jumlah;
+            $item_selected->save();
+            $pembelian_selected->save();
+        }
+        else{
+            if ($penjualan->transaksi_pembelian_id == $request->batch) {
+                $pembelian = Pembelian::find($penjualan->transaksi_pembelian_id);
+                $barang = Barang::find($pembelian->master_item_id);
+                $item = Item::find($barang->item_id);
+                if ($penjualan->jumlah > $request->jumlah) {
+                    $selish = $penjualan->jumlah - $request->jumlah;
+                    $penjualan->jumlah = $penjualan->jumlah - $selish;
+                    $pembelian->sisa = $pembelian->sisa + $selish;
+                    $item->stock = $item->stock + $selish;
+                }
+                if ($penjualan->jumlah < $request->jumlah) {
+                    $selish = $request->jumlah - $penjualan->jumlah;
+                    $penjualan->jumlah = $penjualan->jumlah + $selish;
+                    $pembelian->sisa = $pembelian->sisa - $selish;
+                    $item->stock = $item->stock - $selish;
+                }
+                $pembelian->save();
+                $item->save();
+            }
+        }
+        $penjualan->customer_id = $request->customer;
+        $penjualan->harga = $request->harga;
+        $penjualan->tanggal = $timestamp;
+        $penjualan->save();
+        
+        return redirect()->route('beraspenjualan.index')->with('success', 'mengubah penjualan barang');
     }
 
     public function destroy($id)

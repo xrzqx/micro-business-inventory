@@ -45,6 +45,7 @@ use App\Http\Controllers\MinyakPembelianController;
 use App\Http\Controllers\MinyakPenjualanController;
 use App\Http\Controllers\MinyakLaporanKeuanganController;
 
+use App\Http\Controllers\BerasCustomerController;
 use App\Http\Controllers\BerasKategoriController;
 use App\Http\Controllers\BerasBarangController;
 use App\Http\Controllers\BerasPembelianController;
@@ -55,6 +56,7 @@ use App\Http\Controllers\BrilinkTransaksiController;
 use App\Http\Controllers\BrilinkBankController;
 use App\Http\Controllers\BrilinkLaporanKeuanganController;
 
+use App\Http\Controllers\PupukCustomerController;
 use App\Http\Controllers\PupukKategoriController;
 use App\Http\Controllers\PupukBarangController;
 use App\Http\Controllers\PupukPembelianController;
@@ -81,6 +83,7 @@ use App\Http\Controllers\DasboardController;
 Route::get('/', [DasboardController::class, 'index'])->name('dashboard.index');
 
 Route::get('/fetch-batch', [BatchController::class, 'fetchData'])->name('fetch.batch');
+Route::get('/fetch-batch-edit', [BatchController::class, 'fetchEditData'])->name('fetch.batchedit');
 Route::get('/fetch-batch-sales', [BatchSalesController::class, 'fetchData'])->name('fetch.batchsales');
 Route::get('/fetch-mitem', [BarangController::class, 'fetchData'])->name('fetch.mitem');
 Route::get('/fetch-keuangan-sales', [SalesKeuanganController::class, 'fetchData'])->name('fetch.keuangansales');
@@ -313,6 +316,13 @@ Route::get('/minyak/{id}', [MinyakBarangController::class, 'edit'])->name('minya
 Route::post('/minyak/{id}', [MinyakBarangController::class, 'update'])->name('minyak.update');
 Route::delete('/minyak/{id}', [MinyakBarangController::class, 'destroy'])->name('minyak.destroy');
 
+Route::get('/beras/customer/search', [BerasCustomerController::class, 'search'])->name('berascustomer.search');
+Route::get('/beras/customer', [BerasCustomerController::class, 'index'])->name('berascustomer.index');
+Route::post('/beras/customer', [BerasCustomerController::class, 'store'])->name('berascustomer.store');
+Route::get('/beras/customer/{id}', [BerasCustomerController::class, 'edit'])->name('berascustomer.edit');
+Route::post('/beras/customer/{id}', [BerasCustomerController::class, 'update'])->name('berascustomer.update');
+Route::delete('/beras/customer/{id}', [BerasCustomerController::class, 'destroy'])->name('berascustomer.destroy');
+
 Route::get('/beras/kategori/search', [BerasKategoriController::class, 'search'])->name('beraskategori.search');
 Route::get('/beras/kategori', [BerasKategoriController::class, 'index'])->name('beraskategori.index');
 Route::post('/beras/kategori', [BerasKategoriController::class, 'store'])->name('beraskategori.store');
@@ -360,6 +370,13 @@ Route::post('/brilink', [BrilinkTransaksiController::class, 'store'])->name('bri
 Route::get('/brilink/{id}', [BrilinkTransaksiController::class, 'edit'])->name('brilink.edit');
 Route::post('/brilink/{id}', [BrilinkTransaksiController::class, 'update'])->name('brilink.update');
 Route::delete('/brilink/{id}', [BrilinkTransaksiController::class, 'destroy'])->name('brilink.destroy');
+
+Route::get('/pupuk/customer/search', [PupukCustomerController::class, 'search'])->name('pupukcustomer.search');
+Route::get('/pupuk/customer', [PupukCustomerController::class, 'index'])->name('pupukcustomer.index');
+Route::post('/pupuk/customer', [PupukCustomerController::class, 'store'])->name('pupukcustomer.store');
+Route::get('/pupuk/customer/{id}', [PupukCustomerController::class, 'edit'])->name('pupukcustomer.edit');
+Route::post('/pupuk/customer/{id}', [PupukCustomerController::class, 'update'])->name('pupukcustomer.update');
+Route::delete('/pupuk/customer/{id}', [PupukCustomerController::class, 'destroy'])->name('pupukcustomer.destroy');
 
 Route::get('/pupuk/kategori/search', [PupukKategoriController::class, 'search'])->name('pupukkategori.search');
 Route::get('/pupuk/kategori', [PupukKategoriController::class, 'index'])->name('pupukkategori.index');

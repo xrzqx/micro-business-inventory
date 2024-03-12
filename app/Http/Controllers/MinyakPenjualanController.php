@@ -139,13 +139,10 @@ class MinyakPenjualanController extends Controller
             }])
             ->get();
 
-        // return $penjualan;
-
         $customer = Customer::select(['customer.id','customer.nama'])->where("module","minyak")->get();
 
         return view('minyak.penjualanedit', 
         [
-            // "pembelianSelect" => $pembelianSelect,
             "barang" => $barang,
             "pembelian" => $pembelian,
             "penjualan" => $penjualan,

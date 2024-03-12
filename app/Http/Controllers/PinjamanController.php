@@ -15,7 +15,7 @@ class PinjamanController extends Controller
     public function index()
     {
         //
-        $customer = Customer::all();
+        $customer = Customer::where('module','pinjaman')->get();
         $pinjaman = Pinjaman::with('customer')
             ->orderBy('tanggal', 'desc')
             ->paginate(7);

@@ -169,6 +169,7 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('berascustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('beraskategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('beras.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('beraspembelian.index')}}">Pembelian</a></li>
@@ -198,6 +199,7 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('pupukcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('pupukkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>

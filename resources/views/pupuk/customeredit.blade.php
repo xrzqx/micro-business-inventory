@@ -71,19 +71,18 @@
                 <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
                 <li class="sublist-item"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
-
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Rokok</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('rokokcustomer.index')}}">Daftar Customer</a></li>
-                <li class="sublist-item selected"><a href="{{route('rokokkategori.index')}}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{route('rokokkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('rokok.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpenjualan.index')}}">Penjualan</a></li>
@@ -139,13 +138,13 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Pupuk</span>
-                    <span class="material-symbols-outlined toggle-icon">
+                    <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
-                <li class="sublist-item"><a href="{{route('pupukcustomer.index')}}">Daftar Customer</a></li>
+            <ul class="sublist">
+                <li class="sublist-item selected"><a href="{{route('pupukcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('pupukkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
@@ -179,14 +178,14 @@
             });
         </script>
         @endif
-        <form method="POST" action="{{route('rokokkategori.update',$kategori->id)}}">
+        <form method="POST" action="{{route('pupukcustomer.update',$customer->id)}}">
             @csrf
             @method('POST')
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 form-group">
-                        <label>Nama Kategori</label>
-                        <input type="text" value="{{ $kategori->nama }}"
+                        <label>Nama Customer</label>
+                        <input type="text" value="{{ $customer->nama }}"
                             class="form-control form-control-sm nama-produk" name="nama" />
                         <div class="text-err">
                             @error('nama')
@@ -205,7 +204,7 @@
             <div class="row-12">
                 <div class="col-12">
                     <button type="button" class="btn btn-secondary">
-                        <a href="{{route('rokokkategori.index')}}"
+                        <a href="{{route('pupukcustomer.index')}}"
                             style="color: white; text-decoration-line: none">back</a>
                     </button>
                     <input type="submit" class="btn btn-primary btn-save" value="Save changes">

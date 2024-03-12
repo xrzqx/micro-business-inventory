@@ -15,18 +15,23 @@
                     <div class="row">
                         <div class="col-sm-12 form-group">
                             <label>Nama Customer</label>
-                            <input type="text" class="form-control form-control-sm supplier-produk" name="customer" />
-                            <div class="text-err">
-                                @error('customer')
-                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                    width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                    </path>
-                                </svg>
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                            <div class="input-group">
+                                <select class="js-example-basic-single col-sm-12" name="customer" id="nama-customer">
+                                    <option value="" disabled selected hidden>Pilih Customer</option>
+                                    @foreach ($customer as $value)
+                                        <option value="{{ $value->id }}">{{ $value->nama }}</option>
+                                    @endforeach
+                                </select>
                             </div>
+                            @error('customer')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-sm-12 form-group">
                             <label>Nama Barang</label>
@@ -114,7 +119,7 @@
                         <div class="col-sm-12 form-group">
                             <label>Tanggal</label>
                             <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
-                                name="tanggal" />
+                                name="tanggal" autocomplete="off"/>
                             <div class="text-err">
                                 @error('tanggal')
                                 <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
@@ -255,6 +260,7 @@
                 </div>
             </li>
             <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{route('berascustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('beraskategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('beras.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('beraspembelian.index')}}">Pembelian</a></li>
@@ -284,6 +290,7 @@
                 </div>
             </li>
             <ul class="sublist">
+                <li class="sublist-item"><a href="{{route('pupukcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('pupukkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('pupuk.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('pupukpembelian.index')}}">Pembelian</a></li>
@@ -361,7 +368,7 @@
                 @foreach ($penjualan as $key => $value)
                 <tr>
                     <td>
-                        {{ $value->nama }}
+                        {{ $value->customer->nama }}
                     </td>
                     <td>
                         {{ $value->pembelian->barang->item->kode }}
@@ -389,10 +396,10 @@
                         {{date('d-m-Y', $value->tanggal)}}
                     </td>
                     <td>
-                        {{-- <button type="button" style="background-color: yellow">
+                        <button type="button" style="background-color: yellow">
                             <a href="{{ route('pupukpenjualan.edit', $value->id) }}"
                                 style="color: black;text-decoration-line: none">edit</a>
-                        </button> --}}
+                        </button>
                         <form method="post" action="{{ route('pupukpenjualan.destroy', $value->id) }}"
                             style="display: inline;">
                             @csrf

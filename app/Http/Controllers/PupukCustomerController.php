@@ -5,25 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 
-class CustomerController extends Controller
+class PupukCustomerController extends Controller
 {
+    //
     /**
      * Display a listing of the resource.
      */
-    public function index(){
-        $customer = Customer::where('module', 'pinjaman')->paginate(7);
-        return view("pinjaman.customer", 
+    public function index()
+    {
+        $customer = Customer::where('module', '=', 'pupuk')->paginate(7);
+        return view("pupuk.customer", 
         [
             "customer" => $customer,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -31,27 +25,21 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        //
         $validator =  $request->validate([
-            'customer' => 'required|max:255',
+            'namacustomer' => 'required|max:255',
         ], [
-            'customer.required' => 'Input nama kategori tidak boleh kosong',
-            'customer.max' => 'Input nama kategori tidak boleh lebih dari 255 karakter',
+            'namacustomer.required' => 'Input nama kategori tidak boleh kosong',
+            'namacustomer.max' => 'Input nama kategori tidak boleh lebih dari 255 karakter',
         ]);
         Customer::create(
             [
-                'nama' => $request->customer,
-                'module' => 'pinjaman'
+                'nama' => $request->namacustomer,
+                'module' => 'pupuk',
             ]
         );
-        return redirect()->route('customer.index')->with('success', 'menambahkan customer');
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        return redirect()->route('pupukcustomer.index')->with('success', 'menambahkan kategori');
     }
 
     /**
@@ -59,12 +47,13 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
+        //
         $customer = Customer::find($id);
         if (!$customer) {
             // Handle case where the resource is not found
             abort(404, 'Resource not found');
         }
-        return view('pinjaman.customeredit', 
+        return view('pupuk.customeredit', 
         [
             "customer" => $customer,
         ]);
@@ -73,8 +62,9 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
+        //
         $validator =  $request->validate([
             'nama' => 'required|max:255',
         ], [
@@ -82,37 +72,39 @@ class CustomerController extends Controller
             'nama.max' => 'Input nama kategori tidak boleh lebih dari 255 karakter',
         ]);
         $customer = Customer::find($id);
+        $customer->nama = $request->nama;
+        $customer->save();
         if (!$customer) {
             // Handle case where the resource is not found
             abort(404, 'Resource not found');
         }
-        $customer->nama = $request->nama;
-        $customer->save();
-        return redirect()->route('customer.index')->with('success', 'mengubah customer');
+        return redirect()->route('pupukcustomer.index')->with('success', 'mengubah kategori');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
+        //
         $customer = Customer::find($id);
         if (!$customer) {
             // Handle case where the resource is not found
             abort(404, 'Resource not found');
         }
         $customer->delete();
-        return redirect()->route('customer.index')->with('success', 'menghapus customer');
+        return redirect()->route('pupukcustomer.index')->with('success', 'menghapus kategori');
     }
 
     public function search(Request $request)
     {
-        $searchQuery = $request->input('customer');
+        //
+        $searchQuery = $request->input('namacustomer');
         
-        $customer = Customer::where('nama', 'like', '%' . $searchQuery . '%')
-        ->where('module','pinjaman')
-        ->paginate(7);
-        return view("pinjaman.customer", 
+        $customer = Customer::where('module', '=', 'pupuk')
+            ->where('nama', 'like', '%' . $searchQuery . '%')
+            ->paginate(7);
+        return view("pupuk.customer", 
         [
             "customer" => $customer,
         ]);
