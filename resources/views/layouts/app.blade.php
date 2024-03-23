@@ -26,6 +26,7 @@
     <!-- jQuery UI CSS CDN -->
     <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
         rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -96,14 +97,11 @@
     
     <script>
         $(document).ready(function () {
-
             $(function () {
                 $("#my_date_picker").datepicker({ dateFormat: 'dd-mm-yy' });
-                // $("#my_date_picker").datepicker();
             });
             $(function () {
                 $("#my_date_picker2").datepicker({ dateFormat: 'dd-mm-yy' });
-                // $("#my_date_picker").datepicker();
             });
         })
 

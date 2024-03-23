@@ -132,7 +132,7 @@ class MinyakPenjualanController extends Controller
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
             ->join('item', 'item.id', '=', 'master_item.item_id')
             ->where('kategori.toko', '=', 'minyak')
-            ->where('sisa', '>', 0)
+            // ->where('sisa', '>', 0)
             ->groupBy('transaksi_pembelian.master_item_id')
             ->with(['barang' => function ($query) {
                 $query->with('item', 'kategori');

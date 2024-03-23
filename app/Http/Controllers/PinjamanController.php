@@ -93,7 +93,7 @@ class PinjamanController extends Controller
     public function edit(string $id)
     {
         //
-        $customer = Customer::all();
+        $customer = Customer::where('module','pinjaman')->get();
         $pinjaman = Pinjaman::find($id);
         if (!$pinjaman) {
             // Handle case where the resource is not found

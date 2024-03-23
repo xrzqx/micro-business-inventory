@@ -98,7 +98,7 @@ class BerasPenjualanController extends Controller
         // return $item;
         Penjualan::create([
             'transaksi_pembelian_id' => $request->batch,
-            'nama' => $request->customer,
+            'customer_id' => $request->customer,
             'jumlah' => $request->jumlah,
             'harga' => $request->harga,
             'tanggal' => $timestamp,

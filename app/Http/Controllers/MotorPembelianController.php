@@ -158,21 +158,22 @@ class MotorPembelianController extends Controller
 
         $barang = Barang::find($request->nama);
         $item = Item::find($barang->item_id);
+
         if ($pembelian->jumlah > $request->jumlah) {
             $selisih = $pembelian->jumlah - $request->jumlah;
             $item->stock = $item->stock - $selisih;
-            $item->save();
             $pembelian->sisa = $pembelian->sisa - $selisih;
-            $pembelian->jumlah = $request->jumlah - $selisih;
+            $pembelian->jumlah = $pembelian->jumlah - $selisih;
+        } else {
+            if ($pembelian->jumlah < $request->jumlah) {
+                $selisih = $request->jumlah - $pembelian->jumlah;
+                $item->stock = $item->stock + $selisih;
+                $pembelian->sisa = $pembelian->sisa + $selisih;
+                $pembelian->jumlah = $pembelian->jumlah + $selisih;
+            }
         }
-        if ($pembelian->jumlah < $request->jumlah) {
-            $selisih = $request->jumlah - $pembelian->jumlah;
-            $item->stock = $item->stock + $selisih;
-            $item->save();
-            $pembelian->sisa = $pembelian->sisa + $selisih;
-            $pembelian->jumlah = $pembelian->jumlah + $selisih;
-        }
-
+        
+        $item->save();
         $pembelian->supplier = $request->supplier;
         $pembelian->master_item_id = $request->nama;
         $pembelian->batch = $request->batch;

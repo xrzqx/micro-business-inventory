@@ -7,8 +7,12 @@ use App\Http\Controllers\MotorBarangController;
 use App\Http\Controllers\MotorPembelianController;
 use App\Http\Controllers\MotorPenjualanController;
 use App\Http\Controllers\MotorPengeluaranController;
+use App\Http\Controllers\MotorLaporanCustomerController;
 use App\Http\Controllers\MotorLaporanKeuanganController;
 use App\Http\Controllers\MotorLaporanPenjualanController;
+use App\Http\Controllers\MotorLaporanMovingStock;
+use App\Http\Controllers\MotorLaporanLabaKategoriController;
+use App\Http\Controllers\MotorLaporanLabaBulanController;
 
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchSalesController;
@@ -22,6 +26,7 @@ use App\Http\Controllers\StudioPembelianController;
 use App\Http\Controllers\StudioPenjualanController;
 use App\Http\Controllers\StudioPengeluaranController;
 use App\Http\Controllers\StudioLimbahController;
+use App\Http\Controllers\StudioLaporanCustomerController;
 use App\Http\Controllers\StudioStockController;
 use App\Http\Controllers\StudioLaporanKeuanganController;
 
@@ -143,8 +148,21 @@ Route::delete('/motor/pengeluaran/{id}', [MotorPengeluaranController::class, 'de
 Route::get('/motor/laporanpenjualan/search', [MotorLaporanPenjualanController::class, 'search'])->name('motorlaporanpenjualan.search');
 Route::get('/motor/laporanpenjualan', [MotorLaporanPenjualanController::class, 'index'])->name('motorlaporanpenjualan.index');
 
+Route::get('/motor/laporanmovingstock/search', [MotorLaporanMovingStock::class, 'search'])->name('motorlaporanmovingstock.search');
+Route::get('/motor/laporanmovingstock', [MotorLaporanMovingStock::class, 'index'])->name('motorlaporanmovingstock.index');
+
+// Route::get('/motor/laporanpenjualan/search', [MotorLaporanPenjualanController::class, 'search'])->name('motorlaporanpenjualan.search');
+Route::get('/motor/laporancustomer/search', [MotorLaporanCustomerController::class, 'search'])->name('motorlaporancustomer.search');
+Route::get('/motor/laporancustomer', [MotorLaporanCustomerController::class, 'index'])->name('motorlaporancustomer.index');
+
 Route::get('/motor/keuangan/search', [MotorLaporanKeuanganController::class, 'search'])->name('motorkeuangan.search');
 Route::get('/motor/keuangan', [MotorLaporanKeuanganController::class, 'index'])->name('motorkeuangan.index');
+
+Route::get('/motor/labakategori/search', [MotorLaporanLabaKategoriController::class, 'search'])->name('motorlaporanlabakategori.search');
+Route::get('/motor/labakategori', [MotorLaporanLabaKategoriController::class, 'index'])->name('motorlaporanlabakategori.index');
+
+Route::get('/motor/lababulan/search', [MotorLaporanLabaBulanController::class, 'search'])->name('motorlaporanlababulan.search');
+Route::get('/motor/lababulan', [MotorLaporanLabaBulanController::class, 'index'])->name('motorlaporanlababulan.index');
 
 Route::get('/motor/search', [MotorBarangController::class, 'search'])->name('motor.search');
 Route::get('/motor', [MotorBarangController::class, 'index'])->name('motor.index');
@@ -208,6 +226,9 @@ Route::post('/studio/stock', [StudioStockController::class, 'store'])->name('stu
 
 Route::get('/studio/keuangan/search', [StudioLaporanKeuanganController::class, 'search'])->name('studiokeuangan.search');
 Route::get('/studio/keuangan', [StudioLaporanKeuanganController::class, 'index'])->name('studiokeuangan.index');
+
+Route::get('/studio/laporancustomer/search', [StudioLaporanCustomerController::class, 'search'])->name('studiolaporancustomer.search');
+Route::get('/studio/laporancustomer', [StudioLaporanCustomerController::class, 'index'])->name('studiolaporancustomer.index');
 
 Route::get('/studio/search', [StudioBarangController::class, 'search'])->name('studio.search');
 Route::get('/studio', [StudioBarangController::class, 'index'])->name('studio.index');
