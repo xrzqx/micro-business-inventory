@@ -151,6 +151,7 @@
                 <li class="sublist-item"><a href="{{route('studiolaporancustomer.index')}}">Laporan Customer</a></li>
                 <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
                 <li class="sublist-item"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
+                <li class="sublist-item"><a href="{{route('studiolaporanlabakategori.index')}}">Laporan Laba (Category Wise)</a></li>
                 <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">

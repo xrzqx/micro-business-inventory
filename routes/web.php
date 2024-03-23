@@ -29,6 +29,7 @@ use App\Http\Controllers\StudioLimbahController;
 use App\Http\Controllers\StudioLaporanCustomerController;
 use App\Http\Controllers\StudioStockController;
 use App\Http\Controllers\StudioLaporanKeuanganController;
+use App\Http\Controllers\StudioLaporanLabaKategoriController;
 
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SalesPenjualanController;
@@ -229,6 +230,9 @@ Route::get('/studio/keuangan', [StudioLaporanKeuanganController::class, 'index']
 
 Route::get('/studio/laporancustomer/search', [StudioLaporanCustomerController::class, 'search'])->name('studiolaporancustomer.search');
 Route::get('/studio/laporancustomer', [StudioLaporanCustomerController::class, 'index'])->name('studiolaporancustomer.index');
+
+Route::get('/studio/labakategori/search', [StudioLaporanLabaKategoriController::class, 'search'])->name('studiolaporanlabakategori.search');
+Route::get('/studio/labakategori', [StudioLaporanLabaKategoriController::class, 'index'])->name('studiolaporanlabakategori.index');
 
 Route::get('/studio/search', [StudioBarangController::class, 'search'])->name('studio.search');
 Route::get('/studio', [StudioBarangController::class, 'index'])->name('studio.index');

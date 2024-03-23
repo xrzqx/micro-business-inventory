@@ -82,8 +82,8 @@ CREATE TABLE penjualan_produk
 	produk_id INT NOT NULL,
     customer_id INT NOT NULL,
     nama VARCHAR(255) NOT NULL,
-	jumlah VARCHAR(255) NOT NULL,
-	harga VARCHAR(255) NOT NULL,
+	jumlah INT NOT NULL,
+	harga INT NOT NULL,
     tanggal BIGINT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY fk_produk_penjualan_produk (produk_id) REFERENCES produk (id)

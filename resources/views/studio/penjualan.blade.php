@@ -276,6 +276,7 @@
                 <li class="sublist-item"><a href="{{route('studiolaporancustomer.index')}}">Laporan Customer</a></li>
                 <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
                 <li class="sublist-item"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
+                <li class="sublist-item"><a href="{{route('studiolaporanlabakategori.index')}}">Laporan Laba (Category Wise)</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">

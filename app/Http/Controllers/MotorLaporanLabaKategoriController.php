@@ -4,19 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Penjualan;
-use App\Models\Kategori;
 use Carbon\Carbon;
 
 class MotorLaporanLabaKategoriController extends Controller
 {
     //
     public function index(){
-        $namaArray = [];
         $data = [];
-        // $kategori_selected = [];
-        // $kategoriOpt = Kategori::select('kategori.nama')
-        //     ->where('toko', 'SGH_Motor')
-        //     ->get();
 
         $currentTimestamp = Carbon::now();
         $formattedDate = $currentTimestamp->format('d-m-Y');
@@ -99,7 +93,6 @@ class MotorLaporanLabaKategoriController extends Controller
                     $query->with(['item','kategori']);
                 }]);
             }])
-            ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->get();
 
         $totalLaba = 0;
