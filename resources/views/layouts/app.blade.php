@@ -103,6 +103,9 @@
             $(function () {
                 $("#my_date_picker2").datepicker({ dateFormat: 'dd-mm-yy' });
             });
+            $(function () {
+                $("#my_date_picker3").datepicker({ dateFormat: 'dd-mm-yy' });
+            });
         })
 
     </script>

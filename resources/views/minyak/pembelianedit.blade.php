@@ -45,9 +45,9 @@
             </li>
             <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('motorcustomer.index')}}">Daftar Customer</a></li>
-                <li class="sublist-item"><a href="{{route('motorkategori.index')}}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
-                <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item"><a href="{{ route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('motorpengeluaran.index')}}">Pengeluaran</a></li>
                 <li class="sublist-item"><a href="{{route('motorlaporanmovingstock.index')}}">Laporan Moving Stock</a></li>
@@ -61,12 +61,12 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>SGH Studio</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('studiocustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
@@ -76,7 +76,7 @@
                 <li class="sublist-item"><a href="{{route('studiopengeluaran.index')}}">Pengeluaran</a></li>
                 <li class="sublist-item"><a href="{{route('studiolimbah.index')}}">Limbah Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiolaporancustomer.index')}}">Laporan Customer</a></li>
-                <li class="sublist-item selected"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
+                <li class="sublist-item"><a href="{{route('studiostock.index')}}">Laporan Stock</a></li>
                 <li class="sublist-item"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
                 <li class="sublist-item"><a href="{{route('studiolaporanlabakategori.index')}}">Laporan Laba (Category Wise)</a></li>
                 <li class="sublist-item"><a href="{{route('studiolaporanlababulan.index')}}">Laporan Laba (Month Wise)</a></li>
@@ -102,16 +102,16 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Minyak</span>
-                    <span class="material-symbols-outlined toggle-icon">
+                    <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{route('minyakcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('minyakkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('minyak.index')}}">Daftar Barang</a></li>
-                <li class="sublist-item"><a href="{{route('minyakpembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item selected"><a href="{{route('minyakpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('minyakpenjualan.index')}}">Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('minyakkeuangan.index')}}">Laporan Keuangan</a></li>
                 <!-- Add more sublist items as needed -->
@@ -172,118 +172,140 @@
         </span>
     </button>
     <div class="content">
-        <h1>Laporan Stock</h1>
-        <div class="row">
-            <div class="col-sm-12">
-                <form class="d-flex align-items-center text-center" action="{{ route('studiostock.search') }}" method="GET">
-                    <div class="input-group mb-3">
-                        <label for="my_date_picker" class="mr-2" style="display:flex; align-items: center; font-size: 1.2rem">Tanggal:</label>
-                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker" name="tanggal" value="{{ request('date') }}" autocomplete="off"/>
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Search</button>
+        <h1>Edit Barang</h1>
+        @if ($errors->any())
+        <div class="alert alert-danger" id="failed-alert">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Tidak berhasil </strong> menambahkan/mengubah barang
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        <script>
+            $("#failed-alert").fadeTo(2000, 500).slideUp(500, function () {
+                $("#failed-alert").slideUp(500);
+            });
+
+        </script>
+        @endif
+        <form method="POST" action="{{route('minyakpembelian.update', $pembelian[0]->id)}}">
+            @csrf
+            @method('POST')
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label>Supplier</label>
+                        <input type="text" class="form-control form-control-sm supplier-produk" name="supplier" value="{{$pembelian[0]->supplier}}"/>
+                        <div class="text-err">
+                            @error('supplier')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
-                </form>
-                <div class="mb-3">Tanggal : {{ request('tanggal') }}</div>
+                    <div class="col-sm-12 form-group">
+                        <label>Nama Barang</label>
+                        <div class="input-group">
+                            <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
+                                <option value="#" disabled selected hidden>Pilih Barang</option>
+                                @foreach ($barang as $value)
+                                    @if ($value->id == $pembelian[0]->master_item_id)
+                                        <option selected value="{{ $value->id }}">{{ $value->item->nama }}</option>
+                                    @else
+                                        <option value="{{ $value->id }}">{{ $value->item->nama }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('nama')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false" width="16px"
+                            height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Batch</label>
+                        <input type="text" class="form-control form-control-sm batch-produk" name="batch" value="{{$pembelian[0]->batch}}"/>
+                        <div class="text-err">
+                            @error('batch')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Jumlah</label>
+                        <input type="text" class="form-control form-control-sm jumlah-produk"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                            placeholder="input harus angka" name="jumlah" value="{{$pembelian[0]->jumlah}}"/>
+                        @error('jumlah')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false" width="16px"
+                            height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Harga</label>
+                        <input type="text" class="form-control form-control-sm harga-produk"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                            placeholder="input harus angka" name="harga" value="{{$pembelian[0]->harga}}"/>
+                        @error('harga')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false" width="16px"
+                            height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Tanggal</label>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
+                            name="tanggal" value="{{date('m/d/Y', $value->tanggal)}}"/>
+                        <div class="text-err">
+                            @error('tanggal')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table">
-                <tr>
-                    <th>Nama Barang</th>
-                    <th>Stock Akhir</th>
-                    <th>Masuk</th>
-                    <th>Pemakaian</th>
-                </tr>
-                @foreach ($data as $key => $value)
-                <tr>
-                    <td>
-                        {{ $value['nama'] }}
-                    </td>
-                    <td>
-                        {{ $value['stock'] }}
-                    </td>
-                    <td>
-                        {{ $value['masuk'] }}
-                    </td>
-                    <td>
-                        {{ $value['pemakaian'] }}
-                    </td>
-                </tr>
-                @endforeach
-            </table>
-        </div>
-        {{-- {{ $data->appends(request()->input())->links() }} --}}
+            <div class="row-12">
+                <div class="col-12">
+                    <button type="button" class="btn btn-secondary">
+                        <a href="{{route('minyakpembelian.index')}}" style="color: white; text-decoration-line: none">back</a>
+                    </button>
+                    <input type="submit" class="btn btn-primary btn-save" value="Save changes">
+                </div>
+            </div>
+        </form>
     </div>
 </div>
-
-<script>
-    function validateInput(input) {
-      // Remove non-numeric characters
-      input.value = input.value.replace(/[^0-9]/g, '');
-  
-      // Remove leading zeros
-      input.value = input.value.replace(/^0+/g, '');
-  
-      // Limit the input to a maximum of stock
-      var maxStock = document.getElementById('jumlahInp').getAttribute('data-dynamic-value');
-      var numericMaxStock = parseInt(maxStock, 10);
-      const numericValue = parseInt(input.value, 10);
-      if (!isNaN(numericValue) && numericValue > numericMaxStock) {
-        input.value = maxStock;
-      }
-    }
-</script>
-
-<script>
-    // Attach an event listener to the select2:select event for "kategori-produk"
-    $('#kategori-produk').on('select2:select', function (e) {
-        var selectedCategoryId = e.params.data.id;
-
-        // Make an AJAX request to fetch data for "batch-produk" based on the selected category
-        $.ajax({
-            url: '{{ route('fetch.batch') }}', // Replace with your actual endpoint
-            method: 'GET',
-            data: {
-                masterItemId: selectedCategoryId
-            },
-            success: function (response) {
-                // Clear existing options
-                $('#batch-produk').empty();
-                $('#batch-produk').append('<option value="" disabled selected hidden>Pilih Batch</option>');
-                // Populate options based on the AJAX response
-                $.each(response, function (index, value) {
-                    $('#batch-produk').append('<option value="' + value.id + '">' + value
-                        .batch + " | Stock: " + value.sisa +'</option>');
-                });
-
-                // Trigger Select2 to update the UI
-                $('#batch-produk').trigger('change');
-            },
-            error: function (error) {
-                console.error('Error:', error);
-            }
-        });
-    });
-
-    $('#batch-produk').on('change', function (e) {
-        $('#jumlahInp').val('');
-        console.log("Change event triggered");
-    });
-
-    $('#batch-produk').on('select2:select', function (e) {
-        var selectedBatchText = e.params.data.text;
-        // Split the string by '|'
-        var parts = selectedBatchText.split('|');
-
-        // Extract the stock data (assuming it's in the second part after the '|')
-        var stockData = parts[1].trim().split(':')[1].trim();
-        
-        // Access the data attribute using JavaScript
-        document.getElementById('jumlahInp').setAttribute('data-dynamic-value', stockData);
-        console.log(stockData);
-    });
-
-</script>
 @endsection

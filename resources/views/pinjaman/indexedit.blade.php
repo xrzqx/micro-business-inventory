@@ -261,6 +261,22 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Keterangan</label>
+                        <input type="text" value="{{ $pinjaman->keterangan }}"
+                            class="form-control form-control-sm keterangan-produk" name="keterangan" />
+                        <div class="text-err">
+                            @error('keterangan')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row-12">

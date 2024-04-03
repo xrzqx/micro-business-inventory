@@ -152,26 +152,28 @@ class BerasPembelianController extends Controller
 
         $barang = Barang::find($request->nama);
         $item = Item::find($barang->item_id);
+
         if ($pembelian->jumlah > $request->jumlah) {
             $selisih = $pembelian->jumlah - $request->jumlah;
             $item->stock = $item->stock - $selisih;
-            $item->save();
+            $pembelian->sisa = $pembelian->sisa - $selisih;
+            $pembelian->jumlah = $pembelian->jumlah - $selisih;
         }
-        if ($pembelian->jumlah < $request->jumlah) {
+        elseif ($pembelian->jumlah < $request->jumlah) {
             $selisih = $request->jumlah - $pembelian->jumlah;
             $item->stock = $item->stock + $selisih;
-            $item->save();
+            $pembelian->sisa = $pembelian->sisa + $selisih;
+            $pembelian->jumlah = $pembelian->jumlah + $selisih;
         }
-
+        $item->save();
         $pembelian->supplier = $request->supplier;
         $pembelian->master_item_id = $request->nama;
         $pembelian->batch = $request->batch;
-        $pembelian->jumlah = $request->jumlah;
         $pembelian->harga = $request->harga;
         $pembelian->tanggal = $timestamp;
         $pembelian->save();
 
-        return redirect()->route('beraspembelian.index')->with('success', 'menambahkan pembelian barang');
+        return redirect()->route('beraspembelian.index')->with('success', 'mengedit pembelian barang');
     }
 
     public function destroy($id)

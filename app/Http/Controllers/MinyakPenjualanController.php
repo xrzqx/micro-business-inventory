@@ -299,12 +299,15 @@ class MinyakPenjualanController extends Controller
             }])
             ->paginate(7);
 
+        $customer = Customer::select(['customer.id','customer.nama'])->where("module","minyak")->get();
+
         // return $penjualan;
 
         return view("minyak.penjualan",
         [
             "barang" => $barang,
             "penjualan" => $penjualan,
+            "customer" => $customer,
         ]);
     }
 }

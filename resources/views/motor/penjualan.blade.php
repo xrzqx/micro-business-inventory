@@ -301,20 +301,38 @@
     <div class="content">
         <h1>Daftar Penjualan Barang</h1>
         <div class="row">
-            <div class="col-sm-8">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            <div class="col-sm-6 pb-3">
+                <button type="button" class="btn btn-primary" style="height: 100%" data-toggle="modal" data-target="#exampleModalCenter">
                     Tambah Penjualan
                 </button>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <form class="d-flex" action="{{route('motorpenjualan.search')}}" method="GET">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
-                            placeholder="Cari Barang">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Search</button>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="namacust" value="{{ request('search') }}"
+                                    placeholder="Cari Customer">
+                                <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
+                                    placeholder="Cari Barang">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker2"
+                                    name="start" autocomplete="off" value="{{ request('search') }}" 
+                                    placeholder="Cari Tanggal Mulai"/>
+                                <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker3"
+                                    name="end" autocomplete="off" value="{{ request('search') }}" 
+                                    placeholder="Cari Tanggal Akhir"/>
+                            </div>
                         </div>
                     </div>
+                    <div class="input-group-append pb-3" style="">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+
+
                 </form>
             </div>
         </div>

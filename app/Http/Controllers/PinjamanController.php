@@ -45,6 +45,7 @@ class PinjamanController extends Controller
             'debit' => 'nullable|numeric',
             'kredit' => 'nullable|numeric',
             'tanggal' => 'required|max:255',
+            'keterangan' => 'nullable|max:100',
         ], [
             'customer.required' => 'Input nama kategori tidak boleh kosong',
             'customer.numeric' => 'Input nama customer harus benar',
@@ -52,7 +53,9 @@ class PinjamanController extends Controller
             'kredit.numeric' => 'Input jumlah harus nomor',
             'tanggal.required' => 'Input tanggal tidak boleh kosong',
             'tanggal.max' => 'Input tanggal tidak boleh lebih dari 255 karakter',
+            'keterangan.max' => 'Input keterangan tidak boleh lebih dari 100 karakter',
         ]);
+        // return $request->keterangan;
 
         $selectedDate = $request->tanggal;
 
@@ -73,6 +76,7 @@ class PinjamanController extends Controller
                 'debit' => $debit,
                 'kredit' => $kredit,
                 'tanggal' => $timestamp,
+                'keterangan' => $request->keterangan,
             ]
         );
 
@@ -117,6 +121,7 @@ class PinjamanController extends Controller
             'debit' => 'nullable|numeric',
             'kredit' => 'nullable|numeric',
             'tanggal' => 'required|max:255',
+            'keterangan' => 'nullable|max:100',
         ], [
             'customer.required' => 'Input nama kategori tidak boleh kosong',
             'customer.numeric' => 'Input nama customer harus benar',
@@ -124,6 +129,7 @@ class PinjamanController extends Controller
             'kredit.numeric' => 'Input jumlah harus nomor',
             'tanggal.required' => 'Input tanggal tidak boleh kosong',
             'tanggal.max' => 'Input tanggal tidak boleh lebih dari 255 karakter',
+            'keterangan.max' => 'Input keterangan tidak boleh lebih dari 100 karakter',
         ]);
 
         $selectedDate = $request->tanggal;
@@ -144,6 +150,7 @@ class PinjamanController extends Controller
         $pinjaman->debit = $debit;
         $pinjaman->kredit = $kredit;
         $pinjaman->tanggal = $timestamp;
+        $pinjaman->keterangan = $request->keterangan;
         $pinjaman->save();
 
         return redirect()->route('pinjaman.index')->with('success', 'mengedit daftar pinjaman');

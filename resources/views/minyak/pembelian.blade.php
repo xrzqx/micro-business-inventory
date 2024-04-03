@@ -368,10 +368,10 @@
                         {{date('d-m-Y', $value->tanggal)}}
                     </td>
                     <td>
-                        {{-- <button type="button" style="background-color: yellow">
+                        <button type="button" style="background-color: yellow">
                             <a href="{{ route('minyakpembelian.edit', $value->id) }}"
                                 style="color: black;text-decoration-line: none">edit</a>
-                        </button> --}}
+                        </button>
                         <form method="post" action="{{ route('minyakpembelian.destroy', $value->id) }}"
                             style="display: inline;">
                             @csrf

@@ -76,6 +76,8 @@ use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\PinjamanLaporanKeuanganController;
 
 use App\Http\Controllers\DasboardController;
+
+use App\Http\Controllers\BebanKategoriController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -440,3 +442,10 @@ Route::post('/pupuk', [PupukBarangController::class, 'store'])->name('pupuk.stor
 Route::get('/pupuk/{id}', [PupukBarangController::class, 'edit'])->name('pupuk.edit');
 Route::post('/pupuk/{id}', [PupukBarangController::class, 'update'])->name('pupuk.update');
 Route::delete('/pupuk/{id}', [PupukBarangController::class, 'destroy'])->name('pupuk.destroy');
+
+Route::get('/beban/kategori/search', [BebanKategoriController::class, 'search'])->name('bebankategori.search');
+Route::get('/beban/kategori', [BebanKategoriController::class, 'index'])->name('bebankategori.index');
+Route::post('/beban/kategori', [BebanKategoriController::class, 'store'])->name('bebankategori.store');
+Route::get('/beban/kategori/{id}', [BebanKategoriController::class, 'edit'])->name('bebankategori.edit');
+Route::post('/beban/kategori/{id}', [BebanKategoriController::class, 'update'])->name('bebankategori.update');
+Route::delete('/beban/kategori/{id}', [BebanKategoriController::class, 'destroy'])->name('bebankategori.destroy');

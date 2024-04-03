@@ -55,8 +55,7 @@ class MotorPenjualanController extends Controller
                     $query->with(['item', 'kategori']);
                 }]);
             }])
-            ->orderBy('transaksi_penjualan.tanggal', 'desc')
-            ->paginate(6);
+            ->paginate(7);
 
         $customer = Customer::select(['customer.id','customer.nama'])->where("module","SGH_Motor")->get();
         // return $penjualan;
@@ -274,6 +273,21 @@ class MotorPenjualanController extends Controller
     public function search(Request $request)
     {
         $searchQuery = $request->input('namabarang');
+        $searchQueryNama = $request->input('namacust');
+        $searchStart = $request->input('start');
+        $searchEnd = $request->input('end');
+        if (!$searchEnd) {
+            $currentTimestamp = Carbon::now();
+            $searchEnd = $currentTimestamp->format('d-m-Y');
+        }
+        if (!$searchStart) {
+            $timestampMinTx = Penjualan::select(\DB::raw('min(transaksi_penjualan.tanggal) as tanggal'))->first();
+            $dateTx = Carbon::createFromTimestamp($timestampMinTx);
+            $searchStart = $dateTx->format('d-m-Y');
+        }
+        $timestampStart = Carbon::parse($searchStart)->timestamp;
+        $timestampEnd = Carbon::parse($searchEnd)->timestamp;
+
         $customer = Customer::select(['customer.id','customer.nama'])->where("module","SGH_Motor")->get();
         
         $barang = Pembelian::select('transaksi_pembelian.master_item_id')
@@ -293,15 +307,21 @@ class MotorPenjualanController extends Controller
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
             ->join('item', 'item.id', '=', 'master_item.item_id')
+            ->join('customer', 'customer.id', '=', 'transaksi_penjualan.customer_id')
             ->where('kategori.toko', '=', 'SGH_Motor')
             ->where('item.nama', 'like', '%' . $searchQuery . '%')
-            ->distinct()
+            ->where('customer.nama', 'like', '%' . $searchQueryNama . '%')
+            ->where('transaksi_penjualan.tanggal', '>=', $timestampStart)
+            ->where('transaksi_penjualan.tanggal', '<=', $timestampEnd)
+            // ->distinct()
+            ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->with(['pembelian' => function ($query) use ($searchQuery){
                 $query->with(['barang' => function ($query) {
                     $query->with('item');
                 }]);
             }])
-            ->paginate(6);
+            // ->with('customer')
+            ->paginate(7);
 
         // return $penjualan;
 

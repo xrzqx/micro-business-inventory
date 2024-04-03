@@ -184,6 +184,15 @@ h1{
     border-radius: 5px;
 }
 
+.card-f-chart{
+    padding: 1rem;
+    /* height: 410px; */
+    width: 360px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.175);
+    border-radius: 5px;
+}
+
 .card-title-f{
     font-size: 1.5rem;
     margin-bottom: 0.5rem;

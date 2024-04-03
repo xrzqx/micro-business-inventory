@@ -13,7 +13,7 @@ class Pinjaman extends Model
     public $timestamps = false;
     protected $primaryKey = 'id';
     protected $fillable = [
-        'customer_id', 'debit','kredit','tanggal'
+        'customer_id', 'debit','kredit','tanggal','keterangan'
     ];
     public function customer(): BelongsTo
     {

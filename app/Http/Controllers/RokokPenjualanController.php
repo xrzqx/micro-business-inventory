@@ -306,12 +306,15 @@ class RokokPenjualanController extends Controller
             }])
             ->paginate(7);
 
+        $customer = Customer::select(['customer.id','customer.nama'])->where("module","rokok")->get();
+
         // return $penjualan;
 
         return view("rokok.penjualan",
         [
             "barang" => $barang,
             "penjualan" => $penjualan,
+            "customer" => $customer
         ]);
     }
 }
