@@ -96,6 +96,17 @@
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
+                    <span>Beban</span>
+                    <span class="material-symbols-outlined toggle-icon">
+                        chevron_right
+                    </span>
+                </div>
+            </li>
+            <ul class="sublist hide">
+                <li class="sublist-item"><a href="{{ route('bebankategori.index') }}">Daftar Kategori</a></li>
+            </ul>
+            <li class="toggle-sublist">
+                <div class="flex-row-list">
                     <span>Salesperson</span>
                     <span class="material-symbols-outlined toggle-icon">
                         chevron_right
