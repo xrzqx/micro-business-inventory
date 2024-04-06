@@ -471,6 +471,7 @@ class DasboardController extends Controller
         //     ->get();
         //     $pembelian->push($res);
         // }
+        
         $pembelian = collect();
         foreach ($time_intervals as $value) {
             $res = Pembelian::select('kategori.toko', \DB::raw('SUM(transaksi_pembelian.harga) as total_kredit'))

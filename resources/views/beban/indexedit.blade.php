@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container-f">
     <div class="sidenav">
         <ul class="main-list">
@@ -23,14 +24,14 @@
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Beban</span>
-                    <span class="material-symbols-outlined toggle-icon">
+                    <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{ route('bebankategori.index') }}">Daftar Kategori</a></li>
-                <li class="sublist-item"><a href="{{ route('beban.index') }}">Daftar Beban</a></li>
+                <li class="sublist-item selected"><a href="{{ route('beban.index') }}">Daftar Beban</a></li>
                 <li class="sublist-item"><a href="{{ route('bebanlaporan.index') }}">Laporan Beban</a></li>
             </ul>
             <li class="toggle-sublist">
@@ -59,7 +60,7 @@
                 <li class="sublist-item"><a href="{{route('motorcustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
-                <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
+                <li class="sublist-item"><a href="{{ route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('motorpengeluaran.index')}}">Pengeluaran</a></li>
                 <li class="sublist-item"><a href="{{route('motorlaporanmovingstock.index')}}">Laporan Moving Stock</a></li>
@@ -68,20 +69,21 @@
                 <li class="sublist-item"><a href="{{route('motorkeuangan.index')}}">Laporan Keuangan</a></li>
                 <li class="sublist-item"><a href="{{route('motorlaporanlabakategori.index')}}">Laporan Laba (Category Wise)</a></li>
                 <li class="sublist-item"><a href="{{route('motorlaporanlababulan.index')}}">Laporan Laba (Month Wise)</a></li>
+                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>SGH Studio</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('studiocustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
-                <li class="sublist-item selected"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
+                <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopengeluaran.index')}}">Pengeluaran</a></li>
@@ -91,6 +93,7 @@
                 <li class="sublist-item"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
                 <li class="sublist-item"><a href="{{route('studiolaporanlabakategori.index')}}">Laporan Laba (Category Wise)</a></li>
                 <li class="sublist-item"><a href="{{route('studiolaporanlababulan.index')}}">Laporan Laba (Month Wise)</a></li>
+                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -107,6 +110,7 @@
                 <li class="sublist-item"><a href="{{route('rokokpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpenjualan.index')}}">Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('rokokkeuangan.index')}}">Laporan Keuangan</a></li>
+                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -181,11 +185,11 @@
         </span>
     </button>
     <div class="content">
-        <h1>Edit Kategori</h1>
+        <h1>Edit Barang</h1>
         @if ($errors->any())
         <div class="alert alert-danger" id="failed-alert">
             <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong>Tidak berhasil </strong> menambahkan/mengubah produk
+            <strong>Tidak berhasil </strong> menambahkan/mengubah barang
             <ul>
                 @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -196,19 +200,83 @@
             $("#failed-alert").fadeTo(2000, 500).slideUp(500, function () {
                 $("#failed-alert").slideUp(500);
             });
+
         </script>
         @endif
-        <form method="POST" action="{{route('studioproduk.update',$produk->id)}}">
+        <form method="POST" action="{{route('beban.update', $beban->id)}}">
             @csrf
             @method('POST')
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 form-group">
-                        <label>Nama Produk</label>
-                        <input type="text" value="{{ $produk->nama }}"
-                            class="form-control form-control-sm nama-produk" name="nama" />
+                        <label>Nama Barang</label>
+                        <div class="input-group">
+                            <select class="js-example-basic-single col-sm-12" name="kategori" id="kategori-produk">
+                                <option value="#" disabled selected hidden>Pilih Kategori</option>
+                                @foreach ($kategori as $value)
+                                    @if ($value->id == $beban->kategori_id)
+                                        <option selected value="{{ $value->id }}">{{ $value->nama }}</option>
+                                    @else
+                                        <option value="{{ $value->id }}">{{ $value->nama }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('kategori')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false" width="16px"
+                            height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Toko</label>
+                        <div class="input-group">
+                            <select class="js-example-basic-single col-sm-12" name="toko" id="batch-produk">
+                                <option value="" disabled selected hidden>Pilih Toko</option>
+                                @foreach ($toko as $value)
+                                    @if ($value->id == $beban->toko_id)
+                                        <option selected value="{{ $value->id }}">{{ $value->nama }}</option>
+                                    @else
+                                        <option value="{{ $value->id }}">{{ $value->nama }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('toko')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Harga</label>
+                        <input type="text" class="form-control form-control-sm harga-produk"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                            placeholder="input harus angka" name="harga" value="{{$beban->harga}}"/>
+                        @error('harga')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false" width="16px"
+                            height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Tanggal</label>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
+                            name="tanggal" value="{{date('m/d/Y', $value->tanggal)}}"/>
                         <div class="text-err">
-                            @error('nama')
+                            @error('tanggal')
                             <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                                 width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                                 <path
@@ -224,8 +292,7 @@
             <div class="row-12">
                 <div class="col-12">
                     <button type="button" class="btn btn-secondary">
-                        <a href="{{route('studioproduk.index')}}"
-                            style="color: white; text-decoration-line: none">back</a>
+                        <a href="{{route('beban.index')}}" style="color: white; text-decoration-line: none">back</a>
                     </button>
                     <input type="submit" class="btn btn-primary btn-save" value="Save changes">
                 </div>

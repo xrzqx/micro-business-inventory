@@ -18,20 +18,20 @@
             <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{ route('customer.index') }}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('pinjaman.index')}}">Daftar Pinjaman</a></li>
-                <li class="sublist-item"><a href="{{route('pinjamankeuangan.index')}}">Laporan Keuangan</a></li>
+                <li class="sublist-item "><a href="{{route('pinjamankeuangan.index')}}">Laporan Keuangan</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>Beban</span>
-                    <span class="material-symbols-outlined toggle-icon">
+                    <span class="material-symbols-outlined toggle-icon rotate">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist hide">
+            <ul class="sublist">
                 <li class="sublist-item"><a href="{{ route('bebankategori.index') }}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{ route('beban.index') }}">Daftar Beban</a></li>
-                <li class="sublist-item"><a href="{{ route('bebanlaporan.index') }}">Laporan Beban</a></li>
+                <li class="sublist-item selected"><a href="{{ route('bebanlaporan.index') }}">Laporan Beban</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -57,7 +57,7 @@
             </li>
             <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('motorcustomer.index')}}">Daftar Customer</a></li>
-                <li class="sublist-item"><a href="{{ route('motorkategori.index') }}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{route('motorkategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('motor.index')}}">Daftar Barang</a></li>
                 <li class="sublist-item"><a href="{{route('motorpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('motorpenjualan.index')}}">Penjualan</a></li>
@@ -68,20 +68,21 @@
                 <li class="sublist-item"><a href="{{route('motorkeuangan.index')}}">Laporan Keuangan</a></li>
                 <li class="sublist-item"><a href="{{route('motorlaporanlabakategori.index')}}">Laporan Laba (Category Wise)</a></li>
                 <li class="sublist-item"><a href="{{route('motorlaporanlababulan.index')}}">Laporan Laba (Month Wise)</a></li>
+                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
                     <span>SGH Studio</span>
-                    <span class="material-symbols-outlined toggle-icon rotate">
+                    <span class="material-symbols-outlined toggle-icon">
                         chevron_right
                     </span>
                 </div>
             </li>
-            <ul class="sublist">
+            <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{route('studiocustomer.index')}}">Daftar Customer</a></li>
                 <li class="sublist-item"><a href="{{route('studiokategori.index')}}">Daftar Kategori</a></li>
                 <li class="sublist-item"><a href="{{route('studio.index')}}">Daftar Barang</a></li>
-                <li class="sublist-item selected"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
+                <li class="sublist-item"><a href="{{route('studioproduk.index')}}">Daftar Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopembelian.index')}}">Pembelian Barang</a></li>
                 <li class="sublist-item"><a href="{{route('studiopenjualan.index')}}">Penjualan Produk</a></li>
                 <li class="sublist-item"><a href="{{route('studiopengeluaran.index')}}">Pengeluaran</a></li>
@@ -91,6 +92,7 @@
                 <li class="sublist-item"><a href="{{route('studiokeuangan.index')}}">Laporan Keuangan</a></li>
                 <li class="sublist-item"><a href="{{route('studiolaporanlabakategori.index')}}">Laporan Laba (Category Wise)</a></li>
                 <li class="sublist-item"><a href="{{route('studiolaporanlababulan.index')}}">Laporan Laba (Month Wise)</a></li>
+                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -107,6 +109,7 @@
                 <li class="sublist-item"><a href="{{route('rokokpembelian.index')}}">Pembelian</a></li>
                 <li class="sublist-item"><a href="{{route('rokokpenjualan.index')}}">Penjualan</a></li>
                 <li class="sublist-item"><a href="{{route('rokokkeuangan.index')}}">Laporan Keuangan</a></li>
+                <!-- Add more sublist items as needed -->
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
@@ -181,11 +184,39 @@
         </span>
     </button>
     <div class="content">
-        <h1>Edit Kategori</h1>
+        <h1>Laporan Beban</h1>
+        <div class="row">
+            <div class="col-sm-6">
+                <form class="d-flex" action="{{route('bebanlaporan.search')}}" method="GET">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
+                            name="start" autocomplete="off" value="{{ request('search') }}" 
+                            placeholder="Cari Tanggal Mulai"/>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker2"
+                            name="end" autocomplete="off" value="{{ request('search') }}" 
+                            placeholder="Cari Tanggal Akhir"/>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @if (Session::has('success'))
+        <div class="alert alert-success" id="success-alert">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Berhasil </strong> {{ Session::get('success') }}
+        </div>
+        <script>
+            $("#success-alert").fadeTo(5000, 500).slideUp(500);
+
+        </script>
+        @endif
         @if ($errors->any())
         <div class="alert alert-danger" id="failed-alert">
             <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong>Tidak berhasil </strong> menambahkan/mengubah produk
+            <strong>Tidak berhasil </strong> menambahkan/mengubah data
             <ul>
                 @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -193,44 +224,82 @@
             </ul>
         </div>
         <script>
-            $("#failed-alert").fadeTo(2000, 500).slideUp(500, function () {
-                $("#failed-alert").slideUp(500);
-            });
+            $("#failed-alert").fadeTo(5000, 500).slideUp(500);
+
         </script>
         @endif
-        <form method="POST" action="{{route('studioproduk.update',$produk->id)}}">
-            @csrf
-            @method('POST')
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12 form-group">
-                        <label>Nama Produk</label>
-                        <input type="text" value="{{ $produk->nama }}"
-                            class="form-control form-control-sm nama-produk" name="nama" />
-                        <div class="text-err">
-                            @error('nama')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row-12">
-                <div class="col-12">
-                    <button type="button" class="btn btn-secondary">
-                        <a href="{{route('studioproduk.index')}}"
-                            style="color: white; text-decoration-line: none">back</a>
-                    </button>
-                    <input type="submit" class="btn btn-primary btn-save" value="Save changes">
-                </div>
-            </div>
-        </form>
+        <span>Tanggal : {{$tanggalStart}} </span>
+        <span style="margin-left:1rem">Sampai Tanggal: {{$tanggalEnd}}</span>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Uraian</th>
+                        <th>Jumlah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $totalharga = 0;
+                    @endphp
+                    @foreach ($beban as $index => $value)
+                        @php
+                            $totalharga += $value->jumlah;
+                        @endphp
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>Pembayaran {{$value->kategori->nama}}</td>
+                            <td>{{number_format($value->jumlah, 0, ',', '.') }}</td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td><strong>Total:</strong></td>
+                        <td></td>
+                        <td><strong>{{ number_format($totalharga, 0, ',', '.') }}</strong></td>
+                    </tr>
+                </tbody>
+                {{-- <tbody>
+                    @php
+                        $no = 0;
+                        $totalDebit = 0;
+                        $totalKredit = 0;
+                    @endphp
+                    @foreach ($data as $value)
+                        <tr>
+                            <td>{{ ++$no }}</td>
+                            <td>Pinjaman {{$value->customer->nama}}</td>
+                            <td>{{number_format($value->total_debit, 0, ',', '.') }}</td>
+                            <td>{{number_format($value->total_kredit, 0, ',', '.') }}</td>
+                        </tr>
+                        @php
+                            $totalDebit += $value->total_debit;
+                            $totalKredit += $value->total_kredit;
+                        @endphp
+                    @endforeach
+                    <tr>
+                        <td><strong>Total:</strong></td>
+                        <td></td>
+                        <td><strong>{{ number_format($totalDebit, 0, ',', '.') }}</strong></td>
+                        <td><strong>{{ number_format($totalKredit, 0, ',', '.') }}</strong></td>
+                    </tr>
+                </tbody> --}}
+                
+            </table>
+            {{-- <table style="margin-left: 0.5rem">
+                @foreach ($data as $value)
+                <tr>
+                    <td><strong>Total Pinjaman {{$value->customer->nama}}:</strong></td>
+                    <td><strong style="margin-left: 0.5rem">Rp. {{number_format($value->total_kredit - $value->total_debit, 0, ',', '.')}}</strong></td>
+                </tr>
+                @endforeach
+                <tr>
+                    <td><strong>Total Pinjaman Keseluruhan:</strong></td>
+                    <td><strong style="margin-left: 0.5rem">Rp. {{number_format($totalKredit - $totalDebit, 0, ',', '.')}}</strong></td>
+                </tr>
+            </table> --}}
+        </div>
+        {{-- {{ $data->appends(request()->input())->links() }} --}}
     </div>
 </div>
 @endsection

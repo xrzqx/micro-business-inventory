@@ -179,3 +179,20 @@ CREATE TABLE pinjaman
     PRIMARY KEY (id),
     FOREIGN KEY fk_customer_pinjaman (customer_id) REFERENCES customer (id)
 )ENGINE InnoDB;
+
+CREATE TABLE toko
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	nama VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id)
+)ENGINE InnoDB;
+
+CREATE TABLE beban
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	toko_id INT NOT NULL,
+    harga INT NOT NULL,
+    tanggal BIGINT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY fk_toko_beban (toko_id) REFERENCES toko (id)
+)ENGINE InnoDB;

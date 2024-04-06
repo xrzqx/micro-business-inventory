@@ -78,6 +78,8 @@ use App\Http\Controllers\PinjamanLaporanKeuanganController;
 use App\Http\Controllers\DasboardController;
 
 use App\Http\Controllers\BebanKategoriController;
+use App\Http\Controllers\BebanController;
+use App\Http\Controllers\BebanLaporanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -449,3 +451,14 @@ Route::post('/beban/kategori', [BebanKategoriController::class, 'store'])->name(
 Route::get('/beban/kategori/{id}', [BebanKategoriController::class, 'edit'])->name('bebankategori.edit');
 Route::post('/beban/kategori/{id}', [BebanKategoriController::class, 'update'])->name('bebankategori.update');
 Route::delete('/beban/kategori/{id}', [BebanKategoriController::class, 'destroy'])->name('bebankategori.destroy');
+
+Route::get('/beban/laporan/search', [BebanLaporanController::class, 'search'])->name('bebanlaporan.search');
+Route::get('/beban/laporan', [BebanLaporanController::class, 'index'])->name('bebanlaporan.index');
+
+Route::get('/beban/search', [BebanController::class, 'search'])->name('beban.search');
+Route::get('/beban', [BebanController::class, 'index'])->name('beban.index');
+Route::post('/beban', [BebanController::class, 'store'])->name('beban.store');
+Route::get('/beban/{id}', [BebanController::class, 'edit'])->name('beban.edit');
+Route::post('/beban/{id}', [BebanController::class, 'update'])->name('beban.update');
+Route::delete('/beban/{id}', [BebanController::class, 'destroy'])->name('beban.destroy');
+

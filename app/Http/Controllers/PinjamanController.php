@@ -47,7 +47,7 @@ class PinjamanController extends Controller
             'tanggal' => 'required|max:255',
             'keterangan' => 'nullable|max:100',
         ], [
-            'customer.required' => 'Input nama kategori tidak boleh kosong',
+            'customer.required' => 'Input nama customer tidak boleh kosong',
             'customer.numeric' => 'Input nama customer harus benar',
             'debit.numeric' => 'Input jumlah harus nomor',
             'kredit.numeric' => 'Input jumlah harus nomor',

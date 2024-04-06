@@ -143,6 +143,8 @@
             </li>
             <ul class="sublist hide">
                 <li class="sublist-item"><a href="{{ route('bebankategori.index') }}">Daftar Kategori</a></li>
+                <li class="sublist-item"><a href="{{ route('beban.index') }}">Daftar Beban</a></li>
+                <li class="sublist-item"><a href="{{ route('bebanlaporan.index') }}">Laporan Beban</a></li>
             </ul>
             <li class="toggle-sublist">
                 <div class="flex-row-list">
