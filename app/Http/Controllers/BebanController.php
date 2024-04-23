@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kategori;
-use App\Models\Toko;
 use App\Models\Beban;
 use Carbon\Carbon;
 
@@ -13,15 +12,13 @@ class BebanController extends Controller
     //
     public function index(){
         $kategori = Kategori::where('toko','beban')->get();
-        $toko = Toko::all();
-        $beban = Beban::with(['kategori','toko'])
+        $beban = Beban::with('kategori')
             ->orderBy('tanggal', 'desc')
             ->paginate(7);
         return view("beban.index", 
         [
             "kategori" => $kategori,
-            "beban" => $beban,
-            "toko" => $toko
+            "beban" => $beban
         ]);
     }
 
@@ -30,14 +27,11 @@ class BebanController extends Controller
         //
         $validator =  $request->validate([
             'kategori' => 'required|numeric',
-            'toko' => 'required|numeric',
             'harga' => 'required|numeric',
             'tanggal' => 'required|max:255',
         ], [
             'kategori.required' => 'Input nama kategori tidak boleh kosong',
             'kategori.numeric' => 'Input nama kategori harus benar',
-            'toko.required' => 'Input nama toko tidak boleh kosong',
-            'toko.numeric' => 'Input nama toko harus benar',
             'harga.required' => 'Input harga tidak boleh kosong',
             'harga.numeric' => 'Input harga harus nomor',
             'kredit.numeric' => 'Input jumlah harus nomor',
@@ -54,7 +48,6 @@ class BebanController extends Controller
         Beban::create(
             [
                 'kategori_id' => $request->kategori,
-                'toko_id' => $request->toko,
                 'harga' => $request->harga,
                 'tanggal' => $timestamp,
             ]
@@ -67,7 +60,6 @@ class BebanController extends Controller
     {
         //
         $kategori = Kategori::where('toko','beban')->get();
-        $toko = Toko::all();
         $beban = Beban::find($id);
         if (!$beban) {
             // Handle case where the resource is not found
@@ -78,7 +70,6 @@ class BebanController extends Controller
         [
             "kategori" => $kategori,
             "beban" => $beban,
-            "toko" => $toko
         ]);
     }
 

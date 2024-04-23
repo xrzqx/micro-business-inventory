@@ -1,44 +1,7 @@
-[
-    [],
-    [],
-    [{
-        "toko": "motor",
-        "total_kredit": "40000"
-    }],
-    [{
-            "toko": "studio",
-            "total_kredit": "50000"
-        },
-        {
-            "toko": "motor",
-            "total_kredit": "2391000"
-        }
-    ],
-    [{
-            "toko": "studio",
-            "total_kredit": "50000"
-        },
-        {
-            "toko": "motor",
-            "total_kredit": "2589500"
-        }
-    ],
-    [{
-            "toko": "studio",
-            "total_kredit": "50000"
-        },
-        {
-            "toko": "motor",
-            "total_kredit": "2589500"
-        }
-    ],
-    [{
-            "toko": "studio",
-            "total_kredit": "50000"
-        },
-        {
-            "toko": "motor",
-            "total_kredit": "2589500"
-        }
-    ]
-]
+{
+    "last30days": "16001937",
+    "last60days": "22293000",
+    "last90days": "402781370",
+    "alltime": "402781370"
+  }
+  

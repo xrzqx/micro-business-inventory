@@ -11,6 +11,7 @@ use App\Models\SalesPenjualan;
 use App\Models\Brilink;
 use App\Models\Pinjaman;
 use App\Models\Pengeluaran;
+use App\Models\Beban;
 use Carbon\Carbon;
 use App\Utils\TimeIntervalUtils;
 
@@ -423,7 +424,6 @@ class DasboardController extends Controller
         // return $pinjaman;
 
         $data_pengeluaran_chart = [];
-        $data_pengeluaran_chart_time = [];
         $pengeluaran = collect();
         foreach ($time_intervals as $value) {
             $res = Pengeluaran::select('pengeluaran.toko', \DB::raw('SUM(pengeluaran.harga) as total_kredit'))
@@ -437,6 +437,7 @@ class DasboardController extends Controller
         }
 
         // return $pengeluaran;
+        // return $laba_kotor_nama;
 
         $data_pengeluaran = [];
         $idx = 0;
@@ -447,30 +448,35 @@ class DasboardController extends Controller
                     if (isset($data_pengeluaran_chart[$value->toko])) {
                         // Key exists in the array
                         $data_pengeluaran_chart[$value->toko] = $value->total_kredit;
-                        $data_pengeluaran_chart_time[$laba_kotor_nama[$idx]] = $data_pengeluaran_chart;
                     } else {
                         // Key does not exist in the array
                         $data_pengeluaran_chart[$value->toko] = $value->total_kredit;
-                        $data_pengeluaran_chart_time[$laba_kotor_nama[$idx]] = $data_pengeluaran_chart;
                     }
                     $data_pengeluaran[$laba_kotor_nama[$idx]] += $value->total_kredit;
                 }
             }
             $idx ++;
         }
-        // return $data_pengeluaran_chart_time;
 
-        // $pembelian = collect();
-        // foreach ($time_intervals as $value) {
-        //     $res = Pembelian::select('transaksi_pembelian.master_item_id', \DB::raw('SUM(transaksi_pembelian.harga) as total_kredit'))
-        //     // ->join('customer', 'customer.id', '=', 'pinjaman.customer_id')
-        //     ->where('transaksi_pembelian.tanggal', '>=', $value['start'])
-        //     ->where('transaksi_pembelian.tanggal', '<=', $value['end'])
-        //     ->groupBy('transaksi_pembelian.master_item_id')
-        //     ->orderBy('transaksi_pembelian.tanggal', 'desc')
-        //     ->get();
-        //     $pembelian->push($res);
-        // }
+        // return $data_pengeluaran;
+
+        $beban = collect();
+        foreach ($time_intervals as $value) {
+            $res = Beban::select(\DB::raw('SUM(beban.harga) as total_kredit'))
+            ->where('beban.tanggal', '>=', $value['start'])
+            ->where('beban.tanggal', '<=', $value['end'])
+            ->get();
+            $beban->push($res);
+        }
+
+        $idx = 0;
+        foreach ($beban as $innerArray) {
+            // $data_pengeluaran[$laba_kotor_nama[$idx]] = 0;
+            foreach ($innerArray as $value) {
+                $data_pengeluaran[$laba_kotor_nama[$idx]] += $value["total_kredit"];
+            }
+            $idx ++;
+        }
         
         $pembelian = collect();
         foreach ($time_intervals as $value) {
@@ -486,37 +492,103 @@ class DasboardController extends Controller
             $pembelian->push($res);
         }
 
-        // return $pembelian;
-
+        $data_pembelian = [];
+        $data_pembelian_chart = [];
+        $data_pembelian_chart_time = [];
         $idx = 0;
         foreach ($pembelian as $innerArray) {
-            // $data_pengeluaran[$laba_kotor_nama[$idx]] = 0;
             if (count($innerArray) !== 0) {
+                $total = 0;
                 foreach ($innerArray as $value) {
-                    if (isset($data_pengeluaran_chart[$value->toko])) {
+                    $total += $value->total_kredit;
+                    if (isset($data_pembelian_chart[$value->toko])) {
                         // Key exists in the array
-                        $data_pengeluaran_chart[$value->toko] = $value->total_kredit;
-                        $data_pengeluaran_chart_time[$laba_kotor_nama[$idx]] = $data_pengeluaran_chart;
-                    } else {
+                        $data_pembelian_chart[$value->toko] = $value->total_kredit;
+                        $data_pembelian_chart_time[$laba_kotor_nama[$idx]] = $data_pembelian_chart;
+                    } 
+                    else {
                         // Key does not exist in the array
-                        $data_pengeluaran_chart[$value->toko] = $value->total_kredit;
-                        $data_pengeluaran_chart_time[$laba_kotor_nama[$idx]] = $data_pengeluaran_chart;
+                        $data_pembelian_chart[$value->toko] = $value->total_kredit;
+                        $data_pembelian_chart_time[$laba_kotor_nama[$idx]] = $data_pembelian_chart;
                     }
-                    $data_pengeluaran[$laba_kotor_nama[$idx]] += $value->total_kredit;
                 }
+                $data_pembelian[$laba_kotor_nama[$idx]] = $total;
+            }
+            else{
+                $data_pembelian[$laba_kotor_nama[$idx]] = 0;
             }
             $idx ++;
         }
 
-        // return $data_pengeluaran;
-        // return $data_pengeluaran_chart_time['alltime'];
+        $inventory = collect();
+        foreach ($time_intervals as $value) {
+            $res = Pembelian::select('*')
+            ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+            ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+            ->where('transaksi_pembelian.tanggal', '>=', $value['start'])
+            ->where('transaksi_pembelian.tanggal', '<=', $value['end'])
+            ->where('sisa','>', '0')
+            ->orderBy('transaksi_pembelian.tanggal', 'desc')
+            ->get();
+            $inventory->push($res);
+        }
+        // return $inventory;
 
-        // return $data_pengeluaran_chart;
+        $data_inventory = [];
+        // $data_inventory_chart = [];
+        // $data_inventory_chart_time = [];
+        $idx = 0;
+        foreach ($inventory as $innerArray) {
+            if (count($innerArray) !== 0) {
+                // echo $innerArray;
+                $total = 0;
+                foreach ($innerArray as $value) {
+                    // echo $value;
+                    $total += ($value->harga/$value->jumlah) * $value->sisa;
+                    
+                    // $total += $value->total_kredit;
+                    // if (isset($data_pembelian_chart[$value->toko])) {
+                    //     // Key exists in the array
+                    //     $data_pembelian_chart[$value->toko] = $value->total_kredit;
+                    //     $data_pembelian_chart_time[$laba_kotor_nama[$idx]] = $data_pembelian_chart;
+                    // } 
+                    // else {
+                    //     // Key does not exist in the array
+                    //     $data_pembelian_chart[$value->toko] = $value->total_kredit;
+                    //     $data_pembelian_chart_time[$laba_kotor_nama[$idx]] = $data_pembelian_chart;
+                    // }
+                }
+                $data_inventory[$laba_kotor_nama[$idx]] = $total;
+            }
+            else{
+                // echo "xx";
+                $data_inventory[$laba_kotor_nama[$idx]] = 0;
+            }
+            $idx ++;
+        }
+
+        $data_laba_bersih = $data_laba_kotor;
+        
+        $data_laba_bersih['today'] = $data_laba_kotor['today'] - $data_pinjaman['today'] - $data_pengeluaran['today'] - $data_pembelian['today'];
+        $data_laba_bersih['yesterday'] = $data_laba_kotor['yesterday'] - $data_pinjaman['yesterday'] - $data_pengeluaran['yesterday'] - $data_pembelian['yesterday'];
+        $data_laba_bersih['last7days'] = $data_laba_kotor['last7days'] - $data_pinjaman['last7days'] - $data_pengeluaran['last7days'] - $data_pembelian['last7days'];
+        $data_laba_bersih['last30days'] = $data_laba_kotor['last30days'] - $data_pinjaman['last30days'] - $data_pengeluaran['last30days'] - $data_pembelian['last30days'];
+        $data_laba_bersih['last60days'] = $data_laba_kotor['last60days'] - $data_pinjaman['last60days'] - $data_pengeluaran['last60days'] - $data_pembelian['last60days'];
+        $data_laba_bersih['last90days'] = $data_laba_kotor['last90days'] - $data_pinjaman['last90days'] - $data_pengeluaran['last90days'] - $data_pembelian['last90days'];
+        $data_laba_bersih['alltime'] = $data_laba_kotor['alltime'] - $data_pinjaman['alltime'] - $data_pengeluaran['alltime'] - $data_pembelian['alltime'];
+        // return $data_laba_bersih;
+        // return $data_pembelian_chart_time['alltime']['SGH_Motor'];
+        // return $data_pembelian;
+        // return $data_pembelian_chart_time;
         
         return view('dashboard.index',[
             'data_laba_kotor' => $data_laba_kotor,
             'data_pinjaman' => $data_pinjaman,
             'data_pengeluaran' => $data_pengeluaran,
+            'data_pembelian' => $data_pembelian,
+            'data_inventory' => $data_inventory,
+            'data_laba_bersih' => $data_laba_bersih,
+            'data_pembelian_chart' => $data_pembelian_chart_time,
             'laba_kotor_sparepart' => $laba_kotor_sparepart,
             'laba_kotor_studio' => $laba_kotor_studio,
             'laba_kotor_rokok' => $laba_kotor_rokok,
@@ -524,7 +596,6 @@ class DasboardController extends Controller
             'laba_kotor_beras' => $laba_kotor_beras,
             'laba_kotor_brilink' => $laba_kotor_brilink,
             'laba_kotor_pupuk' => $laba_kotor_pupuk,
-            'data_pengeluaran_chart' => $data_pengeluaran_chart_time,
         ]);
     }
 }

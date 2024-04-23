@@ -306,6 +306,102 @@
                     </div>
                 </div>
             </div>
+            <div class="card-f">
+                <div class="card-title-f">
+                    Pembelian
+                </div>
+                <div class="card-body-f">
+                    <div class="f-row">
+                        <div class="f-col">
+                            <div>#</div>
+                            <div>Today</div>
+                            <div>Yesterday</div>
+                            <div>Last 7 days</div>
+                            <div>Last 30 days</div>
+                            <div>Last 60 days</div>
+                            <div>Last 90 days</div>
+                            <div>All time</div>
+                        </div>
+                        <div class="f-col">
+                            <div>
+                                Total
+                            </div>
+                            <div>Rp. {{ number_format($data_pembelian['today'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_pembelian['yesterday'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_pembelian['last7days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_pembelian['last30days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_pembelian['last60days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_pembelian['last90days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_pembelian['alltime'], 0, ',', '.') }}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-f">
+                <div class="card-title-f">
+                    Penilaian Inventaris
+                </div>
+                <div class="card-body-f">
+                    <div class="f-row">
+                        <div class="f-col">
+                            <div>#</div>
+                            <div>Today</div>
+                            <div>Yesterday</div>
+                            <div>Last 7 days</div>
+                            <div>Last 30 days</div>
+                            <div>Last 60 days</div>
+                            <div>Last 90 days</div>
+                            <div>All time</div>
+                        </div>
+                        <div class="f-col">
+                            <div>
+                                Total
+                            </div>
+                            <div>Rp. {{ number_format($data_inventory['today'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_inventory['yesterday'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_inventory['last7days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_inventory['last30days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_inventory['last60days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_inventory['last90days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_inventory['alltime'], 0, ',', '.') }}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-f">
+                <div class="card-title-f">
+                    Laba Bersih
+                </div>
+                <div class="card-body-f">
+                    <div class="f-row">
+                        <div class="f-col">
+                            <div>#</div>
+                            <div>Today</div>
+                            <div>Yesterday</div>
+                            <div>Last 7 days</div>
+                            <div>Last 30 days</div>
+                            <div>Last 60 days</div>
+                            <div>Last 90 days</div>
+                            <div>All time</div>
+                        </div>
+                        <div class="f-col">
+                            <div>
+                                Total
+                            </div>
+                            <div>Rp. {{ number_format($data_laba_bersih['today'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_bersih['yesterday'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_bersih['last7days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_bersih['last30days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_bersih['last60days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_bersih['last90days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_bersih['alltime'], 0, ',', '.') }}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-container" style="margin-top: 0.5rem">
             <div class="card-f-chart">
@@ -316,7 +412,7 @@
             </div>
             <div class="card-f-chart">
                 <div class="card-title-f">
-                    Pengeluaran
+                    Pembelian
                 </div>
                 <canvas id="myChartPengeluaran" width="400" height="400"></canvas>
             </div>
@@ -385,22 +481,23 @@
     const myChart = new Chart(document.getElementById('myChart'), config);
 
 </script>
+
 <script>
-    var sparepartPengeluaranPercentage = {{round(( ($data_pengeluaran_chart['alltime']['motor']+$data_pengeluaran_chart['alltime']['SGH_Motor']) /$data_pengeluaran['alltime']) * 100, 2)}};
-    var studioPengeluaranPercentage = {{round((($data_pengeluaran_chart['alltime']['studio']+$data_pengeluaran_chart['alltime']['SGH_Studio']) /$data_pengeluaran['alltime']) * 100, 2)}};
-    var rokokPengeluaranPercentage = {{round(($data_pengeluaran_chart['alltime']['rokok']/$data_pengeluaran['alltime']) * 100, 2)}};
-    var minyakPengeluaranPercentage = {{round(($data_pengeluaran_chart['alltime']['minyak']/$data_pengeluaran['alltime']) * 100, 2)}};
-    var berasPengeluaranPercentage = {{round(($data_pengeluaran_chart['alltime']['beras']/$data_pengeluaran['alltime']) * 100, 2)}};
-    var pupukPengeluaranPercentage = {{round(($data_pengeluaran_chart['alltime']['pupuk']/$data_pengeluaran['alltime']) * 100, 2)}};
+    var sparepartPengeluaranPercentage = {{round(($data_pembelian_chart['alltime']['SGH_Motor'] /$data_pembelian['alltime']) * 100, 2)}};
+    var studioPengeluaranPercentage = {{round(($data_pembelian_chart['alltime']['SGH_Studio'] /$data_pembelian['alltime']) * 100, 2)}};
+    var rokokPengeluaranPercentage = {{round(($data_pembelian_chart['alltime']['rokok']/$data_pembelian['alltime']) * 100, 2)}};
+    var minyakPengeluaranPercentage = {{round(($data_pembelian_chart['alltime']['minyak']/$data_pembelian['alltime']) * 100, 2)}};
+    var berasPengeluaranPercentage = {{round(($data_pembelian_chart['alltime']['beras']/$data_pembelian['alltime']) * 100, 2)}};
+    var pupukPengeluaranPercentage = {{round(($data_pembelian_chart['alltime']['pupuk']/$data_pembelian['alltime']) * 100, 2)}};
     // Sample data for the pie chart
     const dataPengeluaran = {
         labels: ['Sparepart ' + sparepartPengeluaranPercentage + '%', 'Studio ' + studioPengeluaranPercentage + '%', 'Rokok ' + rokokPengeluaranPercentage + '%', 'Minyak ' + minyakPengeluaranPercentage + '%', 'Beras ' + berasPengeluaranPercentage+ '%', 'Pupuk ' + pupukPengeluaranPercentage + '%'],
         datasets: [{
             label: 'Jumlah',
-            data: [{{$data_pengeluaran_chart['alltime']['motor'] + $data_pengeluaran_chart['alltime']['SGH_Motor']}}, 
-                {{$data_pengeluaran_chart['alltime']['studio'] + $data_pengeluaran_chart['alltime']['SGH_Studio']}}, 
-                {{$data_pengeluaran_chart['alltime']['rokok']}}, {{$data_pengeluaran_chart['alltime']['minyak']}},
-                {{$data_pengeluaran_chart['alltime']['beras']}}, {{$data_pengeluaran_chart['alltime']['pupuk']}}],
+            data: [{{$data_pembelian_chart['alltime']['SGH_Motor']}}, 
+                {{$data_pembelian_chart['alltime']['SGH_Studio']}}, 
+                {{$data_pembelian_chart['alltime']['rokok']}}, {{$data_pembelian_chart['alltime']['minyak']}},
+                {{$data_pembelian_chart['alltime']['beras']}}, {{$data_pembelian_chart['alltime']['pupuk']}}],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.5)',
                 'rgba(54, 162, 235, 0.5)',
@@ -437,6 +534,6 @@
 
     // Create the chart
     const myChartPengeluaran = new Chart(document.getElementById('myChartPengeluaran'), configPengeluaran);
-
 </script>
+
 @endsection

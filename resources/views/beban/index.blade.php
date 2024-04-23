@@ -34,26 +34,6 @@
                             @enderror
                         </div>
                         <div class="col-sm-12 form-group">
-                            <label>Toko</label>
-                            <div class="input-group">
-                                <select class="js-example-basic-single col-sm-12" name="toko" id="batch-produk">
-                                    <option value="" disabled selected hidden>Pilih Toko</option>
-                                    @foreach ($toko as $item)
-                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @error('toko')
-                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-sm-12 form-group">
                             <label>Harga</label>
                             <input type="text" class="form-control form-control-sm harga-produk"
                                 oninput="this.value = this.value.replace(/[^0-9]/g, '');"
@@ -333,7 +313,6 @@
                 <tr>
                     <th>Nama Kategori</th>
                     <th>Harga</th>
-                    <th>Toko</th>
                     <th>Tanggal</th>
                     <th>Action</th>
                 </tr>
@@ -344,9 +323,6 @@
                     </td>
                     <td>
                         {{ $value->harga }}
-                    </td>
-                    <td>
-                        {{ $value->toko->nama }}
                     </td>
                     <td>
                         {{date('d-m-Y', $value->tanggal)}}
