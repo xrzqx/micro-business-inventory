@@ -205,9 +205,10 @@
             <table class="table">
                 <tr>
                     <th>Nama Barang</th>
-                    <th>Stock Akhir</th>
+                    <th>Stock Awal</th>
                     <th>Masuk</th>
                     <th>Pemakaian</th>
+                    <th>Stock Akhir</th>
                 </tr>
                 @foreach ($data as $key => $value)
                 <tr>
@@ -215,13 +216,16 @@
                         {{ $value['nama'] }}
                     </td>
                     <td>
-                        {{ $value['stock'] }}
+                        {{ $value['stock_akhir'] + $value['pemakaian'] - $value['masuk']}}
                     </td>
                     <td>
                         {{ $value['masuk'] }}
                     </td>
                     <td>
                         {{ $value['pemakaian'] }}
+                    </td>
+                    <td>
+                        {{ $value['stock_akhir'] }}
                     </td>
                 </tr>
                 @endforeach

@@ -397,15 +397,19 @@ class StudioPenjualanController extends Controller
     public function search(Request $request)
     {
         //
-        $searchQuery = $request->input('namacustomer');
-        
-        // $customer = Customer::where('module', '=', 'SGH_Studio')
-        //     ->where('nama', 'like', '%' . $searchQuery . '%')
-        //     ->paginate(7);
-        // return view("studio.customer", 
-        // [
-        //     "customer" => $customer,
-        // ]);
+        $searchStart = $request->input('start');
+        $searchEnd = $request->input('end');
+        if (!$searchEnd) {
+            $currentTimestamp = Carbon::now();
+            $searchEnd = $currentTimestamp->format('d-m-Y');
+        }
+        if (!$searchStart) {
+            $timestampMinTx = PenjualanProduk::select(\DB::raw('min(penjualan_produk.tanggal) as tanggal'))->first();
+            $dateTx = Carbon::createFromTimestamp($timestampMinTx);
+            $searchStart = $dateTx->format('d-m-Y');
+        }
+        $timestampStart = Carbon::parse($searchStart)->timestamp;
+        $timestampEnd = Carbon::parse($searchEnd)->timestamp;
 
         $produk = Produk::where('toko', '=', 'SGH_Studio')->get();
 
@@ -437,7 +441,8 @@ class StudioPenjualanController extends Controller
             ->join('penjualan_produk', 'penjualan_produk.id', '=', 'penjualan_produk_transaksi_pembelian.penjualan_produk_id')
             ->join('customer', 'customer.id', '=', 'penjualan_produk.customer_id')
             ->where('kategori.toko', '=', 'SGH_Studio')
-            ->where('customer.nama', 'like', '%' . $searchQuery . '%')
+            ->where('penjualan_produk.tanggal', '>=', $timestampStart)
+            ->where('penjualan_produk.tanggal', '<=', $timestampEnd)
             ->groupBy('penjualan_produk_transaksi_pembelian.penjualan_produk_id')
             ->orderBy('penjualan_produk.tanggal', 'desc')
             ->with(['penjualan_produk' => function ($query) {

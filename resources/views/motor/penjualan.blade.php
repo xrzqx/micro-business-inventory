@@ -344,8 +344,6 @@
                     <div class="input-group-append pb-3" style="">
                         <button class="btn btn-primary" type="submit">Search</button>
                     </div>
-
-
                 </form>
             </div>
         </div>
