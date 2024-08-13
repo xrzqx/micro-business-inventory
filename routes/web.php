@@ -431,6 +431,7 @@ Route::post('/pupuk/penjualan', [PupukPenjualanController::class, 'store'])->nam
 Route::get('/pupuk/penjualan/{id}', [PupukPenjualanController::class, 'edit'])->name('pupukpenjualan.edit');
 Route::post('/pupuk/penjualan/{id}', [PupukPenjualanController::class, 'update'])->name('pupukpenjualan.update');
 Route::delete('/pupuk/penjualan/{id}', [PupukPenjualanController::class, 'destroy'])->name('pupukpenjualan.destroy');
+Route::get('/pupuk/penjualan/{id}/invoice', [PupukPenjualanController::class, 'invoice'])->name('pupukpenjualan.invoice');
 
 Route::get('/pupuk/keuangan/search', [PupukLaporanKeuanganController::class, 'search'])->name('pupukkeuangan.search');
 Route::get('/pupuk/keuangan', [PupukLaporanKeuanganController::class, 'index'])->name('pupukkeuangan.index');
@@ -461,4 +462,3 @@ Route::post('/beban', [BebanController::class, 'store'])->name('beban.store');
 Route::get('/beban/{id}', [BebanController::class, 'edit'])->name('beban.edit');
 Route::post('/beban/{id}', [BebanController::class, 'update'])->name('beban.update');
 Route::delete('/beban/{id}', [BebanController::class, 'destroy'])->name('beban.destroy');
-

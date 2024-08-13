@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
+use App\Models\InvoiceItem;
 use App\Models\Kategori;
 use Carbon\Carbon;
 
@@ -43,21 +44,21 @@ class PupukLaporanKeuanganController extends Controller
         
         // return $pembelian;
         
-        $penjualan = Penjualan::select('transaksi_penjualan.transaksi_pembelian_id', \DB::raw('SUM(transaksi_penjualan.harga) as total_harga'))
-            ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
+        $penjualan = InvoiceItem::select('invoice_item.transaksi_pembelian_id', \DB::raw('SUM(invoice_item.jumlah) as total_jumlah'), \DB::raw('SUM(invoice_item.total_harga) as total_harga'))
+            ->join('invoice', 'invoice.id', '=', 'invoice_item.invoice_id')
+            ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'invoice_item.transaksi_pembelian_id')
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
             ->where('kategori.toko', '=', 'pupuk')
-            ->where('transaksi_penjualan.tanggal', '>=', $timestamp)
-            ->where('transaksi_penjualan.tanggal', '<=', $timestamp)
-            ->groupBy('transaksi_penjualan.transaksi_pembelian_id')
-            ->orderBy('transaksi_penjualan.tanggal', 'desc')
+            ->where('invoice.tanggal', '>=', $timestamp)
+            ->where('invoice.tanggal', '<=', $timestamp)
+            ->groupBy('invoice_item.transaksi_pembelian_id')
+            ->orderBy('invoice.tanggal', 'desc')
             ->with(['pembelian' => function ($query) {
                 $query->with(['barang' => function ($query) {
                     $query->with('item');
                 }]);
             }])
-            ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->get();
             // ->paginate(7);
 
@@ -66,6 +67,8 @@ class PupukLaporanKeuanganController extends Controller
         // Append results to $data array
         $data = array_merge($pembelian->toArray(), $penjualan->toArray());
         $associativeArray = array_values($data);
+
+        // return $data;
 
         return view("pupuk.keuangan", 
         [
@@ -114,24 +117,23 @@ class PupukLaporanKeuanganController extends Controller
             }])
             // ->paginate(7);
             ->get();
-        // return $pembelian;
-        
-        $penjualan = Penjualan::select('transaksi_penjualan.transaksi_pembelian_id', \DB::raw('SUM(transaksi_penjualan.harga) as total_harga'))
-            ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
+
+        $penjualan = InvoiceItem::select('invoice_item.transaksi_pembelian_id', \DB::raw('SUM(invoice_item.jumlah) as total_jumlah'), \DB::raw('SUM(invoice_item.total_harga) as total_harga'))
+            ->join('invoice', 'invoice.id', '=', 'invoice_item.invoice_id')
+            ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'invoice_item.transaksi_pembelian_id')
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
-            // ->where('kategori.toko', '=', 'pupuk')
-            ->where('transaksi_penjualan.tanggal', '>=', $timestampStart)
-            ->where('transaksi_penjualan.tanggal', '<=', $timestampEnd)
+            ->where('kategori.toko', '=', 'pupuk')
+            ->where('invoice.tanggal', '>=', $timestampStart)
+            ->where('invoice.tanggal', '<=', $timestampEnd)
             ->whereIn('kategori.id', $kategori_selected)
-            ->groupBy('transaksi_penjualan.transaksi_pembelian_id')
-            ->orderBy('transaksi_penjualan.tanggal', 'desc')
+            ->groupBy('invoice_item.transaksi_pembelian_id')
+            ->orderBy('invoice.tanggal', 'desc')
             ->with(['pembelian' => function ($query) {
                 $query->with(['barang' => function ($query) {
                     $query->with('item');
                 }]);
             }])
-            ->orderBy('transaksi_penjualan.tanggal', 'desc')
             ->get();
         // return $pembelian;
 

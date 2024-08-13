@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use App\Models\Penjualan;
 use App\Models\Barang;
 use App\Models\Item;
 use App\Models\Pembelian;
@@ -206,15 +205,6 @@ class StudioPenjualanController extends Controller
             }])
             ->get();
 
-        $pembelian = Pembelian::with(['barang' => function ($query) {
-            $query->with('item', 'kategori')
-                ->whereHas('kategori', function (Builder $query) {
-                    $query->where('toko', '=', 'SGH_Motor');
-                });
-        }])
-        ->where('sisa', '>', 0)
-        ->get();
-
         $kertas = PenjualanProdukBarang::select('penjualan_produk_transaksi_pembelian.*')
             ->where('penjualan_produk_transaksi_pembelian.penjualan_produk_id',$id)
             ->with('pembelian')
@@ -235,7 +225,6 @@ class StudioPenjualanController extends Controller
             'penjualan' => $penjualan,
             "produk" => $produk,
             "barang" => $barang,
-            "pembelian" => $pembelian,
             "kertas" => $kertas,
             "kertas_list" => $kertas_list,
             "customer" => $customer
@@ -278,6 +267,7 @@ class StudioPenjualanController extends Controller
             'kategori.max' => 'Input kategori tidak boleh lebih dari 100 karakter',
         ]);
 
+        $idDynamic = $request->input('itemDynamic', []);
         $namaDynamic = $request->input('namaDynamic', []);
         $batchDynamic = $request->input('batchDynamic', []);
         $jumlahDynamic = $request->input('jumlahDynamic', []);
@@ -293,18 +283,30 @@ class StudioPenjualanController extends Controller
             abort(404, 'Resource not found');
         }
 
-        $penjualan_produk->produk_id = $request->produk;
-        $penjualan_produk->customer_id = $request->customer;
-        $penjualan_produk->jumlah = $request->jprod;
-        $penjualan_produk->harga = $request->harga;
-        $penjualan_produk->tanggal = $timestamp;
-        $penjualan_produk->keterangan = $request->keterangan;
-        $penjualan_produk->save();
+        DB::beginTransaction();
+        try {
+            $penjualan_produk->produk_id = $request->produk;
+            $penjualan_produk->customer_id = $request->customer;
+            $penjualan_produk->jumlah = $request->jprod;
+            $penjualan_produk->harga = $request->harga;
+            $penjualan_produk->tanggal = $timestamp;
+            $penjualan_produk->keterangan = $request->keterangan;
+            $penjualan_produk->save();
+            // If everything went well, commit the transaction
+            DB::commit();
+        } catch (\Exception $e) {
+            // If an exception occurs, rollback the transaction
+            DB::rollBack();
+        
+            // Handle the exception or log it as needed
+            return response()->json(['error' => 'Transaction failed.'], 500);
+        }
 
         // Make sure both arrays have the same length
         $minLength = min(count($batchDynamic), count($jumlahDynamic), count($namaDynamic));
 
         for ($i = 0; $i < $minLength; $i++) {
+            $invoiceItemId = $idDynamic[$i];
             $batchValue = $batchDynamic[$i];
             $jumlahValue = $jumlahDynamic[$i];
             $barangId = $namaDynamic[$i];
@@ -322,29 +324,50 @@ class StudioPenjualanController extends Controller
                 abort(404, 'Resource not found');
             }
 
-            $penjualan_produk_barang = PenjualanProdukBarang::select('penjualan_produk_transaksi_pembelian.*')
-                ->where('penjualan_produk_transaksi_pembelian.penjualan_produk_id', $id)
-                ->where('penjualan_produk_transaksi_pembelian.transaksi_pembelian_id', $batchValue)
-                ->get();
+            $penjualan_produk_barang = PenjualanProdukBarang::find($invoiceItemId);
+                if (!$penjualan_produk_barang) {
+                    // Handle case where the resource is not found
+                    abort(404, 'Resource not found');
+                }
             // return $penjualan_produk_barang;
             
-            if ($penjualan_produk_barang[0]->jumlah > $jumlahValue) {
-                $selisih = $penjualan_produk_barang[0]->jumlah - $jumlahValue;
-                $item->stock = $item->stock + $selisih;
-                $item->save();
-                $pembelian->sisa = $pembelian->sisa + $selisih;
-                $pembelian->save();
-                $penjualan_produk_barang[0]->jumlah = $penjualan_produk_barang[0]->jumlah - $selisih;
-                $penjualan_produk_barang[0]->save();
+            if ($penjualan_produk_barang->jumlah > $jumlahValue) {
+                DB::beginTransaction();
+                try {
+                    $selisih = $penjualan_produk_barang->jumlah - $jumlahValue;
+                    $item->stock = $item->stock + $selisih;
+                    $item->save();
+                    $pembelian->sisa = $pembelian->sisa + $selisih;
+                    $pembelian->save();
+                    $penjualan_produk_barang->jumlah = $penjualan_produk_barang->jumlah - $selisih;
+                    $penjualan_produk_barang->save();
+                    DB::commit();
+                } catch (\Exception $e) {
+                    // If an exception occurs, rollback the transaction
+                    DB::rollBack();
+                
+                    // Handle the exception or log it as needed
+                    return response()->json(['error' => 'Transaction failed.'], 500);
+                }
             }
-            if ($penjualan_produk_barang[0]->jumlah < $jumlahValue) {
-                $selisih = $jumlahValue - $penjualan_produk_barang[0]->jumlah;
-                $item->stock = $item->stock - $selisih;
-                $item->save();
-                $pembelian->sisa = $pembelian->sisa - $selisih;
-                $pembelian->save();
-                $penjualan_produk_barang[0]->jumlah = $penjualan_produk_barang[0]->jumlah + $selisih;
-                $penjualan_produk_barang[0]->save();
+            if ($penjualan_produk_barang->jumlah < $jumlahValue) {
+                DB::beginTransaction();
+                try {
+                    $selisih = $jumlahValue - $penjualan_produk_barang->jumlah;
+                    $item->stock = $item->stock - $selisih;
+                    $item->save();
+                    $pembelian->sisa = $pembelian->sisa - $selisih;
+                    $pembelian->save();
+                    $penjualan_produk_barang->jumlah = $penjualan_produk_barang->jumlah + $selisih;
+                    $penjualan_produk_barang->save();
+                    DB::commit();
+                } catch (\Exception $e) {
+                    // If an exception occurs, rollback the transaction
+                    DB::rollBack();
+                
+                    // Handle the exception or log it as needed
+                    return response()->json(['error' => 'Transaction failed.'], 500);
+                }
             }
         }
 

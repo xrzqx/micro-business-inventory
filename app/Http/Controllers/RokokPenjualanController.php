@@ -201,6 +201,7 @@ class RokokPenjualanController extends Controller
             $pembelian->save();
 
             $penjualan->transaksi_pembelian_id = $request->batch;
+            $penjualan->jumlah = $request->jumlah;
             $pembelian_selected = Pembelian::find($penjualan->transaksi_pembelian_id);
             $pembelian_selected->sisa = $pembelian_selected->sisa - $request->jumlah;
             $barang_selected = Barang::find($pembelian_selected->master_item_id);

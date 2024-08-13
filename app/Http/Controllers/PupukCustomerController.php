@@ -27,14 +27,24 @@ class PupukCustomerController extends Controller
     {
         //
         $validator =  $request->validate([
-            'namacustomer' => 'required|max:255',
+            'namacustomer' => 'required|max:100',
+            'nik' => 'required|unique:customer,nik|max:20',
+            'lokasi' => 'required|max:20',
         ], [
-            'namacustomer.required' => 'Input nama kategori tidak boleh kosong',
-            'namacustomer.max' => 'Input nama kategori tidak boleh lebih dari 255 karakter',
+            'namacustomer.required' => 'Input nama customer tidak boleh kosong',
+            'namacustomer.max' => 'Input nama customer tidak boleh lebih dari 100 karakter',
+            'nik.required' => 'Input nik tidak boleh kosong',
+            'nik.unique' => 'NIK/NPWP sudah terdaftar',
+            'nik.max' => 'NIK/NPWP tidak boleh lebih dari 20 digit',
+            'lokasi.required' => 'Input nama lokasi tidak boleh kosong',
+            'lokasi.max' => 'Input nama lokasi tidak boleh lebih dari 20 karakter',
         ]);
+
         Customer::create(
             [
                 'nama' => $request->namacustomer,
+                'nik' => $request->nik,
+                'lokasi' => $request->lokasi,
                 'module' => 'pupuk',
             ]
         );
@@ -66,13 +76,22 @@ class PupukCustomerController extends Controller
     {
         //
         $validator =  $request->validate([
-            'nama' => 'required|max:255',
+            'nama' => 'required|max:100',
+            'nik' => 'required|unique:customer,nik,' . $id . '|max:20',
+            'lokasi' => 'required|max:20',
         ], [
-            'nama.required' => 'Input nama kategori tidak boleh kosong',
-            'nama.max' => 'Input nama kategori tidak boleh lebih dari 255 karakter',
+            'nama.required' => 'Input nama customer tidak boleh kosong',
+            'nama.max' => 'Input nama customer tidak boleh lebih dari 100 karakter',
+            'nik.required' => 'Input nik tidak boleh kosong',
+            'nik.unique' => 'NIK/NPWP sudah terdaftar',
+            'nik.max' => 'NIK/NPWP tidak boleh lebih dari 20 digit',
+            'lokasi.required' => 'Input nama lokasi tidak boleh kosong',
+            'lokasi.max' => 'Input nama lokasi tidak boleh lebih dari 20 karakter',
         ]);
         $customer = Customer::find($id);
         $customer->nama = $request->nama;
+        $customer->nik = $request->nik;
+        $customer->lokasi = $request->lokasi;
         $customer->save();
         if (!$customer) {
             // Handle case where the resource is not found

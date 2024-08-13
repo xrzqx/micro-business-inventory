@@ -188,7 +188,10 @@ class MotorPenjualanController extends Controller
             abort(404, 'Resource not found');
         }
 
+        // return $request->jumlah;
+
         if ($penjualan->transaksi_pembelian_id != $request->batch) {
+            // return "lol ";
             $pembelian = Pembelian::find($penjualan->transaksi_pembelian_id);
             $barang = Barang::find($pembelian->master_item_id);
             $item = Item::find($barang->item_id);
@@ -199,6 +202,7 @@ class MotorPenjualanController extends Controller
             $pembelian->save();
 
             $penjualan->transaksi_pembelian_id = $request->batch;
+            $penjualan->jumlah = $request->jumlah;
             $pembelian_selected = Pembelian::find($penjualan->transaksi_pembelian_id);
             $pembelian_selected->sisa = $pembelian_selected->sisa - $request->jumlah;
             $barang_selected = Barang::find($pembelian_selected->master_item_id);

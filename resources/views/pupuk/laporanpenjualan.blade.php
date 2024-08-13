@@ -240,6 +240,7 @@
                         <th>No</th>
                         <th>Kode</th>
                         <th>Nama Produk</th>
+                        <th>Batch</th>
                         <th>Qty. (Kg)</th>
                         <th>Total HB (Kg)</th>
                         <th>Total HJ (Kg)</th>
@@ -256,6 +257,7 @@
                             <td>{{ $data->firstItem() + $loop->index }}</td>
                             <td>{{$value->pembelian->barang->item->kode}}</td>
                             <td>{{$value->pembelian->barang->item->nama}}</td>
+                            <td>{{$value->pembelian->batch}}</td>
                             <td>{{$value->total_jumlah}}</td>
                             <td>{{ number_format($total_hb, 0, ',', '.') }}</td>
                             <td>{{ number_format($value->total_harga, 0, ',', '.') }}</td>

@@ -4,28 +4,6 @@
 <div class="container-f">
     <div class="sidenav">
         <ul class="main-list">
-            {{-- <div class="toggle-sublist">
-                <div class="flex-row-list">
-                    <span>Store</span>
-                    <span class="material-symbols-outlined toggle-icon">
-                        chevron_right
-                    </span>
-                </div>
-            </div>
-            <li class="toggle-sublist test hide">
-                <div class="flex-row-list">
-                    <span>Salesperson</span>
-                    <span class="material-symbols-outlined toggle-icon">
-                        chevron_right
-                    </span>
-                </div>
-            </li>
-            <ul class="sublist hide">
-                <li class="sublist-item"><a href="{{ route('sales.index') }}">Daftar Sales</a></li>
-            <li class="sublist-item"><a href="{{route('salespembelian.index')}}">Pembelian</a></li>
-            <li class="sublist-item"><a href="{{route('salespenjualan.index')}}">Penjualan</a></li>
-        </ul> --}}
-
         <li class="nonlist-item selected">
             <a href="/">Dashboard</a>
         </li>
@@ -212,7 +190,71 @@
         <div class="card-container">
             <div class="card-f">
                 <div class="card-title-f">
-                    Laba Kotor
+                    Omzet
+                </div>
+                <div class="card-body-f">
+                    <div class="f-row">
+                        <div class="f-col">
+                            <div>#</div>
+                            <div>Today</div>
+                            <div>Yesterday</div>
+                            <div>Last 7 days</div>
+                            <div>Last 30 days</div>
+                            <div>Last 60 days</div>
+                            <div>Last 90 days</div>
+                            <div>All time</div>
+                        </div>
+                        <div class="f-col">
+                            <div>
+                                Total
+                            </div>
+                            <div>Rp. {{ number_format($data_omzet['today'] , 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_omzet['yesterday'] , 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_omzet['last7days'] , 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_omzet['last30days'] , 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_omzet['last60days'] , 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_omzet['last90days'] , 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_omzet['alltime'] , 0, ',', '.') }}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-f">
+                <div class="card-title-f">
+                    Laba Kotor (Global)
+                </div>
+                <div class="card-body-f">
+                    <div class="f-row">
+                        <div class="f-col">
+                            <div>#</div>
+                            <div>Today</div>
+                            <div>Yesterday</div>
+                            <div>Last 7 days</div>
+                            <div>Last 30 days</div>
+                            <div>Last 60 days</div>
+                            <div>Last 90 days</div>
+                            <div>All time</div>
+                        </div>
+                        <div class="f-col">
+                            <div>
+                                Total
+                            </div>
+                            <div>Rp. {{ number_format($data_laba_kotor_global['today'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_kotor_global['yesterday'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_kotor_global['last7days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_kotor_global['last30days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_kotor_global['last60days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_kotor_global['last90days'], 0, ',', '.') }}</div>
+                            <div>Rp. {{ number_format($data_laba_kotor_global['alltime'], 0, ',', '.') }}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-f">
+                <div class="card-title-f">
+                    Laba Kotor (Spesific)
                 </div>
                 <div class="card-body-f">
                     <div class="f-row">
@@ -406,7 +448,7 @@
         <div class="card-container" style="margin-top: 0.5rem">
             <div class="card-f-chart">
                 <div class="card-title-f">
-                    Laba Kotor
+                    Laba Kotor (Spesific)
                 </div>
                 <canvas id="myChart" width="400" height="400"></canvas>
             </div>

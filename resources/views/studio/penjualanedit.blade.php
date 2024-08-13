@@ -269,6 +269,7 @@
                         $counter ++;
                     @endphp
                     <div class="row">
+                        <input type="hidden" name="itemDynamic[]" value="{{$item->id}}"/>
                         <div class="col-sm-4 form-group">
                             <label>Nama Barang</label>
                             <div class="input-group">

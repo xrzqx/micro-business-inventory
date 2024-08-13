@@ -181,7 +181,7 @@
         </span>
     </button>
     <div class="content">
-        <h1>Edit Kategori</h1>
+        <h1>Edit Customer</h1>
         @if ($errors->any())
         <div class="alert alert-danger" id="failed-alert">
             <button type="button" class="close" data-dismiss="alert">x</button>
@@ -220,6 +220,44 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label>NIK/NPWP</label>
+                        <input type="text" value="{{ $customer->nik }}"
+                            class="form-control form-control-sm nik-produk"
+                            oninput="validateNumber(this)" placeholder="Input harus angka" name="nik" />
+                        <div class="text-err">
+                            @error('nik')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label>Lokasi</label>
+                        <input type="text" value="{{ $customer->lokasi }}"
+                            class="form-control form-control-sm lokasi-produk" name="lokasi" />
+                        <div class="text-err">
+                            @error('lokasi')
+                                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                    width="16px" height="16px" viewBox="0 0 24 24"
+                                    xmlns="https://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                    </path>
+                                </svg>
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row-12">
                 <div class="col-12">
@@ -233,4 +271,23 @@
         </form>
     </div>
 </div>
+
+<script>
+    function validateNumber(input) {
+        // Remove non-numeric characters
+        input.value = input.value.replace(/[^0-9]/g, '');
+
+        // Remove leading zeros
+        input.value = input.value.replace(/^0+/, '');
+
+        // Limit the input to a maximum of 13 digits
+        var maxDigits = 20;
+        if (input.value.length > maxDigits) {
+            input.value = input.value.slice(0, maxDigits);
+        }
+
+        // Parse the input value to an integer
+        var numericValue = parseInt(input.value, 10);
+    }
+</script>
 @endsection

@@ -12,6 +12,8 @@ use App\Models\Brilink;
 use App\Models\Pinjaman;
 use App\Models\Pengeluaran;
 use App\Models\Beban;
+use App\Models\InvoiceItem;
+use App\Models\Invoice;
 use Carbon\Carbon;
 use App\Utils\TimeIntervalUtils;
 
@@ -35,6 +37,143 @@ class DasboardController extends Controller
         $timeIntervalUtils = new TimeIntervalUtils();
         $time_intervals = $timeIntervalUtils->iterate_time_intervals($timestampStart, $timestampEnd);
         // return $time_intervals;
+
+        $laba_kotor_nama = ["today","yesterday","last7days","last30days","last60days","last90days","alltime"] ;
+
+        //init omzet
+        $omzet = [];
+        $idx = 0;
+        foreach ($laba_kotor_nama as $innerArray) {
+            $omzet[$laba_kotor_nama[$idx]] = 0;
+            $idx ++;
+        }
+
+        $omzet_motor = collect();
+        foreach ($time_intervals as $value) {
+            $res = Penjualan::select('transaksi_penjualan.*')
+                ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
+                ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+                ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+                ->where('kategori.toko', '=', 'SGH_Motor')
+                ->where('transaksi_penjualan.tanggal', '>=', $value['start'])
+                ->where('transaksi_penjualan.tanggal', '<=', $value['end'])
+                ->orderBy('transaksi_penjualan.tanggal', 'desc')
+                ->get();
+            $omzet_motor->push($res);
+        }
+
+        // return $omzet_motor;
+
+        $idx = 0;
+        foreach ($omzet_motor as $innerArray) {
+            // echo $innerArray;
+            if (count($innerArray) !== 0) {
+                foreach ($innerArray as $value) {
+                    $omzet[$laba_kotor_nama[$idx]] += $value->harga;
+                }
+            }
+            $idx ++;
+        }
+
+        // return $omzet;
+
+        $omzet_studio = collect();
+        foreach ($time_intervals as $value) {
+            $res = PenjualanProduk::select('penjualan_produk.*')
+                ->join('produk', 'produk.id', '=', 'penjualan_produk.produk_id')
+                ->where('produk.toko', '=', 'SGH_Studio')
+                ->where('penjualan_produk.tanggal', '>=', $value['start'])
+                ->where('penjualan_produk.tanggal', '<=', $value['end'])
+                ->orderBy('penjualan_produk.tanggal', 'desc')
+                ->get();
+            $omzet_studio->push($res);
+        }
+        // return $omzet_studio;
+
+        $idx = 0;
+        foreach ($omzet_studio as $innerArray) {
+            // echo $innerArray;
+            if (count($innerArray) !== 0) {
+                foreach ($innerArray as $value) {
+                    $omzet[$laba_kotor_nama[$idx]] += $value->harga;
+                }
+            }
+            $idx ++;
+        }
+
+        // return $omzet;
+
+        $omzet_brilink = collect();
+        foreach ($time_intervals as $value) {
+            $res = Brilink::select('brilink.*')
+                ->where('brilink.tanggal', '>=', $value['start'])
+                ->where('brilink.tanggal', '<=', $value['end'])
+                ->orderBy('brilink.tanggal', 'desc')
+                ->get();
+            $omzet_brilink->push($res);
+        }
+
+        // return $omzet_brilink;
+
+        $idx = 0;
+        foreach ($omzet_brilink as $innerArray) {
+            // echo $innerArray;
+            if (count($innerArray) !== 0) {
+                foreach ($innerArray as $value) {
+                    $omzet[$laba_kotor_nama[$idx]] += $value->admin;
+                }
+            }
+            $idx ++;
+        }
+
+        // return $omzet;
+
+        $omzet_sales = collect();
+        foreach ($time_intervals as $value) {
+            $res = SalesPenjualan::select('sales_penjualan.*')
+                ->where('sales_penjualan.tanggal', '>=', $value['start'])
+                ->where('sales_penjualan.tanggal', '<=', $value['end'])
+                ->orderBy('sales_penjualan.tanggal', 'desc')
+                ->get();
+            $omzet_sales->push($res);
+        }
+
+        $idx = 0;
+        foreach ($omzet_sales as $innerArray) {
+            // echo $innerArray;
+            if (count($innerArray) !== 0) {
+                foreach ($innerArray as $value) {
+                    $omzet[$laba_kotor_nama[$idx]] += $value->harga;
+                }
+            }
+            $idx ++;
+        }
+
+        $omzet_pupuk = collect();
+        foreach ($time_intervals as $value) {
+            $res = Invoice::select('invoice.*')
+                ->where('invoice.tanggal', '>=', $value['start'])
+                ->where('invoice.tanggal', '<=', $value['end'])
+                ->get();
+            $omzet_pupuk->push($res);
+        }
+
+        $idx = 0;
+        foreach ($omzet_pupuk as $innerArray) {
+            // echo $innerArray;
+            if (count($innerArray) !== 0) {
+                foreach ($innerArray as $value) {
+                    $omzet[$laba_kotor_nama[$idx]] += $value->harga;
+                }
+            }
+            $idx ++;
+        }
+
+        /*
+            baris setelah ini digunakan untuk mendapatkan nilai laba kotor dengan cara
+            mengurangi harga jual barang dengan harga beli barang setiap ada
+            transaksi penjualan
+        */
 
         $penjualan_laba_studio = collect();
         foreach ($time_intervals as $value) {
@@ -62,8 +201,9 @@ class DasboardController extends Controller
             $penjualan_laba_studio->push($res);
         }
 
+        // return $penjualan_laba_studio;
+
         // $laba_kotor[] = 0;
-        $laba_kotor_nama = ["today","yesterday","last7days","last30days","last60days","last90days","alltime"];
         $laba_kotor_studio = [];
         $idx = 0;
         foreach ($penjualan_laba_studio as $innerArray) {
@@ -97,6 +237,8 @@ class DasboardController extends Controller
             ->get();
             $penjualan_laba_sparepart->push($res);
         }
+
+        // return $penjualan_laba_sparepart;
 
         $laba_kotor_sparepart = [];
         $idx = 0;
@@ -355,15 +497,16 @@ class DasboardController extends Controller
 
         $penjualan_laba_pupuk = collect();
         foreach ($time_intervals as $value) {
-            $res = Penjualan::select('transaksi_penjualan.transaksi_pembelian_id', \DB::raw('SUM(transaksi_penjualan.jumlah) as total_jumlah'),\DB::raw('SUM(transaksi_penjualan.harga) as total_harga'))
-            ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
+            $res = InvoiceItem::select('invoice_item.transaksi_pembelian_id', \DB::raw('SUM(invoice_item.jumlah) as total_jumlah'), \DB::raw('SUM(invoice_item.total_harga) as total_harga'))
+            ->join('invoice', 'invoice.id', '=', 'invoice_item.invoice_id')
+            ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'invoice_item.transaksi_pembelian_id')
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
             ->where('kategori.toko', '=', 'pupuk')
-            ->where('transaksi_penjualan.tanggal', '>=', $value['start'])
-            ->where('transaksi_penjualan.tanggal', '<=', $value['end'])
-            ->groupBy('transaksi_penjualan.transaksi_pembelian_id')
-            ->orderBy('transaksi_penjualan.tanggal', 'desc')
+            ->where('invoice.tanggal', '>=', $value['start'])
+            ->where('invoice.tanggal', '<=', $value['end'])
+            ->groupBy('invoice_item.transaksi_pembelian_id')
+            ->orderBy('invoice.tanggal', 'desc')
             ->with(['pembelian' => function ($query) {
                 $query->with(['barang' => function ($query) {
                     $query->with('item');
@@ -372,6 +515,26 @@ class DasboardController extends Controller
             ->get();
             $penjualan_laba_pupuk->push($res);
         }
+
+        // return $penjualan_laba_pupuk;
+        // foreach ($time_intervals as $value) {
+        //     $res = Penjualan::select('transaksi_penjualan.transaksi_pembelian_id', \DB::raw('SUM(transaksi_penjualan.jumlah) as total_jumlah'),\DB::raw('SUM(transaksi_penjualan.harga) as total_harga'))
+        //     ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
+        //     ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
+        //     ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
+        //     ->where('kategori.toko', '=', 'pupuk')
+        //     ->where('transaksi_penjualan.tanggal', '>=', $value['start'])
+        //     ->where('transaksi_penjualan.tanggal', '<=', $value['end'])
+        //     ->groupBy('transaksi_penjualan.transaksi_pembelian_id')
+        //     ->orderBy('transaksi_penjualan.tanggal', 'desc')
+        //     ->with(['pembelian' => function ($query) {
+        //         $query->with(['barang' => function ($query) {
+        //             $query->with('item');
+        //         }]);
+        //     }])
+        //     ->get();
+        //     $penjualan_laba_pupuk->push($res);
+        // }
 
         $laba_kotor_pupuk = [];
         $idx = 0;
@@ -519,6 +682,45 @@ class DasboardController extends Controller
             }
             $idx ++;
         }
+        
+        /* 
+            set zero value if there no transaction
+        */
+        if (!isset($data_pembelian_chart['minyak']) && !isset($data_pembelian_chart_time['alltime']['minyak'])) {
+            $data_pembelian_chart['minyak'] = 0;
+            $data_pembelian_chart_time['alltime']['minyak'] = 0;
+        }
+        if (!isset($data_pembelian_chart['SGH_Studio']) && !isset($data_pembelian_chart_time['alltime']['SGH_Studio'])) {
+            $data_pembelian_chart['SGH_Studio'] = 0;
+            $data_pembelian_chart_time['alltime']['SGH_Studio'] = 0;
+        }
+        if (!isset($data_pembelian_chart['SGH_Motor']) && !isset($data_pembelian_chart_time['alltime']['SGH_Motor'])) {
+            $data_pembelian_chart['SGH_Motor'] = 0;
+            $data_pembelian_chart_time['alltime']['SGH_Motor'] = 0;
+        }
+        if (!isset($data_pembelian_chart['rokok']) && !isset($data_pembelian_chart_time['alltime']['rokok'])) {
+            $data_pembelian_chart['rokok'] = 0;
+            $data_pembelian_chart_time['alltime']['rokok'] = 0;
+        }
+        if (!isset($data_pembelian_chart['beras']) && !isset($data_pembelian_chart_time['alltime']['beras'])) {
+            $data_pembelian_chart['beras'] = 0;
+            $data_pembelian_chart_time['alltime']['beras'] = 0;
+        }
+        if (!isset($data_pembelian_chart['pupuk']) && !isset($data_pembelian_chart_time['alltime']['pupuk'])) {
+            $data_pembelian_chart['pupuk'] = 0;
+            $data_pembelian_chart_time['alltime']['pupuk'] = 0;
+        }
+
+        // return $data_pembelian;
+        $data_laba_kotor_global = $omzet;
+        $data_laba_kotor_global['today'] = $omzet['today'] - $data_pembelian['today'] ;
+        $data_laba_kotor_global['yesterday'] = $omzet['yesterday'] - $data_pembelian['yesterday'] ;
+        $data_laba_kotor_global['last7days'] = $omzet['last7days'] - $data_pembelian['last7days'] ;
+        $data_laba_kotor_global['last30days'] = $omzet['last30days'] - $data_pembelian['last30days'] ;
+        $data_laba_kotor_global['last60days'] = $omzet['last60days'] - $data_pembelian['last60days'] ;
+        $data_laba_kotor_global['last90days'] = $omzet['last90days'] - $data_pembelian['last90days'] ;
+        $data_laba_kotor_global['alltime'] = $omzet['alltime'] - $data_pembelian['alltime'] ;
+        // return $laba_kotor_global;
 
         $inventory = collect();
         foreach ($time_intervals as $value) {
@@ -546,17 +748,6 @@ class DasboardController extends Controller
                     // echo $value;
                     $total += ($value->harga/$value->jumlah) * $value->sisa;
                     
-                    // $total += $value->total_kredit;
-                    // if (isset($data_pembelian_chart[$value->toko])) {
-                    //     // Key exists in the array
-                    //     $data_pembelian_chart[$value->toko] = $value->total_kredit;
-                    //     $data_pembelian_chart_time[$laba_kotor_nama[$idx]] = $data_pembelian_chart;
-                    // } 
-                    // else {
-                    //     // Key does not exist in the array
-                    //     $data_pembelian_chart[$value->toko] = $value->total_kredit;
-                    //     $data_pembelian_chart_time[$laba_kotor_nama[$idx]] = $data_pembelian_chart;
-                    // }
                 }
                 $data_inventory[$laba_kotor_nama[$idx]] = $total;
             }
@@ -567,26 +758,28 @@ class DasboardController extends Controller
             $idx ++;
         }
 
-        $data_laba_bersih = $data_laba_kotor;
+        $data_laba_bersih = $data_laba_kotor_global;
         
-        $data_laba_bersih['today'] = $data_laba_kotor['today'] - $data_pinjaman['today'] - $data_pengeluaran['today'] - $data_pembelian['today'];
-        $data_laba_bersih['yesterday'] = $data_laba_kotor['yesterday'] - $data_pinjaman['yesterday'] - $data_pengeluaran['yesterday'] - $data_pembelian['yesterday'];
-        $data_laba_bersih['last7days'] = $data_laba_kotor['last7days'] - $data_pinjaman['last7days'] - $data_pengeluaran['last7days'] - $data_pembelian['last7days'];
-        $data_laba_bersih['last30days'] = $data_laba_kotor['last30days'] - $data_pinjaman['last30days'] - $data_pengeluaran['last30days'] - $data_pembelian['last30days'];
-        $data_laba_bersih['last60days'] = $data_laba_kotor['last60days'] - $data_pinjaman['last60days'] - $data_pengeluaran['last60days'] - $data_pembelian['last60days'];
-        $data_laba_bersih['last90days'] = $data_laba_kotor['last90days'] - $data_pinjaman['last90days'] - $data_pengeluaran['last90days'] - $data_pembelian['last90days'];
-        $data_laba_bersih['alltime'] = $data_laba_kotor['alltime'] - $data_pinjaman['alltime'] - $data_pengeluaran['alltime'] - $data_pembelian['alltime'];
+        $data_laba_bersih['today'] = $data_laba_kotor_global['today'] + $data_pinjaman['today'] - $data_pengeluaran['today'] + $data_inventory['today'];
+        $data_laba_bersih['yesterday'] = $data_laba_kotor_global['yesterday'] + $data_pinjaman['yesterday'] - $data_pengeluaran['yesterday'] + $data_inventory['yesterday'];
+        $data_laba_bersih['last7days'] = $data_laba_kotor_global['last7days'] + $data_pinjaman['last7days'] - $data_pengeluaran['last7days'] + $data_inventory['last7days'];
+        $data_laba_bersih['last30days'] = $data_laba_kotor_global['last30days'] + $data_pinjaman['last30days'] - $data_pengeluaran['last30days'] + $data_inventory['last30days'];
+        $data_laba_bersih['last60days'] = $data_laba_kotor_global['last60days'] + $data_pinjaman['last60days'] - $data_pengeluaran['last60days'] + $data_inventory['last60days'];
+        $data_laba_bersih['last90days'] = $data_laba_kotor_global['last90days'] + $data_pinjaman['last90days'] - $data_pengeluaran['last90days'] + $data_inventory['last90days'];
+        $data_laba_bersih['alltime'] = $data_laba_kotor_global['alltime'] + $data_pinjaman['alltime'] - $data_pengeluaran['alltime'] + $data_inventory['alltime'];
         // return $data_laba_bersih;
         // return $data_pembelian_chart_time['alltime']['SGH_Motor'];
         // return $data_pembelian;
         // return $data_pembelian_chart_time;
         
         return view('dashboard.index',[
+            'data_omzet' => $omzet,
             'data_laba_kotor' => $data_laba_kotor,
             'data_pinjaman' => $data_pinjaman,
             'data_pengeluaran' => $data_pengeluaran,
             'data_pembelian' => $data_pembelian,
             'data_inventory' => $data_inventory,
+            'data_laba_kotor_global' => $data_laba_kotor_global,
             'data_laba_bersih' => $data_laba_bersih,
             'data_pembelian_chart' => $data_pembelian_chart_time,
             'laba_kotor_sparepart' => $laba_kotor_sparepart,

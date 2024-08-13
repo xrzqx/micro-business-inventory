@@ -203,114 +203,17 @@
 
         </script>
         @endif
-        <form method="POST" action="{{route('pupukpenjualan.update', $penjualan->id)}}">
+        <form method="POST" action="{{route('pupukpenjualan.update', $penjualan_produk)}}">
             @csrf
             @method('POST')
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 form-group">
-                        <label>Nama Customer</label>
-                        <div class="input-group">
-                            <select class="js-example-basic-single col-sm-12" name="customer" id="nama-customer">
-                                <option value="" disabled selected hidden>Pilih Customer</option>
-                                @foreach ($customer as $value)
-                                    @if ($penjualan->customer->id == $value->id)
-                                        <option value="{{ $value->id }}" selected>{{ $value->nama }}</option>
-                                    @else
-                                        <option value="{{ $value->id }}">{{ $value->nama }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        @error('customer')
-                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                            </path>
-                        </svg>
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="col-sm-12 form-group">
-                        <label>Nama Barang</label>
-                        <div class="input-group">
-                            <select class="js-example-basic-single col-sm-12" name="nama" id="kategori-produk">
-                                <option value="" disabled selected hidden>Pilih Barang</option>
-                                @foreach ($barang as $value)
-                                    @if ($pembelian->master_item_id == $value->master_item_id)
-                                        <option value="{{ $value->master_item_id }}" selected>{{ $value->barang->item->kode }} | {{ $value->barang->item->nama }}</option>
-                                    @else
-                                        <option value="{{ $value->master_item_id }}">{{ $value->barang->item->kode }} | {{ $value->barang->item->nama }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        @error('nama')
-                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                            </path>
-                        </svg>
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    {{-- {{$pembelianSelect}} --}}
-                    <div class="col-sm-12 form-group">
-                        <label>Batch</label>
-                        <div class="input-group">
-                            <select class="js-example-basic-single col-sm-12" name="batch" id="batch-produk">
-                                <option value="" disabled selected hidden>Pilih Batch</option>
-                            </select>
-                        </div>
-                        @error('batch')
-                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                            </path>
-                        </svg>
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="col-sm-12 form-group">
-                        <label>Jumlah (Kg)</label>
-                        <input type="text" class="form-control form-control-sm jumlah-produk" 
-                        oninput="validateInput(this,{{$pembelian->sisa + $penjualan->jumlah}})" placeholder="Input harus angka" name="jumlah" 
-                        id="jumlahInp" value="{{$penjualan->jumlah}}"
-                        />
-                        @error('jumlah')
-                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
-                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                            </path>
-                        </svg>
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="col-sm-12 form-group">
-                        <label>Harga (Kg)</label>
-                        <input type="text" class="form-control form-control-sm harga-produk"
+                        <label>No Invoice</label>
+                        <input type="text" class="form-control form-control-sm invoice-produk"
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                            placeholder="input harus angka" name="harga" value="{{$penjualan->harga / $penjualan->jumlah}}" />
-                        @error('harga')
-                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false" width="16px"
-                            height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                            </path>
-                        </svg>
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="col-sm-12 form-group">
-                        <label>COD (optional)</label>
-                        <input type="text" class="form-control form-control-sm cod-produk"
-                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                            placeholder="input harus angka" name="cod" value="{{$penjualan->cod}}"/>
-                        @error('cod')
+                            placeholder="input harus angka" name="invoice" value="{{$number_invoice}}"/>
+                        @error('invoice')
                         <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
                             width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
                             <path
@@ -320,10 +223,12 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-12 form-group">
                         <label>Tanggal</label>
                         <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker"
-                            name="tanggal" value="{{date('d-m-Y', $penjualan->tanggal)}}" />
+                            name="tanggal" autocomplete="off" value="{{date('d-m-Y', $penjualan_produk->tanggal)}}"/>
                         <div class="text-err">
                             @error('tanggal')
                             <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
@@ -337,6 +242,126 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label>Nama Customer</label>
+                        <div class="input-group">
+                            <select class="js-example-basic-single col-sm-12" name="customer" id="nama-customer">
+                                <option value="" disabled selected hidden>Pilih Customer</option>
+                                @foreach ($customer as $value)
+                                    @if ($penjualan_produk->customer_id == $value->id)
+                                        <option value="{{ $value->id }}" selected>{{ $value->nama }} | {{$value->nik}}</option> 
+                                    @else
+                                        <option value="{{ $value->id }}">{{ $value->nama }} | {{$value->nik}}</option> 
+                                    @endif
+                                    {{-- <option value="{{ $value->id }}">{{ $value->nama }}</option> --}}
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('customer')
+                        <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                            width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                @php
+                    $counter = 0;
+                @endphp
+                @foreach ($penjualan as $item)
+                    @php
+                        $counter ++;
+                    @endphp
+                    <div class="row">
+                        <input type="hidden" name="itemDynamic[]" value="{{$item->id}}"/>
+                        <div class="col-sm-3 form-group">
+                            <label>Nama Barang</label>
+                            <div class="input-group">
+                                <select class="js-example-basic-single col-sm-12" name="namaDynamic[]" id="kategori-produk{{$counter}}">
+                                    <option value="" disabled selected hidden>Pilih Barang</option>
+                                    @foreach ($barang as $value)
+                                        @if ($item->pembelian->master_item_id == $value->master_item_id)
+                                            <option value="{{ $value->master_item_id }}" selected>{{ $value->barang->item->nama }}</option>
+                                        @else
+                                            <option value="{{ $value->master_item_id }}">{{ $value->barang->item->nama }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('namaDynamic[]')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label>Batch</label>
+                            <div class="input-group">
+                                <select class="js-example-basic-single col-sm-12" name="batchDynamic[]" id="batch-produk{{$counter}}">
+                                    <option value="" disabled selected hidden>Pilih Batch</option>
+                                    @foreach ($pupuk_list as $value)
+                                        @if ($item->pembelian->master_item_id == $value->master_item_id)
+                                            @if ($item->pembelian->id == $value->id)
+                                                <option value="{{ $value->id }}" selected>{{ $value->batch }} | Stock: {{$value->sisa}}</option>
+                                            @else
+                                                <option value="{{ $value->id }}">{{ $value->batch }} | Stock: {{$value->sisa}}</option>
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('batchDynamic[]')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label>Jumlah</label>
+                            <input type="text" class="form-control form-control-sm jumlah-produk" 
+                            oninput="validateInput(this,{{$item->pembelian->sisa + $item->jumlah}})" placeholder="Input harus angka" name="jumlahDynamic[]" 
+                            id="jumlahInp" value="{{$item->jumlah}}" data-dynamic-value="{{$item->pembelian->sisa}}"
+                            />
+                            @error('jumlahDynamic[]')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label>Harga (kg)</label>
+                            <input type="text" class="form-control form-control-sm harga-produk" 
+                            oninput="validateInputHarga(this)" 
+                            placeholder="Input harus angka" name="hargaDynamic[]" id="hargaInp" value="{{$item->harga}}"/>
+                            @error('hargaDynamic[]')
+                            <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false"
+                                width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                                </path>
+                            </svg>
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                @endforeach
+                
             </div>
             <div class="row-12">
                 <div class="col-12">
@@ -369,98 +394,37 @@
     }
 
 </script>
+
 <script>
-    // Wait for the document to be ready
-    $(document).ready(function () {
-        // Perform AJAX request
-        $.ajax({
-            url: '{{ route('fetch.batchedit') }}', // Replace with your actual endpoint
-            method: 'GET',
-            data: {
-                masterItemId: {{$pembelian->master_item_id}}
-            },
-            success: function (response) {
-                // Clear existing options
-                $('#batch-produk').empty();
-                $('#batch-produk').append('<option value="" disabled selected hidden>Pilih Batch</option>');
-                // Populate options based on the AJAX response
-                $.each(response, function (index, value) {
-                    if (value.het != null) {
-                        $('#batch-produk').append('<option value="' + value.id + '"selected>' + value
-                        .batch + " | Stock: " + value.sisa + ' | HB: ' + value.harga/value.jumlah + ' | HET: ' + value.het +'</option>');
-                    }
-                    else{
-                        if ({{$pembelian->id}} == value.id) {
-                            $('#batch-produk').append('<option value="' + value.id + '" selected>' + value
-                            .batch + " | Stock: " + value.sisa + ' | HB: ' + value.harga/value.jumlah +'</option>');
-                        }
-                        else{
-                            $('#batch-produk').append('<option value="' + value.id + '">' + value
-                            .batch + " | Stock: " + value.sisa + ' | HB: ' + value.harga/value.jumlah +'</option>');
-                        }
-                    }
-                });
-            },
-            error: function (error) {
-                console.error('Error:', error);
-            }
-        });
-    });
-</script>
-<script>
-    // Attach an event listener to the select2:select event for "kategori-produk"
-    $('#kategori-produk').on('select2:select', function (e) {
-        var selectedCategoryId = e.params.data.id;
-        // Make an AJAX request to fetch data for "batch-produk" based on the selected category
-        $.ajax({
-            url: '{{ route('fetch.batchedit') }}', // Replace with your actual endpoint
-            method: 'GET',
-            data: {
-                masterItemId: selectedCategoryId
-            },
-            success: function (response) {
-                // Clear existing options
-                $('#batch-produk').empty();
-                $('#batch-produk').append('<option value="" disabled selected hidden>Pilih Batch</option>');
-                // Populate options based on the AJAX response
-                $.each(response, function (index, value) {
-                    if (value.het != null) {
-                        $('#batch-produk').append('<option value="' + value.id + '">' + value
-                        .batch + " | Stock: " + value.sisa + ' | HB: ' + value.harga/value.jumlah + ' | HET: ' + value.het +'</option>');
-                    }
-                    else{
-                        $('#batch-produk').append('<option value="' + value.id + '">' + value
-                        .batch + " | Stock: " + value.sisa + ' | HB: ' + value.harga/value.jumlah +'</option>');
-                    }
-                });
+    function validateInputHarga(input) {
+        // Remove all non-numeric characters except the decimal point
+        input.value = input.value.replace(/[^0-9.]/g, '');
 
-                // Trigger Select2 to update the UI
-                $('#batch-produk').trigger('change');
-            },
-            error: function (error) {
-                console.error('Error:', error);
-            }
-        });
-    });
+        // Only keep the first decimal point
+        input.value = input.value.replace(/(\..*?)\..*/g, '$1');
 
-    $('#batch-produk').on('change', function (e) {
-        $('#jumlahInp').val('');
-        console.log("Change event triggered");
-    });
+        // Split the input into integer and fractional parts
+        const parts = input.value.split('.');
 
-    $('#batch-produk').on('select2:select', function (e) {
-        var selectedBatchText = e.params.data.text;
-        // Split the string by '|'
-        var parts = selectedBatchText.split('|');
+        // Remove leading zeros from the integer part, but keep a single zero if it's just "0" or "0."
+        if (parts[0].length > 1) {
+            parts[0] = parts[0].replace(/^0+/, '');
+            if (parts[0] === '') parts[0] = '0';
+        }
 
-        // Extract the stock data (assuming it's in the second part after the '|')
-        var stockData = parts[1].trim().split(':')[1].trim();
-        
-        // Access the data attribute using JavaScript
-        document.getElementById('jumlahInp').setAttribute('data-dynamic-value', stockData);
-        console.log(stockData);
-    });
+        // Ensure the input doesn't start with a decimal point
+        if (input.value.startsWith('.')) {
+            parts[0] = '0';
+        }
 
+        // Limit the fractional part to 2 digits
+        if (parts[1] && parts[1].length > 2) {
+            parts[1] = parts[1].slice(0, 2);
+        }
+
+        // Reassemble the input value
+        input.value = parts.join('.');
+    }
 </script>
 
 @endsection
