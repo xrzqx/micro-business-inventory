@@ -29,7 +29,7 @@ class PupukCustomerController extends Controller
         $validator =  $request->validate([
             'namacustomer' => 'required|max:100',
             'nik' => 'required|unique:customer,nik|max:20',
-            'lokasi' => 'required|max:20',
+            'lokasi' => 'required|max:100',
         ], [
             'namacustomer.required' => 'Input nama customer tidak boleh kosong',
             'namacustomer.max' => 'Input nama customer tidak boleh lebih dari 100 karakter',
@@ -37,7 +37,7 @@ class PupukCustomerController extends Controller
             'nik.unique' => 'NIK/NPWP sudah terdaftar',
             'nik.max' => 'NIK/NPWP tidak boleh lebih dari 20 digit',
             'lokasi.required' => 'Input nama lokasi tidak boleh kosong',
-            'lokasi.max' => 'Input nama lokasi tidak boleh lebih dari 20 karakter',
+            'lokasi.max' => 'Input nama lokasi tidak boleh lebih dari 100 karakter',
         ]);
 
         Customer::create(

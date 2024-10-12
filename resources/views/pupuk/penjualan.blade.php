@@ -347,12 +347,20 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                     Tambah Penjualan
                 </button>
+                <button type="button" class="btn" style="background-color: darkgreen">
+                    <a href="{{ route('pupukpenjualan.excel') }}"
+                        style="color: white;text-decoration-line: none;">Export Excel</a>
+                </button>
             </div>
             <div class="col-sm-4">
                 <form class="d-flex" action="{{route('pupukpenjualan.search')}}" method="GET">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="namabarang" value="{{ request('search') }}"
-                            placeholder="Cari Barang">
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker2"
+                            name="start" autocomplete="off" value="{{ request('search') }}" 
+                            placeholder="Cari Tanggal Mulai"/>
+                        <input type="text" class="form-control form-control-sm tanggal-produk" id="my_date_picker3"
+                            name="end" autocomplete="off" value="{{ request('search') }}" 
+                            placeholder="Cari Tanggal Akhir"/>
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>

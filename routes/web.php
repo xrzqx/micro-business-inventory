@@ -36,7 +36,7 @@ use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SalesPenjualanController;
 use App\Http\Controllers\SalesPembelianController;
 use App\Http\Controllers\SalesLaporanKeuanganController;
-use App\Http\Controllers\SalesKeuanganController;
+// use App\Http\Controllers\SalesKeuanganController;
 
 use App\Http\Controllers\RokokCustomerController;
 use App\Http\Controllers\RokokKategoriController;
@@ -97,7 +97,7 @@ Route::get('/fetch-batch', [BatchController::class, 'fetchData'])->name('fetch.b
 Route::get('/fetch-batch-edit', [BatchController::class, 'fetchEditData'])->name('fetch.batchedit');
 Route::get('/fetch-batch-sales', [BatchSalesController::class, 'fetchData'])->name('fetch.batchsales');
 Route::get('/fetch-mitem', [BarangController::class, 'fetchData'])->name('fetch.mitem');
-Route::get('/fetch-keuangan-sales', [SalesKeuanganController::class, 'fetchData'])->name('fetch.keuangansales');
+// Route::get('/fetch-keuangan-sales', [SalesKeuanganController::class, 'fetchData'])->name('fetch.keuangansales');
 
 Route::get('/pinjaman/customer/search', [CustomerController::class, 'search'])->name('customer.search');
 Route::get('/pinjaman/customer', [CustomerController::class, 'index'])->name('customer.index');
@@ -432,6 +432,7 @@ Route::get('/pupuk/penjualan/{id}', [PupukPenjualanController::class, 'edit'])->
 Route::post('/pupuk/penjualan/{id}', [PupukPenjualanController::class, 'update'])->name('pupukpenjualan.update');
 Route::delete('/pupuk/penjualan/{id}', [PupukPenjualanController::class, 'destroy'])->name('pupukpenjualan.destroy');
 Route::get('/pupuk/penjualan/{id}/invoice', [PupukPenjualanController::class, 'invoice'])->name('pupukpenjualan.invoice');
+Route::get('/pupuk/penjualan/excel/export', [PupukPenjualanController::class, 'excel'])->name('pupukpenjualan.excel');
 
 Route::get('/pupuk/keuangan/search', [PupukLaporanKeuanganController::class, 'search'])->name('pupukkeuangan.search');
 Route::get('/pupuk/keuangan', [PupukLaporanKeuanganController::class, 'index'])->name('pupukkeuangan.index');

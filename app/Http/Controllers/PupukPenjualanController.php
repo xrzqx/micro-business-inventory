@@ -10,10 +10,12 @@ use App\Models\Item;
 use App\Models\Pembelian;
 use App\Models\Barang;
 use App\Models\Customer;
+use App\Exports\InvoiceExportExcel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PupukPenjualanController extends Controller
 {
@@ -426,8 +428,23 @@ class PupukPenjualanController extends Controller
 
     public function search(Request $request)
     {
-        $searchQuery = $request->input('namabarang');
-        
+        $searchStart = $request->input('start');
+        $searchEnd = $request->input('end');
+
+        if (!$searchEnd) {
+            $currentTimestamp = Carbon::now();
+            $searchEnd = $currentTimestamp->format('d-m-Y');
+        }
+        if (!$searchStart) {
+            $timestampMinTx = Invoice::select(\DB::raw('min(invoice.tanggal) as tanggal'))->first();
+            $dateTx = Carbon::createFromTimestamp($timestampMinTx);
+            $searchStart = $dateTx->format('d-m-Y');
+        }
+
+        // Convert the selected date to a timestamp (UNIX timestamp)
+        $timestampStart = Carbon::parse($searchStart)->timestamp;
+        $timestampEnd = Carbon::parse($searchEnd)->timestamp;
+
         $barang = Pembelian::select('transaksi_pembelian.master_item_id')
             ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
             ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
@@ -440,27 +457,30 @@ class PupukPenjualanController extends Controller
             }])
             ->get();
 
-        $penjualan = Penjualan::select('transaksi_penjualan.*')
-            ->join('transaksi_pembelian', 'transaksi_pembelian.id', '=', 'transaksi_penjualan.transaksi_pembelian_id')
-            ->join('master_item', 'master_item.id', '=', 'transaksi_pembelian.master_item_id')
-            ->join('kategori', 'kategori.id', '=', 'master_item.kategori_id')
-            ->join('item', 'item.id', '=', 'master_item.item_id')
-            ->where('kategori.toko', '=', 'pupuk')
-            ->where('item.nama', 'like', '%' . $searchQuery . '%')
-            ->distinct()
-            ->with(['pembelian' => function ($query) use ($searchQuery){
-                $query->with(['barang' => function ($query) {
-                    $query->with('item');
-                }]);
-            }])
+        $pembelian = Pembelian::with(['barang' => function ($query) {
+            $query->with('item', 'kategori')
+                ->whereHas('kategori', function (Builder $query) {
+                    $query->where('toko', '=', 'pupuk');
+                });
+        }])
+        ->where('sisa', '>', 0)
+        ->get();
+
+        $penjualan = Invoice::select('invoice.*')
+            ->orderBy('invoice.tanggal', 'desc')
+            ->with('customer')
+            ->where('invoice.tanggal', '>=', $timestampStart)
+            ->where('invoice.tanggal', '<=', $timestampEnd)
             ->paginate(7);
 
-        // return $penjualan;
+        $customer = Customer::select(['customer.id','customer.nama', 'customer.nik', 'customer.lokasi'])->where("module","pupuk")->get();
 
-        return view("pupuk.penjualan",
+        return view('pupuk.penjualan',
         [
             "barang" => $barang,
+            "pembelian" => $pembelian,
             "penjualan" => $penjualan,
+            "customer" => $customer,
         ]);
     }
 
@@ -496,5 +516,11 @@ class PupukPenjualanController extends Controller
         // return view('pdf.invoice',[
         //     'invoiceData' => $invoiceData,
         // ]);
+    }
+
+    public function excel()
+    {
+        // Download the invoice as an Excel file
+        return Excel::download(new InvoiceExportExcel, 'Rekap Penjualan.xlsx');
     }
 }
